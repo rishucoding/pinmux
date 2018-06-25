@@ -4,7 +4,7 @@
    https://bitbucket.org/casl/pinmux.
 
    Authors: Neel Gala, Luke
-   Date of generation: Mon Jun 25 15:46:34 2018
+   Date of generation: Mon Jun 25 16:20:40 2018
 */
 
 package pinmux;
@@ -91,7 +91,9 @@ package pinmux;
       // (giving six pairs of dangling wires, named left and right)
       // these iocells are routed in their place on one side ("left")
       // and the matching *GPIO* peripheral interfaces in/out/dir
-      // connect to the OTHER side ("right").
+      // connect to the OTHER side ("right").  the result is that
+      // the muxer settings end up controlling the routing of where
+      // the I/O from the IOcell actually goes.
       interface IOCellSide iocell_side;
    endinterface
    (*synthesize*)
