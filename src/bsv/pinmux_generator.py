@@ -116,6 +116,20 @@ def write_pmp(pmp, p, ifaces, iocells):
 
         bsv_file.write('''
 
+      interface IOCellSide;
+      // declare the interface to the IO cells.
+      // Each IO cell will have 1 input field (output from pin mux)
+      // and an output and out-enable field (input to pinmux)''')
+
+        # == create method definitions for all iocell interfaces ==#
+        iocells.ifacefmt(bsv_file)
+
+        # ===== finish interface definition and start module definition=======
+        bsv_file.write("\n      endinterface\n")
+
+        # ===== io cell definition =======
+        bsv_file.write('''
+
       interface PeripheralSide;
       // declare the interface to the peripherals
       // Each peripheral's function will be either an input, output
@@ -126,20 +140,6 @@ def write_pmp(pmp, p, ifaces, iocells):
         # ==============================================================
 
         # == create method definitions for all peripheral interfaces ==#
-        iocells.ifacefmt(bsv_file)
-
-        # ===== finish interface definition and start module definition=======
-        bsv_file.write("\n      endinterface\n")
-
-        # ===== io cell definition =======
-        bsv_file.write('''
-
-      interface IOCellSide;
-      // declare the interface to the IO cells.
-      // Each IO cell will have 1 input field (output from pin mux)
-      // and an output and out-enable field (input to pinmux)''')
-
-        # == create method definitions for all iocell interfaces ==#
         ifaces.ifacefmt(bsv_file)
         bsv_file.write("\n      endinterface\n")
 

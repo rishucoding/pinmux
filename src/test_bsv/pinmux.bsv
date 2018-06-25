@@ -4,7 +4,7 @@
    https://bitbucket.org/casl/pinmux.
 
    Authors: Neel Gala, Luke
-   Date of generation: Mon Jun 25 16:20:40 2018
+   Date of generation: Mon Jun 25 17:04:53 2018
 */
 
 package pinmux;
@@ -21,13 +21,10 @@ package pinmux;
       endinterface
 
 
-      interface PeripheralSide;
-      // declare the interface to the peripherals
-      // Each peripheral's function will be either an input, output
-      // or be bi-directional.  an input field will be an output from the
-      // peripheral and an output field will be an input to the peripheral.
-      // Bi-directional functions also have an output-enable (which
-      // again comes *in* from the peripheral)
+      interface IOCellSide;
+      // declare the interface to the IO cells.
+      // Each IO cell will have 1 input field (output from pin mux)
+      // and an output and out-enable field (input to pinmux)
           // interface declaration between IO-0 and pinmux
     (*always_ready,always_enabled*) method  Bit#(1) io0_cell_out;
     (*always_ready,always_enabled*) method  Bit#(1) io0_cell_outen;
@@ -46,10 +43,13 @@ package pinmux;
       endinterface
 
 
-      interface IOCellSide;
-      // declare the interface to the IO cells.
-      // Each IO cell will have 1 input field (output from pin mux)
-      // and an output and out-enable field (input to pinmux)
+      interface PeripheralSide;
+      // declare the interface to the peripherals
+      // Each peripheral's function will be either an input, output
+      // or be bi-directional.  an input field will be an output from the
+      // peripheral and an output field will be an input to the peripheral.
+      // Bi-directional functions also have an output-enable (which
+      // again comes *in* from the peripheral)
           // interface declaration between UART-0 and pinmux
     (*always_ready,always_enabled*) method  Action uart_tx (Bit#(1) in);
     (*always_ready,always_enabled*) method  Bit#(1) uart_rx;
