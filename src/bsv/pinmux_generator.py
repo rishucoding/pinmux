@@ -118,8 +118,11 @@ def write_pmp(pmp, p, ifaces, iocells):
 
       interface PeripheralSide;
       // declare the interface to the peripherals
-      // Each IO cell will have 3 input field (output from pin mux
-      // and on output field (input to pinmux)''')
+      // Each peripheral's function will be either an input, output
+      // or be bi-directional.  an input field will be an output from the
+      // peripheral and an output field will be an input to the peripheral.
+      // Bi-directional functions also have an output-enable (which
+      // again comes *in* from the peripheral)''')
         # ==============================================================
 
         # == create method definitions for all peripheral interfaces ==#
@@ -133,8 +136,8 @@ def write_pmp(pmp, p, ifaces, iocells):
 
       interface IOCellSide;
       // declare the interface to the IO cells.
-      // Each IO cell will have 3 input field (output from pin mux
-      // and on output field (input to pinmux)''')
+      // Each IO cell will have 1 input field (output from pin mux)
+      // and an output and out-enable field (input to pinmux)''')
 
         # == create method definitions for all iocell interfaces ==#
         ifaces.ifacefmt(bsv_file)
@@ -144,8 +147,24 @@ def write_pmp(pmp, p, ifaces, iocells):
         bsv_file.write('''
 
    interface Ifc_pinmux;
+      // this interface controls how each IO cell is routed.  setting
+      // any given IO cell's mux control value will result in redirection
+      // of not just the input or output to different peripheral functions
+      // but also the *direction* control - if appropriate - as well.
       interface MuxSelectionLines mux_lines;
+
+      // this interface contains the inputs, outputs and direction-control
+      // lines for all peripherals.  GPIO is considered to also be just
+      // a peripheral because it also has in, out and direction-control.
       interface PeripheralSide peripheral_side;
+
+      // this interface is to be linked to the individual IO cells.
+      // if looking at a "non-muxed" GPIO design, basically the
+      // IO cell input, output and direction-control wires are cut
+      // (giving six pairs of dangling wires, named left and right)
+      // these iocells are routed in their place on one side ("left")
+      // and the matching *GPIO* peripheral interfaces in/out/dir
+      // connect to the OTHER side ("right").
       interface IOCellSide iocell_side;
    endinterface
    (*synthesize*)
