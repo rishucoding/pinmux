@@ -40,18 +40,18 @@ package pinmux;
       // Each IO cell will have 8 input field (output from pin mux
       // and on output field (input to pinmux)
           // interface declaration between IO-0 and pinmux
-    (*always_ready,always_enabled*) method Bit#(1) io0_cell_outen;
-    (*always_ready,always_enabled*) method Bit#(1) io0_cell_out;
+    (*always_ready,always_enabled*) method  Bit#(1) io0_cell_out;
+    (*always_ready,always_enabled*) method  Bit#(1) io0_cell_outen;
     (*always_ready,always_enabled,result="io"*) method 
                        Action io0_inputval (Bit#(1) in);
           // interface declaration between IO-1 and pinmux
-    (*always_ready,always_enabled*) method Bit#(1) io1_cell_outen;
-    (*always_ready,always_enabled*) method Bit#(1) io1_cell_out;
+    (*always_ready,always_enabled*) method  Bit#(1) io1_cell_out;
+    (*always_ready,always_enabled*) method  Bit#(1) io1_cell_outen;
     (*always_ready,always_enabled,result="io"*) method 
                        Action io1_inputval (Bit#(1) in);
           // interface declaration between IO-2 and pinmux
-    (*always_ready,always_enabled*) method Bit#(1) io2_cell_outen;
-    (*always_ready,always_enabled*) method Bit#(1) io2_cell_out;
+    (*always_ready,always_enabled*) method  Bit#(1) io2_cell_out;
+    (*always_ready,always_enabled*) method  Bit#(1) io2_cell_outen;
     (*always_ready,always_enabled,result="io"*) method 
                        Action io2_inputval (Bit#(1) in);
           // interface declaration between UART-0 and pinmux
@@ -109,9 +109,7 @@ package pinmux;
 
       // following wires capture signals to IO CELL if uart-0 is
       // allotted to it
-      // declare wruart_tx_*, set up as type 'out'
       Wire#(Bit#(1)) wruart_tx<-mkDWire(0);
-      // declare wruart_rx_*, set up as type 'input'
       Wire#(Bit#(1)) wruart_rx<-mkDWire(0);
 
       // following wires capture signals to IO CELL if gpioa-0 is
@@ -128,11 +126,9 @@ package pinmux;
 
       // following wires capture signals to IO CELL if twi-0 is
       // allotted to it
-      // declare wrtwi_sda_*, set up as type 'inout'
       Wire#(Bit#(1)) wrtwi_sda_out<-mkDWire(0);
       Wire#(Bit#(1)) wrtwi_sda_outen<-mkDWire(0);
       Wire#(Bit#(1)) wrtwi_sda_in<-mkDWire(0);
-      // declare wrtwi_scl_*, set up as type 'inout'
       Wire#(Bit#(1)) wrtwi_scl_out<-mkDWire(0);
       Wire#(Bit#(1)) wrtwi_scl_outen<-mkDWire(0);
       Wire#(Bit#(1)) wrtwi_scl_in<-mkDWire(0);
