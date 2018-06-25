@@ -161,6 +161,7 @@ class Interface(object):
     def wirefmt(self, *args):
         res = '\n'.join(map(self.wirefmtpin, self.pins)).format(*args)
         res += '\n'
+        return '\n' + res
         for p in self.pinspecs:
             name = self.pname(p['name'])
             typ = self.getifacetype(name.format(""))
@@ -351,8 +352,8 @@ mux_interface = MuxInterface('cell', [{'name': 'mux', 'ready': False,
 
 io_interface = IOInterface(
     'io',
-    [{'name': 'cell_out', 'enabled': False, },
-     {'name': 'cell_outen', 'enabled': False, 'outenmode': True, },
+    [{'name': 'cell_out', 'enabled': True, },
+     {'name': 'cell_outen', 'enabled': True, 'outenmode': True, },
      {'name': 'inputval', 'action': True, 'io': True}, ])
 
 # == Peripheral Interface definitions == #
