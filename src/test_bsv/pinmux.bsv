@@ -4,7 +4,7 @@
    https://bitbucket.org/casl/pinmux.
 
    Authors: Neel Gala, Luke
-   Date of generation: Sun Jun 24 12:09:36 2018
+   Date of generation: Mon Jun 25 15:11:57 2018
 */
 
 package pinmux;
@@ -20,9 +20,10 @@ package pinmux;
      method  Action cell2_mux (Bit#(2) in);
       endinterface
 
+
       interface PeripheralSide;
-      // declare the interface to the IO cells.
-      // Each IO cell will have 8 input field (output from pin mux
+      // declare the interface to the peripherals
+      // Each IO cell will have 3 input field (output from pin mux
       // and on output field (input to pinmux)
           // interface declaration between IO-0 and pinmux
     (*always_ready,always_enabled*) method  Bit#(1) io0_cell_out;
@@ -39,6 +40,13 @@ package pinmux;
     (*always_ready,always_enabled*) method  Bit#(1) io2_cell_outen;
     (*always_ready,always_enabled,result="io"*) method 
                        Action io2_cell_in (Bit#(1) in);
+      endinterface
+
+
+      interface IOCellSide;
+      // declare the interface to the IO cells.
+      // Each IO cell will have 3 input field (output from pin mux
+      // and on output field (input to pinmux)
           // interface declaration between UART-0 and pinmux
     (*always_ready,always_enabled*) method  Action uart_tx (Bit#(1) in);
     (*always_ready,always_enabled*) method  Bit#(1) uart_rx;
@@ -59,11 +67,13 @@ package pinmux;
     (*always_ready,always_enabled*) method  Action twi_scl_out (Bit#(1) in);
     (*always_ready,always_enabled*) method  Action twi_scl_outen (Bit#(1) in);
     (*always_ready,always_enabled*) method  Bit#(1) twi_scl_in;
-   endinterface
+      endinterface
+
 
    interface Ifc_pinmux;
       interface MuxSelectionLines mux_lines;
       interface PeripheralSide peripheral_side;
+      interface IOCellSide iocell_side;
    endinterface
    (*synthesize*)
    module mkpinmux(Ifc_pinmux);
@@ -207,7 +217,7 @@ package pinmux;
       endmethod
 
     endinterface;
-    interface peripheral_side = interface PeripheralSide
+    interface iocell_side = interface IOCellSide
 
       method io0_cell_out=cell0_mux_out;
       method io0_cell_outen=cell0_mux_outen;
@@ -226,6 +236,9 @@ package pinmux;
       method Action  io2_cell_in(Bit#(1) in);
          cell2_mux_in<=in;
       endmethod
+
+     endinterface;
+    interface peripheral_side = interface PeripheralSide
 
       method Action  uart_tx(Bit#(1) in);
          wruart_tx<=in;
