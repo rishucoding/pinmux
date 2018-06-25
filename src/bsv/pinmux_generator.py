@@ -219,7 +219,6 @@ def write_pmp(pmp, p, ifaces, iocells):
         ifaces.ifacedef(bsv_file)
         bsv_file.write("\n     endinterface;")
 
-
         bsv_file.write(footer)
         print("BSV file successfully generated: bsv_src/pinmux.bsv")
         # ======================================================================

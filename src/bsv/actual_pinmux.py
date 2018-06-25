@@ -64,12 +64,14 @@ def fmt(ifaces, cell, idx, suffix=None):
     temp = transfn(cell)
     x = ifaces.getifacetype(temp)
     if x == 'input':
-        return '0' # inputs don't get passed through to the out mux
+        return '0'  # inputs don't get passed through to the out mux
     if suffix == '_outen' and x == 'out':
         return '1'
     return "wr%s%s" % (cell, suffix or '')
 
 # XXX this needs to move into interface_decl.py
+
+
 def mkcomment(ifaces, cell, idx, outenmode=False):
     """ returns a comment string for the cell when muxed
     """
@@ -104,10 +106,11 @@ def mkmux(p, ifaces, cell, suffix, outenmode):
         cf = fmt(ifaces, cell, i, suffix)
         ret += fmtstr % (cn(cell[0]), i, cf, comment)
     comment = mkcomment(ifaces, cell, i + 1, outenmode)
-    ret += "\t\t\t" + fmt(ifaces, cell, i + 1, suffix) # last line
+    ret += "\t\t\t" + fmt(ifaces, cell, i + 1, suffix)  # last line
     ret += ";%s\n" % comment
 
     return ret
+
 
 def init(p, ifaces):
     """ generates the actual output pinmux for each io-cell.  blank lines
