@@ -164,7 +164,9 @@ def write_pmp(pmp, p, ifaces, iocells):
       // (giving six pairs of dangling wires, named left and right)
       // these iocells are routed in their place on one side ("left")
       // and the matching *GPIO* peripheral interfaces in/out/dir
-      // connect to the OTHER side ("right").
+      // connect to the OTHER side ("right").  the result is that
+      // the muxer settings end up controlling the routing of where
+      // the I/O from the IOcell actually goes.
       interface IOCellSide iocell_side;
    endinterface
    (*synthesize*)
