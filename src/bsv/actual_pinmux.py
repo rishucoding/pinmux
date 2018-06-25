@@ -10,7 +10,7 @@ except ImportError:
 # first argument is the io-cell number being assigned.
 # second argument is the mux value.
 # Third argument is the signal from the pinmap file
-mux_wire = '''
+mux_wire = '''\
       rule assign_{2}_on_cell{0}(wrcell{0}_mux=={1});
         {2}<=cell{0}_mux_in;
       endrule
@@ -148,6 +148,8 @@ def init(p, ifaces):
         # We choose to keep the dictionary within the code and not user-input
         # since the interfaces are always standard and cannot change from
         # user-to-user. Plus this also reduces human-error as well :)
+        p.pinmux += "\n"
+        p.pinmux += "      // priority-in-muxer for cell idx %s\n" % (cell[0])
         for i in range(0, len(cell) - 1):
             cname = cell[i + 1]
             if not cname:  # skip blank entries, no need to test
