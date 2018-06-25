@@ -329,7 +329,7 @@ io_interface = IOInterface(
     'io',
     [{'name': 'cell_out', 'enabled': True, },
      {'name': 'cell_outen', 'enabled': True, 'outenmode': True, },
-     {'name': 'inputval', 'action': True, 'io': True}, ])
+     {'name': 'cell_in', 'action': True, 'io': True}, ])
 
 # == Peripheral Interface definitions == #
 # these are the interface of the peripherals to the pin mux
