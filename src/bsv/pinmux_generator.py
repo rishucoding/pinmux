@@ -39,21 +39,6 @@ copyright = '''
 header = copyright + '''
 package pinmux;
 
-   // FunctionType: contains the active wires of a function.  That INCLUDES
-   // GPIO (as GPIO is also a "Function").  These are what get muxed.
-   // However, only GPIO "Functions" will end up with Register SRAMs.
-   typedef struct{
-      Bit#(1) outputval;      // output from function to pad            bit2
-      Bit#(1) inputval;       // input  from pad to function            bit1
-      Bit#(1) output_en;      // output enable from core to pad         bit0
-   } FunctionType deriving(Eq,Bits,FShow);
-
-   typedef struct{
-      Bit#(1) outputval;      // output from core to pad                bit7
-      Bit#(1) output_en;      // output enable from core to pad         bit6
-      Bit#(1) input_en;       // input enable from core to io_cell      bit5
-   } GenericIOType deriving(Eq,Bits,FShow);
-
 '''
 footer = '''
      endinterface;
