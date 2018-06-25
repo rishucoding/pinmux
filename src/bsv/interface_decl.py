@@ -232,10 +232,12 @@ class Interfaces(UserDict):
     """ contains a list of interface definitions
     """
 
-    def __init__(self, pth):
+    def __init__(self, pth=None):
         self.pth = pth
         self.ifacecount = []
         UserDict.__init__(self, {})
+        if not pth:
+            return
         ift = 'interfaces.txt'
         if pth:
             ift = os.path.join(pth, ift)

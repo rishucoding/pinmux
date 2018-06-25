@@ -41,7 +41,6 @@ package pinmux;
 
 '''
 footer = '''
-     endinterface;
    endmodule
 endpackage
 '''
@@ -52,8 +51,10 @@ def pinmuxgen(pth=None, verify=True):
     """
 
     p = Parse(pth, verify)
+    iocells = Interfaces()
+    iocells.ifaceadd('io', p.N_IO, io_interface, 0)
     ifaces = Interfaces(pth)
-    ifaces.ifaceadd('io', p.N_IO, io_interface, 0)
+    #ifaces.ifaceadd('io', p.N_IO, io_interface, 0)
     init(p, ifaces)
 
     bp = 'bsv_src'
@@ -80,7 +81,7 @@ def pinmuxgen(pth=None, verify=True):
     ptp = os.path.join(bp, 'PinTop.bsv')
     bvp = os.path.join(bp, 'bus.bsv')
 
-    write_pmp(pmp, p, ifaces)
+    write_pmp(pmp, p, ifaces, iocells)
     write_ptp(ptp, p, ifaces)
     write_bvp(bvp, p, ifaces)
     write_bus(bus, p, ifaces)
@@ -93,7 +94,7 @@ def write_bus(bus, p, ifaces):
         ifaces.busfmt(bsv_file)
 
 
-def write_pmp(pmp, p, ifaces):
+def write_pmp(pmp, p, ifaces, iocells):
     # package and interface declaration followed by
     # the generic io_cell definition
     with open(pmp, "w") as bsv_file:
@@ -111,27 +112,41 @@ def write_pmp(pmp, p, ifaces):
         for cell in p.muxed_cells:
             bsv_file.write(mux_interface.ifacefmt(cell[0], cell_bit_width))
 
+        bsv_file.write("\n      endinterface\n")
+
         bsv_file.write('''
-      endinterface
 
       interface PeripheralSide;
-      // declare the interface to the IO cells.
-      // Each IO cell will have 8 input field (output from pin mux
+      // declare the interface to the peripherals
+      // Each IO cell will have 3 input field (output from pin mux
       // and on output field (input to pinmux)''')
         # ==============================================================
 
         # == create method definitions for all peripheral interfaces ==#
-        ifaces.ifacefmt(bsv_file)
+        iocells.ifacefmt(bsv_file)
 
-        # ==============================================================
+        # ===== finish interface definition and start module definition=======
+        bsv_file.write("\n      endinterface\n")
+
+        # ===== io cell definition =======
+        bsv_file.write('''
+
+      interface IOCellSide;
+      // declare the interface to the IO cells.
+      // Each IO cell will have 3 input field (output from pin mux
+      // and on output field (input to pinmux)''')
+
+        # == create method definitions for all iocell interfaces ==#
+        ifaces.ifacefmt(bsv_file)
+        bsv_file.write("\n      endinterface\n")
 
         # ===== finish interface definition and start module definition=======
         bsv_file.write('''
-   endinterface
 
    interface Ifc_pinmux;
       interface MuxSelectionLines mux_lines;
       interface PeripheralSide peripheral_side;
+      interface IOCellSide iocell_side;
    endinterface
    (*synthesize*)
    module mkpinmux(Ifc_pinmux);
@@ -147,6 +162,7 @@ def write_pmp(pmp, p, ifaces):
             bsv_file.write(mux_interface.wirefmt(
                 cell[0], cell_bit_width))
 
+        iocells.wirefmt(bsv_file)
         ifaces.wirefmt(bsv_file)
 
         bsv_file.write("\n")
@@ -168,11 +184,21 @@ def write_pmp(pmp, p, ifaces):
             bsv_file.write(
                 mux_interface.ifacedef(
                     cell[0], cell_bit_width))
+        bsv_file.write("\n    endinterface;")
+
         bsv_file.write('''
-    endinterface;
+    interface iocell_side = interface IOCellSide
+''')
+        iocells.ifacedef(bsv_file)
+        bsv_file.write("\n     endinterface;")
+
+        bsv_file.write('''
     interface peripheral_side = interface PeripheralSide
 ''')
         ifaces.ifacedef(bsv_file)
+        bsv_file.write("\n     endinterface;")
+
+
         bsv_file.write(footer)
         print("BSV file successfully generated: bsv_src/pinmux.bsv")
         # ======================================================================
