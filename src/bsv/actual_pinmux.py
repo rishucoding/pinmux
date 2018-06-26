@@ -95,6 +95,10 @@ def mkcomment(ifaces, cell, idx, outenmode=False):
 
 
 def mkmux(p, ifaces, cell, suffix, outenmode):
+    """ creates a straight many-to-one muxer that accepts
+        multiple inputs and, based on an "address" routes
+        a given indexed input through to the (one) output
+    """
     comment = 'outen' if outenmode else 'output'
     fmtstr = "\t\t\twr%s==%d?%s:%s\n"  # mux-selector format
     ret = ''
