@@ -193,7 +193,7 @@ class Interface(object):
     def ifacefmtpin(self, pin):
         decfn = self.ifacefmtdecfn2
         outfn = self.ifacefmtoutfn
-        print pin, pin.outenmode
+        #print pin, pin.outenmode
         if pin.outenmode:
             decfn = self.ifacefmtdecfn3
             outfn = self.ifacefmtoutenfn

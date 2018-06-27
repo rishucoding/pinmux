@@ -83,7 +83,7 @@ def mkcomment(ifaces, cell, idx, outenmode=False):
         return ' // unused'
     temp = transfn(cname)
     x = ifaces.getifacetype(temp)
-    print (cname, x)
+    #print (cname, x)
     if x == 'input':
         return ' // %s is an input' % cname
     if outenmode and x == 'inout':
