@@ -31,6 +31,11 @@ class Pin(object):
         self.bitspec = bitspec if bitspec else 'Bit#(1)'
         self.outenmode = outenmode
 
+    """
+    (*always_ready,always_enabled*) method Bit#(1) io0_cell_outen;
+    (*always_ready,always_enabled,result="io"*) method
+                       Action io0_inputval (Bit#(1) in);
+    """
     def ifacefmt(self, fmtfn):
         res = '    '
         status = []
@@ -58,26 +63,34 @@ class Pin(object):
         res += ";"
         return res
 
+    """
+    method Action  cell0_mux(Bit#(2) in);
+        wrcell0_mux<=in;
+    endmethod
+    """
     def ifacedef(self, fmtoutfn, fmtinfn, fmtdecfn):
         res = '      method '
         if self.action:
             fmtname = fmtinfn(self.name)
             res += "Action  "
-            res += fmtdecfn(self.name)
+            res += fmtdecfn(self.name) #cell0_mux
             res += '(%s in);\n' % self.bitspec
-            res += '         %s<=in;\n' % fmtname
+            res += '         %s<=in;\n' % fmtname #wrcell0_mux
             res += '      endmethod'
         else:
-            fmtname = fmtoutfn(self.name)
+            fmtname = fmtoutfn(self.name) # method io0_cell_out=cell0_mux_out;
             res += "%s=%s;" % (self.name, fmtname)
         return res
 
+    """
+    Wire#(Bit#(2)) wrcell0_mux<-mkDWire(0);
+    """
     def wirefmt(self, fmtoutfn, fmtinfn, fmtdecfn):
         res = '      Wire#(%s) ' % self.bitspec
         if self.action:
-            res += '%s' % fmtinfn(self.name)
+            res += '%s' % fmtinfn(self.name) # wrcell0_mux
         else:
-            res += '%s' % fmtoutfn(self.name)
+            res += '%s' % fmtoutfn(self.name) # cell0_mux_out
         res += "<-mkDWire(0);"
         return res
 
@@ -87,20 +100,32 @@ class Interface(object):
         each pinspec is a dictionary, see Pin class arguments
         single indicates that there is only one of these, and
         so the name must *not* be extended numerically (see pname)
+        Dictionary has keys : name, action, outen
     """
 
+    """
+    twiinterface_decl = Interface('twi',
+                                  [{'name': 'sda', 'outen': True},
+                                   {'name': 'scl', 'outen': True},
+                                   ])
+    """
     def __init__(self, ifacename, pinspecs, ganged=None, single=False):
         self.ifacename = ifacename
         self.ganged = ganged or {}
+        #pins is a list, holds object of class Pin which generates
+        # methoddef(method ... endmethod), Wire declaration
+        #method declaration
         self.pins = []
-        self.pinspecs = pinspecs
+        self.pinspecs = pinspecs # a list of dictionary
         self.single = single
         for p in pinspecs:
             _p = {}
             _p.update(p)
+            #.get checks for outen key in dict, and a way to supress error
             if p.get('outen') is True:  # special case, generate 3 pins
                 del _p['outen']
                 for psuffix in ['out', 'outen', 'in']:
+                    # changing the name (like uart) to ()
                     _p['name'] = "%s_%s" % (self.pname(p['name']), psuffix)
                     _p['action'] = psuffix != 'in'
                     self.pins.append(Pin(**_p))
@@ -108,6 +133,15 @@ class Interface(object):
                 _p['name'] = self.pname(p['name'])
                 self.pins.append(Pin(**_p))
 
+    """
+        uartinterface_decl = Interface('uart',
+                                   [{'name': 'rx'},
+                                    {'name': 'tx', 'action': True},
+                                    ])
+    """
+    # this function is called in actual_pinmux.py
+    #  x = ifaces.getifacetype(temp), where temp is uart_rx, spi_mosi
+    # purpose is to identify is function : input/output/inout
     def getifacetype(self, name):
         for p in self.pinspecs:
             fname = "%s_%s" % (self.ifacename, p['name'])
@@ -128,8 +162,9 @@ class Interface(object):
             appropriate.  single mode stops the numerical extension.
         """
         if self.single:
-            return '%s_%s' % (self.ifacename, name)
+            return '%s_%s' % (self.ifacename, name) # uart_rx or spi_mosi
         return '%s{0}_%s' % (self.ifacename, name)
+        # uart{0}_rx or spi{0}_mosi for uart1_rx or spi0_mosi
 
     def busfmt(self, *args):
         """ this function creates a bus "ganging" system based
