@@ -24,6 +24,10 @@ This is a tranlation table .. each number is mapped to 1space .
 # remember that function getifacetype in interface_decl.py gets a 
 parameter like spi_sclk or spi_mosi or spi_miso or uart_tx or uart_rx
 
+*************************************************
+///////interface_decl.py 
 
+# bitspec is specification for number of bits for a wire... default is
+Bit#(1)
 
  

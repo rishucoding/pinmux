@@ -125,12 +125,16 @@ class Interface(object):
             if p.get('outen') is True:  # special case, generate 3 pins
                 del _p['outen']
                 for psuffix in ['out', 'outen', 'in']:
-                    # changing the name (like uart) to ()
+                    # changing the name (like sda) to (twi_sda_out)
                     _p['name'] = "%s_%s" % (self.pname(p['name']), psuffix)
-                    _p['action'] = psuffix != 'in'
+                    _p['action'] = psuffix != 'in' #action is True when not out
                     self.pins.append(Pin(**_p))
+                    #will look like {'name': 'twi_sda_out', 'action': True}
+                    # {'name': 'twi_sda_outen', 'action': True}
+                    #{'name': 'twi_sda_in', 'action': False}
+                    # NOTice - outen key is removed
             else:
-                _p['name'] = self.pname(p['name'])
+                _p['name'] = self.pname(p['name']) # tx to uart_tx
                 self.pins.append(Pin(**_p))
 
     """
@@ -173,9 +177,10 @@ class Interface(object):
             interface may be "ganged" together.
         """
         if not self.ganged:
-            return ''
+            return '' # when self.ganged is None
         #print self.ganged
-        res = []
+        res = [] #when self.ganged is not None
+        #converting the list to dict
         for (k, pnames) in self.ganged.items():
             name = self.pname('%senable' % k).format(*args)
             decl = 'Bit#(1) %s = 0;' % name
@@ -224,25 +229,27 @@ class Interface(object):
 
     def ifacefmt(self, *args):
         res = '\n'.join(map(self.ifacefmtdecpin, self.pins)).format(*args)
-        return '\n' + res
+        return '\n' + res # pins is a list
 
     def ifacefmtdecfn(self, name):
-        return name
+        return name # uart
 
     def ifacefmtdecfn2(self, name):
-        return name
+        return name # uart
 
     def ifacefmtdecfn3(self, name):
         """ HACK! """
-        return "%s_outenX" % name
+        return "%s_outenX" % name # wr_outenX
 
     def ifacefmtoutfn(self, name):
-        return "wr%s" % name
+        return "wr%s" % name #wruart
 
     def ifacefmtinfn(self, name):
-        return "wr%s" % name
+        return "wr%s" % name # wruart
 
     def wirefmtpin(self, pin):
+        # pin is any object which will be passed and then its
+        # method is called
         return pin.wirefmt(self.ifacefmtoutfn, self.ifacefmtinfn,
                            self.ifacefmtdecfn2)
 
@@ -302,8 +309,13 @@ class Interfaces(UserDict):
             for ln in ifile.readlines():
                 ln = ln.strip()
                 ln = ln.split("\t")
-                name = ln[0]
-                count = int(ln[1])
+                name = ln[0] # will have uart
+                count = int(ln[1]) # will have count of uart
+                #spec looks like this
+                #[{'name': 'sda', 'outen': True},
+                #                   {'name': 'scl', 'outen': True},
+                #                  ]
+
                 spec, ganged = self.read_spec(pth, name)
                 iface = Interface(name, spec, ganged, count == 1)
                 self.ifaceadd(name, count, iface)
@@ -318,10 +330,12 @@ class Interfaces(UserDict):
 
     def ifaceadd(self, name, count, iface, at=None):
         if at is None:
-            at = len(self.ifacecount)
-        self.ifacecount.insert(at, (name, count))
+            at = len(self.ifacecount) # ifacecount is a list
+        self.ifacecount.insert(at, (name, count))# appends the list 
+        # with (name,count) *at* times
         self[name] = iface
 
+    # will check specific peripheral.txt files like spi.txt    
     def read_spec(self, pth, name):
         spec = []
         ganged = {}
@@ -333,9 +347,9 @@ class Interfaces(UserDict):
                 ln = ln.strip()
                 ln = ln.split("\t")
                 name = ln[0]
-                d = {'name': name}
+                d = {'name': name} # her we start to make the dictionary
                 if ln[1] == 'out':
-                    d['action'] = True
+                    d['action'] = True # adding element to the dict
                 elif ln[1] == 'inout':
                     d['outen'] = True
                     if len(ln) == 3:
