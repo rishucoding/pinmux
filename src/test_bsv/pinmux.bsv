@@ -4,7 +4,7 @@
    https://bitbucket.org/casl/pinmux.
 
    Authors: Neel Gala, Luke
-   Date of generation: Mon Jun 25 17:04:53 2018
+   Date of generation: Fri Jun 29 08:13:35 2018
 */
 
 package pinmux;
@@ -161,10 +161,11 @@ package pinmux;
       // outen muxer for cell idx 0
       cell0_mux_outen=
 			wrcell0_mux==0?wrgpioa_a0_outen: // bi-directional
-			wrcell0_mux==1?1: // uart_tx is an output
+			wrcell0_mux==1?wrgpioa_a0_outen: // uart_tx is an output
 			wrcell0_mux==2?0: // unused
 			0; // unused
 
+      // priority-in-muxer for cell idx 0
       rule assign_wrgpioa_a0_in_on_cell0(wrcell0_mux==0);
         wrgpioa_a0_in<=cell0_mux_in;
       endrule
@@ -183,15 +184,14 @@ package pinmux;
 			wrcell1_mux==2?wrtwi_sda_outen: // bi-directional
 			0; // unused
 
+      // priority-in-muxer for cell idx 1
       rule assign_wrgpioa_a1_in_on_cell1(wrcell1_mux==0);
         wrgpioa_a1_in<=cell1_mux_in;
       endrule
 
-
       rule assign_wruart_rx_on_cell1(wrcell1_mux==1);
         wruart_rx<=cell1_mux_in;
       endrule
-
 
       rule assign_wrtwi_sda_in_on_cell1(wrcell1_mux==2);
         wrtwi_sda_in<=cell1_mux_in;
@@ -211,14 +211,18 @@ package pinmux;
 			wrcell2_mux==2?wrtwi_scl_outen: // bi-directional
 			0; // unused
 
+      // priority-in-muxer for cell idx 2
       rule assign_wrgpioa_a2_in_on_cell2(wrcell2_mux==0);
         wrgpioa_a2_in<=cell2_mux_in;
       endrule
 
-
       rule assign_wrtwi_scl_in_on_cell2(wrcell2_mux==2);
         wrtwi_scl_in<=cell2_mux_in;
       endrule
+
+
+      /*=========================================*/
+      // dedicated cells
 
 
       /*============================================================*/
