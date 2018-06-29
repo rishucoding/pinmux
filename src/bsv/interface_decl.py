@@ -175,7 +175,7 @@ class Interface(object):
 
     def ifacefmtdecfn3(self, name):
         """ HACK! """
-        return "%s_outenX" % name
+        return "%s_outen" % name
 
     def ifacefmtoutfn(self, name):
         return "wr%s" % name
