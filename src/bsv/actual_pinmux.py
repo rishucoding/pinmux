@@ -47,16 +47,25 @@ def transfn(temp):
 
 # XXX this needs to move into interface_decl.py
 # and made to use ifaceoutfmtfn and ifaceinfmtfn
-def fmt(ifaces, cell, idx, suffix=None):
+def fmt(ifaces, cells, idx, suffix=None):
     """ blank entries need to output a 0 to the pin (it could just as
         well be a 1 but we choose 0).  reason: blank entries in
         the pinmap.txt file indicate that there's nothing to choose
         from.  however the user may still set the muxer to that value,
         and rather than throw an exception we choose to output... zero.
+
+        NOTE: IMPORTANT.  when a function is an output-only there
+        is a special-case assumption that:
+        * (a) GPIO is always the first mux entry
+        * (b) GPIO's outen is also used to set the pad
+        the reason for this is that it is assumed better that
+        multiple pads be switched simutaneously to outputs
+        by setting the GPIO direction rather than having them
+        set arbitrarily by changing the muxer registers.
     """
     idx += 1
-    if idx < len(cell):
-        cell = cell[idx]
+    if idx < len(cells):
+        cell = cells[idx]
     else:
         cell = ''
     if not cell:
@@ -66,7 +75,7 @@ def fmt(ifaces, cell, idx, suffix=None):
     if x == 'input':
         return '0'  # inputs don't get passed through to the out mux
     if suffix == '_outen' and x == 'out':
-        return '1'
+        return "wr%s%s" % (cells[1], suffix or '') # USE GPIO FOR SELECTION
     return "wr%s%s" % (cell, suffix or '')
 
 # XXX this needs to move into interface_decl.py
