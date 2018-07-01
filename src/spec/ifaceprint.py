@@ -136,9 +136,9 @@ def check_functions(of, title, bankspec, fns, pins, required, eint, pwm,
                 continue
             for k in pins.fnspec.keys():
                 if fname.startswith(k):
-                    fk = pins.fnspec[k].keys()
+                    fk = list(pins.fnspec[k].keys())
                     fn = pins.fnspec[k]
-                    fn = fn[list(fn.keys())[0]]
+                    fn = fn[fk[0]]
                     #print fname, fn, dir(fn)
                     if count == 100000:
                         count = len(fn.pingroup)
