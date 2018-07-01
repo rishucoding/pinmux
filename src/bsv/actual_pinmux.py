@@ -69,11 +69,11 @@ def fmt(ifaces, cells, idx, suffix=None):
     else:
         cell = ''
     if not cell:
-        return '0'
+        return 'val0'
     temp = transfn(cell)
     x = ifaces.getifacetype(temp)
     if x == 'input':
-        return '0'  # inputs don't get passed through to the out mux
+        return 'val0'  # inputs don't get passed through to the out mux
     if suffix == '_outen' and x == 'out':
         return "wr%s%s" % (cells[1], suffix or '') # USE GPIO FOR SELECTION
     if x == 'out': # sigh hack, should be using interface_decl

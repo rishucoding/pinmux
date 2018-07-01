@@ -191,6 +191,7 @@ def write_pmp(pmp, p, ifaces, iocells):
         # ========================= Actual pinmuxing ========================#
         bsv_file.write('''
       /*====== This where the muxing starts for each io-cell======*/
+      Wire#(Bit#(1)) val0<-mkDWire(0); // need a zero
 ''')
         bsv_file.write(p.pinmux)
         bsv_file.write('''
