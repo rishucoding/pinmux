@@ -167,8 +167,8 @@ def check_functions(of, title, bankspec, fns, pins, required, eint, pwm,
             of.write("* %s %d %s%d/%d\n" % (fname, pin_, bank, pin, mux))
 
         if removedcount != count:
-            print ("not all found", name, removedcount, count, title, found, \
-                    fns[fname])
+            print ("not all found", name, removedcount, count, title, found,
+                   fns[fname])
             print ("pins found", pinfound)
 
         # fnidx.sort(fnsort)

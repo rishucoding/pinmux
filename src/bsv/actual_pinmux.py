@@ -75,8 +75,8 @@ def fmt(ifaces, cells, idx, suffix=None):
     if x == 'input':
         return 'val0'  # inputs don't get passed through to the out mux
     if suffix == '_outen' and x == 'out':
-        return "wr%s%s" % (cells[1], suffix or '') # USE GPIO FOR SELECTION
-    if x == 'out': # sigh hack, should be using interface_decl
+        return "wr%s%s" % (cells[1], suffix or '')  # USE GPIO FOR SELECTION
+    if x == 'out':  # sigh hack, should be using interface_decl
         suffix = ''
     return "wr%s%s" % (cell, suffix or '')
 
