@@ -106,9 +106,9 @@ def pinmux_basic_test(dut):
     dut.peripheral_side_twi_sda_out_in = 0
     dut.peripheral_side_twi_sda_outen_in = 1
 
-    dut._log.info("io1_out %s" % dut.iocell_side_io1_cell_out)
-
     yield Timer(2)
+
+    dut._log.info("io1_out %s" % dut.iocell_side_io1_cell_out)
     # Test for out for twi_sda
     if dut.iocell_side_io1_cell_out != 0:
         raise TestFailure(
@@ -116,10 +116,11 @@ def pinmux_basic_test(dut):
             str(dut.iocell_side_io1_cell_out))
 
     dut.peripheral_side_twi_sda_out_in = 1
+    yield Timer(2)
 
     if dut.iocell_side_io1_cell_out != 1:
         raise TestFailure(
-            "twi_sda=0/mux=0/out=1 %s iocell_io1 != 0" %
+            "twi_sda=1/mux=0/out=1 %s iocell_io1 != 1" %
             str(dut.iocell_side_io1_cell_out))
 
     # Test for in
@@ -161,12 +162,15 @@ def pinmux_basic_test(dut):
     # Test for out for twi_scl
     dut.peripheral_side_twi_scl_out_in = 0
     dut.peripheral_side_twi_scl_outen_in = 1
+    yield Timer(2)
+
     if dut.iocell_side_io2_cell_out != 0:
         raise TestFailure(
             "twi_scl=0/mux=0/out=1 %s iocell_io2 != 0" %
             str(dut.iocell_side_io2_cell_out))
 
     dut.peripheral_side_twi_scl_out_in = 1
+    yield Timer(2)
 
     if dut.iocell_side_io2_cell_out != 1:
         raise TestFailure(
