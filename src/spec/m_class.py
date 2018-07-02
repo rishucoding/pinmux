@@ -3,7 +3,7 @@
 from spec.base import PinSpec
 
 
-def pinspec(of):
+def pinspec():
     pinbanks = {'A': 16,
                 'B': 28,
                 'C': 24,
@@ -512,4 +512,4 @@ def pinspec(of):
                     iot, iot_eint, iot_pwm,
                     descriptions)
 
-    return ps.write(of)
+    return ps

@@ -19,7 +19,7 @@
 import getopt
 import os.path
 import sys
-from spec import modules, specgen
+from spec import modules, specgen, dummytest
 
 from bsv.pinmux_generator import pinmuxgen as bsvgen
 
@@ -43,6 +43,7 @@ if __name__ == '__main__':
             'o:vht:s:',
             ['output=',
              'validate',
+             'test',
              'outputtype=',
              'spec=',
              'help',
@@ -58,6 +59,7 @@ if __name__ == '__main__':
     validate = False
     spec = None
     pinspec = None
+    testing = False
     for opt, arg in options:
         if opt in ('-o', '--output'):
             output_dir = arg
@@ -67,6 +69,8 @@ if __name__ == '__main__':
             output_type = arg
         elif opt in ('-v', '--validate'):
             validate = True
+        elif opt in ('--test',):
+            testing = True
         elif opt in ('-h', '--help'):
             printhelp()
             sys.exit(0)
@@ -83,8 +87,12 @@ if __name__ == '__main__':
         if not os.path.exists(d):
             os.makedirs(d)
         with open(fname, "w") as of:
-            pinout, bankspec, pinspec, fixedpins = module.pinspec(of)
-            specgen(of, output_dir, pinout, bankspec, pinspec, fixedpins)
+            ps = module.pinspec()
+            pinout, bankspec, pinspec, fixedpins = ps.write(of)
+            if testing:
+                dummytest(ps, output_dir, output_type)
+            else:
+                specgen(of, output_dir, pinout, bankspec, pinspec, fixedpins)
     else:
         gentypes = {'bsv': bsvgen}
         if output_type not in gentypes:
