@@ -108,8 +108,6 @@ def pinmux_basic_test(dut):
     # define input variables
     dut.peripheral_side_twi_sda_out_in = 0
     dut.peripheral_side_twi_sda_outen_in = 1
-    dut.peripheral_side_twi_scl_out_in = 0
-    dut.peripheral_side_twi_scl_outen_in = 1
 
     yield Timer(2)
     # Test for out for twi_sda
@@ -161,7 +159,9 @@ def pinmux_basic_test(dut):
 
     yield Timer(2)
 
-# Test for out for twi_scl
+    # Test for out for twi_scl
+    dut.peripheral_side_twi_scl_out_in = 0
+    dut.peripheral_side_twi_scl_outen_in = 1
     if dut.iocell_side_io2_cell_out != 0:
         raise TestFailure(
             "twi_scl=0/mux=0/out=1 %s iocell_io2 != 0" %
