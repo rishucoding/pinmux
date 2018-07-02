@@ -18,12 +18,10 @@ def pinmux_basic_test(dut):
     dut.EN_mux_lines_cell0_mux = 1
     dut.EN_mux_lines_cell1_mux = 1
     dut.EN_mux_lines_cell2_mux = 1
-    yield Timer(2)
-    dut.peripheral_side_uart_tx_in = 1
-    dut.peripheral_side_gpioa_a0_outen_in = 1
 
     yield Timer(2)
 
+    # GPIO
     dut.peripheral_side_gpioa_a2_out_in = 0
     dut.peripheral_side_gpioa_a2_outen_in = 1
 
@@ -71,9 +69,10 @@ def pinmux_basic_test(dut):
 @cocotb.test()
 def pinmux_randomised_test(dut):
     """Test for adding 2 random numbers multiple times"""
-    yield Timer(2)
 
     return
+
+    yield Timer(2)
 
     for i in range(10):
         A = random.randint(0, 15)
