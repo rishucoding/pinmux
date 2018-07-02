@@ -21,7 +21,7 @@ def pinmux_basic_test(dut):
 
     yield Timer(2)
 
-    # GPIO
+    # GPIO2-out test
     dut.peripheral_side_gpioa_a2_out_in = 0
     dut.peripheral_side_gpioa_a2_outen_in = 1
 
@@ -35,6 +35,40 @@ def pinmux_basic_test(dut):
     dut.peripheral_side_gpioa_a2_out_in = 1
 
     yield Timer(2)
+
+    if dut.iocell_side_io2_cell_out != 1:
+        raise TestFailure(
+            "gpioa_a2=0/mux=0/out=1 %s iocell_io2 != 1" % \
+                    str(dut.iocell_side_io2_cell_out ))
+
+    # GPIO2-in test (first see if it's tri-state)
+    if str(dut.peripheral_side_gpioa_a2_in) != "x":
+        raise TestFailure(
+            "gpioa_a2=0/mux=0/out=1 %s gpio_a2_in != x" % \
+                    str(dut.peripheral_side_gpioa_a2_in))
+
+    dut.peripheral_side_gpioa_a2_outen_in = 0
+    dut.iocell_side_io2_cell_in_in = 0
+    yield Timer(2)
+
+    if dut.peripheral_side_gpioa_a2_in != 0:
+        raise TestFailure(
+            "iocell_io2=0/mux=0/out=0 %s gpioa_a2 != 0" % \
+                    str(dut.peripheral_side_gpioa_a2_in))
+
+    dut.iocell_side_io2_cell_in_in = 1
+    yield Timer(2)
+
+    if dut.peripheral_side_gpioa_a2_in != 1:
+        raise TestFailure(
+            "iocell_io2=1/mux=0/out=0 %s gpioa_a2 != 1" % \
+                    str(dut.peripheral_side_gpioa_a2_in))
+
+    dut.peripheral_side_gpioa_a2_outen_in = 1
+    dut.iocell_side_io2_cell_in_in = 0
+    yield Timer(2)
+    dut._log.info("gpioa_a2_in %s" % dut.peripheral_side_gpioa_a2_in )
+
 
     if dut.iocell_side_io2_cell_out != 1:
         raise TestFailure(
