@@ -8,16 +8,17 @@ import random
 
 """ dut is design under test """
 
+
 @cocotb.test()
 def pinmux_basic_test(dut):
     """Test for 5 + 10"""
     yield Timer(2)
-    #mux selection lines, each input two bit wide
+    # mux selection lines, each input two bit wide
     dut.mux_lines_cell0_mux_in = 1
     dut.mux_lines_cell1_mux_in = 2
     dut.mux_lines_cell2_mux_in = 0
     yield Timer(2)
-    #enable input for mux
+    # enable input for mux
     dut.EN_mux_lines_cell0_mux = 1
     dut.EN_mux_lines_cell1_mux = 1
     dut.EN_mux_lines_cell2_mux = 1
@@ -31,7 +32,7 @@ def pinmux_basic_test(dut):
 
     yield Timer(2)
 
-    if dut.iocell_side_io2_cell_out != 0: #output of iopad
+    if dut.iocell_side_io2_cell_out != 0:  # output of iopad
         raise TestFailure(
             "gpioa_a2=0/mux=0/out=1 %s iocell_io2 != 0" %
             str(dut.iocell_side_io2_cell_out))
@@ -111,7 +112,7 @@ def pinmux_basic_test(dut):
     dut.peripheral_side_twi_scl_outen_in = 1
 
     yield Timer(2)
-    #Test for out for twi_sda
+    # Test for out for twi_sda
     if dut.iocell_side_io1_cell_out != 0:
         raise TestFailure(
             "twi_sda=0/mux=0/out=1 %s iocell_io1 != 0" %
@@ -160,7 +161,7 @@ def pinmux_basic_test(dut):
 
     yield Timer(2)
 
-#Test for out for twi_scl
+# Test for out for twi_scl
     if dut.iocell_side_io2_cell_out != 0:
         raise TestFailure(
             "twi_scl=0/mux=0/out=1 %s iocell_io2 != 0" %
@@ -208,7 +209,6 @@ def pinmux_basic_test(dut):
             str(dut.iocell_side_io2_cell_out))
 
     yield Timer(2)
-
 
 
 @cocotb.test()

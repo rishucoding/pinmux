@@ -1,24 +1,30 @@
 from UserDict import UserDict
 
+
 class Wire(object):
     """ a wire which can be hi, lo or tri-state
     """
+
     def __init__(self, wires, name):
         self.wires = wires
         self.wires[name] = self
         self.name = name
         self.val = 'x'
 
+
 class TestPin(object):
     """ a test pin can be an output, input or in-out
         and it stores the state in an associated wire
     """
 
+
 class Wires(UserDict):
     """ a set of wires
     """
+
     def __init__(self):
         UserDict.__init__(self)
+
 
 def dummytest(ps, output_dir, output_type):
     print ps, output_dir, output_type
