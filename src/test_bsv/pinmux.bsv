@@ -4,7 +4,7 @@
    https://bitbucket.org/casl/pinmux.
 
    Authors: Neel Gala, Luke
-   Date of generation: Fri Jun 29 08:13:35 2018
+   Date of generation: Mon Jul  2 00:31:10 2018
 */
 
 package pinmux;
@@ -151,19 +151,20 @@ package pinmux;
 
 
       /*====== This where the muxing starts for each io-cell======*/
+      Wire#(Bit#(1)) val0<-mkDWire(0); // need a zero
        // output muxer for cell idx 0
       cell0_mux_out=
 			wrcell0_mux==0?wrgpioa_a0_out:
-			wrcell0_mux==1?wruart_tx_out:
-			wrcell0_mux==2?0: // unused
-			0; // unused
+			wrcell0_mux==1?wruart_tx:
+			wrcell0_mux==2?val0: // unused
+			val0; // unused
 
       // outen muxer for cell idx 0
       cell0_mux_outen=
 			wrcell0_mux==0?wrgpioa_a0_outen: // bi-directional
 			wrcell0_mux==1?wrgpioa_a0_outen: // uart_tx is an output
-			wrcell0_mux==2?0: // unused
-			0; // unused
+			wrcell0_mux==2?val0: // unused
+			val0; // unused
 
       // priority-in-muxer for cell idx 0
       rule assign_wrgpioa_a0_in_on_cell0(wrcell0_mux==0);
@@ -173,16 +174,16 @@ package pinmux;
       // output muxer for cell idx 1
       cell1_mux_out=
 			wrcell1_mux==0?wrgpioa_a1_out:
-			wrcell1_mux==1?0: // uart_rx is an input
+			wrcell1_mux==1?val0: // uart_rx is an input
 			wrcell1_mux==2?wrtwi_sda_out:
-			0; // unused
+			val0; // unused
 
       // outen muxer for cell idx 1
       cell1_mux_outen=
 			wrcell1_mux==0?wrgpioa_a1_outen: // bi-directional
-			wrcell1_mux==1?0: // uart_rx is an input
+			wrcell1_mux==1?val0: // uart_rx is an input
 			wrcell1_mux==2?wrtwi_sda_outen: // bi-directional
-			0; // unused
+			val0; // unused
 
       // priority-in-muxer for cell idx 1
       rule assign_wrgpioa_a1_in_on_cell1(wrcell1_mux==0);
@@ -200,16 +201,16 @@ package pinmux;
       // output muxer for cell idx 2
       cell2_mux_out=
 			wrcell2_mux==0?wrgpioa_a2_out:
-			wrcell2_mux==1?0: // unused
+			wrcell2_mux==1?val0: // unused
 			wrcell2_mux==2?wrtwi_scl_out:
-			0; // unused
+			val0; // unused
 
       // outen muxer for cell idx 2
       cell2_mux_outen=
 			wrcell2_mux==0?wrgpioa_a2_outen: // bi-directional
-			wrcell2_mux==1?0: // unused
+			wrcell2_mux==1?val0: // unused
 			wrcell2_mux==2?wrtwi_scl_outen: // bi-directional
-			0; // unused
+			val0; // unused
 
       // priority-in-muxer for cell idx 2
       rule assign_wrgpioa_a2_in_on_cell2(wrcell2_mux==0);
