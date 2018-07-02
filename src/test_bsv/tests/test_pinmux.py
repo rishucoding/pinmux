@@ -100,13 +100,13 @@ def pinmux_basic_test(dut):
             "uart_tx=0/mux=0/out=1 %s iocell_io0 != 0" %
             str(dut.iocell_side_io0_cell_out))
 
-    yield Timer(2)
-
     # TWI
     yield Timer(2)
     # define input variables
     dut.peripheral_side_twi_sda_out_in = 0
     dut.peripheral_side_twi_sda_outen_in = 1
+
+    dut._log.info("io1_out %s" % dut.iocell_side_io1_cell_out)
 
     yield Timer(2)
     # Test for out for twi_sda
