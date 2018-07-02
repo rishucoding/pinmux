@@ -310,7 +310,10 @@ class Interfaces(UserDict):
         # with (name,count) *at* times
         self[name] = iface
 
-    # will check specific peripheral.txt files like spi.txt
+    """
+    will check specific files of kind peripheral.txt like spi.txt,
+    uart.txt in test directory
+    """
     def read_spec(self, pth, name):
         spec = []
         ganged = {}
