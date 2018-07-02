@@ -86,7 +86,7 @@ def pinmux_basic_test(dut):
 
     yield Timer(2)
 
-    if dut.iocell_side_io0_cell_out != 0:
+    if dut.iocell_side_io0_cell_out != 1:
         raise TestFailure(
             "uart_tx=1/mux=0/out=1 %s iocell_io0 != 1" %
             str(dut.iocell_side_io0_cell_out))
