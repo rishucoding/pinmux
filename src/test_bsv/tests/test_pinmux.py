@@ -100,7 +100,6 @@ def pinmux_basic_test(dut):
             "uart_tx=0/mux=0/out=1 %s iocell_io0 != 0" %
             str(dut.iocell_side_io0_cell_out))
 
-    dut._log.info("Ok!")
     yield Timer(2)
 
     # TWI
@@ -210,6 +209,7 @@ def pinmux_basic_test(dut):
 
     yield Timer(2)
 
+    dut._log.info("Ok!")
 
 @cocotb.test()
 def pinmux_randomised_test(dut):
