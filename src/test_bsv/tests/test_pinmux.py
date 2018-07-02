@@ -98,6 +98,114 @@ def pinmux_basic_test(dut):
     dut._log.info("Ok!")
     yield Timer(2)
 
+    # TWI
+    yield Timer(2)
+    # define input variables
+    dut.peripheral_side_twi_sda_out_in = 0
+    dut.peripheral_side_twi_sda_outen_in = 1
+    dut.peripheral_side_twi_scl_out_in = 0
+    dut.peripheral_side_twi_scl_outen_in = 1
+
+    yield Timer(2)
+    #Test for out
+    if dut.iocell_side_io1_cell_out != 0:
+        raise TestFailure(
+            "gpioa_a2=0/mux=0/out=1 %s iocell_io2 != 0" %
+            str(dut.iocell_side_io1_cell_out))
+
+    dut.peripheral_side_twi_sda_out_in = 1
+
+    if dut.iocell_side_io1_cell_out != 1:
+        raise TestFailure(
+            "gpioa_a2=0/mux=0/out=1 %s iocell_io2 != 0" %
+            str(dut.iocell_side_io1_cell_out))
+
+    # Test for in
+    # first check for tristate
+    if str(dut.peripheral_side_twi_sda_in) != "x":
+        raise TestFailure(
+            "gpioa_a2=0/mux=0/out=1 %s gpio_a2_in != x" %
+            str(dut.peripheral_side_twi_sda_in))
+
+    dut.peripheral_side_twi_sda_outen_in = 0
+    dut.iocell_side_io1_cell_in_in = 0
+    yield Timer(2)
+
+    if dut.peripheral_side_twi_sda_in != 0:
+        raise TestFailure(
+            "iocell_io2=0/mux=0/out=0 %s gpioa_a2 != 0" %
+            str(dut.peripheral_side_twi_sda_in))
+
+    dut.iocell_side_io1_cell_in_in = 1
+    yield Timer(2)
+
+    if dut.peripheral_side_twi_sda_in != 1:
+        raise TestFailure(
+            "iocell_io2=1/mux=0/out=0 %s gpioa_a2 != 1" %
+            str(dut.peripheral_side_twi_sda_in))
+
+    dut.peripheral_side_twi_sda_outen_in = 1
+    dut.iocell_side_io1_cell_in_in = 0
+    yield Timer(2)
+    dut._log.info("gpioa_a2_in %s" % dut.peripheral_side_twi_sda_in)
+
+    if dut.iocell_side_io1_cell_out != 1:
+        raise TestFailure(
+            "gpioa_a2=0/mux=0/out=1 %s iocell_io2 != 1" %
+            str(dut.iocell_side_io1_cell_out))
+
+    yield Timer(2)
+
+#Test for out
+    if dut.iocell_side_io2_cell_out != 0:
+        raise TestFailure(
+            "gpioa_a2=0/mux=0/out=1 %s iocell_io2 != 0" %
+            str(dut.iocell_side_io2_cell_out))
+
+    dut.peripheral_side_twi_scl_out_in = 1
+
+    if dut.iocell_side_io2_cell_out != 1:
+        raise TestFailure(
+            "gpioa_a2=0/mux=0/out=1 %s iocell_io2 != 0" %
+            str(dut.iocell_side_io2_cell_out))
+
+    # Test for in
+    # first check for tristate
+    if str(dut.peripheral_side_twi_scl_in) != "x":
+        raise TestFailure(
+            "gpioa_a2=0/mux=0/out=1 %s gpio_a2_in != x" %
+            str(dut.peripheral_side_twi_scl_in))
+
+    dut.peripheral_side_twi_scl_outen_in = 0
+    dut.iocell_side_io2_cell_in_in = 0
+    yield Timer(2)
+
+    if dut.peripheral_side_twi_scl_in != 0:
+        raise TestFailure(
+            "iocell_io2=0/mux=0/out=0 %s gpioa_a2 != 0" %
+            str(dut.peripheral_side_twi_scl_in))
+
+    dut.iocell_side_io2_cell_in_in = 1
+    yield Timer(2)
+
+    if dut.peripheral_side_twi_scl_in != 1:
+        raise TestFailure(
+            "iocell_io2=1/mux=0/out=0 %s gpioa_a2 != 1" %
+            str(dut.peripheral_side_twi_scl_in))
+
+    dut.peripheral_side_twi_scl_outen_in = 1
+    dut.iocell_side_io2_cell_in_in = 0
+    yield Timer(2)
+    dut._log.info("gpioa_a2_in %s" % dut.peripheral_side_twi_scl_in)
+
+    if dut.iocell_side_io2_cell_out != 1:
+        raise TestFailure(
+            "gpioa_a2=0/mux=0/out=1 %s iocell_io2 != 1" %
+            str(dut.iocell_side_io2_cell_out))
+
+    yield Timer(2)
+
+
 
 @cocotb.test()
 def pinmux_randomised_test(dut):
