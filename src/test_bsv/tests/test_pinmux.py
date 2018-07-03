@@ -261,3 +261,4 @@ def pinmux_twi_sda(dut):
 
     yield Timer(2)
 
+    dut._log.info("Ok!, twi_sda passed")
