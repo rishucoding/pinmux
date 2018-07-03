@@ -77,7 +77,7 @@ def pinmux_gpio2(dut):
             "gpioa_a2=0/mux=0/out=1 %s iocell_io2 != 1" %
             str(dut.iocell_side_io2_cell_out))
 
-    dut._log.info("Ok!")
+    dut._log.info("Ok!, gpio2 passed")
 
 @cocotb.test()
 def pinmux_uart(dut):
@@ -114,7 +114,7 @@ def pinmux_uart(dut):
             "uart_tx=0/mux=0/out=1 %s iocell_io0 != 0" %
             str(dut.iocell_side_io0_cell_out))
 
-    dut._log.info("Ok!")
+    dut._log.info("Ok!, uart passed")
 
 @cocotb.test()
 def pinmux_twi_scl(dut):
@@ -186,7 +186,7 @@ def pinmux_twi_scl(dut):
 
     yield Timer(2)
 
-    dut._log.info("Ok!")
+    dut._log.info("Ok!, twi_scl passed")
 
 @cocotb.test()
 def pinmux_twi_sda(dut):
