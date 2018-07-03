@@ -10,17 +10,15 @@ import random
 
 
 @cocotb.test()
-def pinmux_basic_test(dut):
-    """Test for 5 + 10"""
+def pinmux_gpio2(dut):
+    """Test for GPIO2"""
     yield Timer(2)
     # mux selection lines, each input two bit wide
-    dut.mux_lines_cell0_mux_in = 1
-    dut.mux_lines_cell1_mux_in = 2
     dut.mux_lines_cell2_mux_in = 0
     yield Timer(2)
     # enable input for mux
-    dut.EN_mux_lines_cell0_mux = 1
-    dut.EN_mux_lines_cell1_mux = 1
+    dut.EN_mux_lines_cell0_mux = 0
+    dut.EN_mux_lines_cell1_mux = 0
     dut.EN_mux_lines_cell2_mux = 1
 
     yield Timer(2)
@@ -79,6 +77,22 @@ def pinmux_basic_test(dut):
             "gpioa_a2=0/mux=0/out=1 %s iocell_io2 != 1" %
             str(dut.iocell_side_io2_cell_out))
 
+    dut._log.info("Ok!")
+
+@cocotb.test()
+def pinmux_uart(dut):
+    """Test for UART"""
+    yield Timer(2)
+    # mux selection lines, each input two bit wide
+    dut.mux_lines_cell0_mux_in = 1
+    yield Timer(2)
+    # enable input for mux
+    dut.EN_mux_lines_cell0_mux = 1
+    dut.EN_mux_lines_cell1_mux = 0
+    dut.EN_mux_lines_cell2_mux = 0
+
+    yield Timer(2)
+
     # UART
     yield Timer(2)
     dut.peripheral_side_uart_tx_in = 1
@@ -100,62 +114,21 @@ def pinmux_basic_test(dut):
             "uart_tx=0/mux=0/out=1 %s iocell_io0 != 0" %
             str(dut.iocell_side_io0_cell_out))
 
-    # TWI
+    dut._log.info("Ok!")
+
+@cocotb.test()
+def pinmux_twi_scl(dut):
+    """Test for I2C SCL"""
     yield Timer(2)
-    # define input variables
-    dut.peripheral_side_twi_sda_out_in = 0
-    dut.peripheral_side_twi_sda_outen_in = 1
-
+    # mux selection lines, each input two bit wide
+    dut.mux_lines_cell0_mux_in = 1
+    dut.mux_lines_cell1_mux_in = 2
+    dut.mux_lines_cell2_mux_in = 0
     yield Timer(2)
-
-    dut._log.info("io1_out %s" % dut.iocell_side_io1_cell_out)
-    # Test for out for twi_sda
-    if dut.iocell_side_io1_cell_out != 0:
-        raise TestFailure(
-            "twi_sda=0/mux=0/out=1 %s iocell_io1 != 0" %
-            str(dut.iocell_side_io1_cell_out))
-
-    dut.peripheral_side_twi_sda_out_in = 1
-    yield Timer(2)
-
-    if dut.iocell_side_io1_cell_out != 1:
-        raise TestFailure(
-            "twi_sda=1/mux=0/out=1 %s iocell_io1 != 1" %
-            str(dut.iocell_side_io1_cell_out))
-
-    # Test for in
-    # first check for tristate
-    if str(dut.peripheral_side_twi_sda_in) != "x":
-        raise TestFailure(
-            "twi_sda=0/mux=0/out=1 %s twi_sda_in != x" %
-            str(dut.peripheral_side_twi_sda_in))
-
-    dut.peripheral_side_twi_sda_outen_in = 0
-    dut.iocell_side_io1_cell_in_in = 0
-    yield Timer(2)
-
-    if dut.peripheral_side_twi_sda_in != 0:
-        raise TestFailure(
-            "iocell_io1=0/mux=0/out=0 %s twi_sda != 0" %
-            str(dut.peripheral_side_twi_sda_in))
-
-    dut.iocell_side_io1_cell_in_in = 1
-    yield Timer(2)
-
-    if dut.peripheral_side_twi_sda_in != 1:
-        raise TestFailure(
-            "iocell_io1=0/mux=0/out=0 %s twi_sda != 0" %
-            str(dut.peripheral_side_twi_sda_in))
-
-    dut.peripheral_side_twi_sda_outen_in = 1
-    dut.iocell_side_io1_cell_in_in = 0
-    yield Timer(2)
-    dut._log.info("twi_sda_in %s" % dut.peripheral_side_twi_sda_in)
-
-    if dut.iocell_side_io1_cell_out != 1:
-        raise TestFailure(
-            "twi_sda=0/mux=0/out=1 %s iocell_io1 != 1" %
-            str(dut.iocell_side_io1_cell_out))
+    # enable input for mux
+    dut.EN_mux_lines_cell0_mux = 0
+    dut.EN_mux_lines_cell1_mux = 1
+    dut.EN_mux_lines_cell2_mux = 0
 
     yield Timer(2)
 
@@ -216,25 +189,75 @@ def pinmux_basic_test(dut):
     dut._log.info("Ok!")
 
 @cocotb.test()
-def pinmux_randomised_test(dut):
-    """Test for adding 2 random numbers multiple times"""
-
-    return
+def pinmux_twi_sda(dut):
+    """Test for I2C"""
+    yield Timer(2)
+    # mux selection lines, each input two bit wide
+    dut.mux_lines_cell1_mux_in = 2
+    yield Timer(2)
+    # enable input for mux
+    dut.EN_mux_lines_cell0_mux = 0
+    dut.EN_mux_lines_cell1_mux = 1
+    dut.EN_mux_lines_cell2_mux = 0
 
     yield Timer(2)
 
-    for i in range(10):
-        A = random.randint(0, 15)
-        B = random.randint(0, 15)
+    # TWI
+    yield Timer(2)
+    # define input variables
+    dut.peripheral_side_twi_sda_out_in = 0
+    dut.peripheral_side_twi_sda_outen_in = 1
 
-        dut.A = A
-        dut.B = B
+    yield Timer(2)
 
-        yield Timer(2)
+    dut._log.info("io1_out %s" % dut.iocell_side_io1_cell_out)
+    # Test for out for twi_sda
+    if dut.iocell_side_io1_cell_out != 0:
+        raise TestFailure(
+            "twi_sda=0/mux=0/out=1 %s iocell_io1 != 0" %
+            str(dut.iocell_side_io1_cell_out))
 
-        if int(dut.X) != pinmux_model(A, B):
-            raise TestFailure(
-                "Randomised test failed with: %s + %s = %s" %
-                (int(dut.A), int(dut.B), int(dut.X)))
-        else:  # these last two lines are not strictly necessary
-            dut._log.info("Ok!")
+    dut.peripheral_side_twi_sda_out_in = 1
+    yield Timer(2)
+
+    if dut.iocell_side_io1_cell_out != 1:
+        raise TestFailure(
+            "twi_sda=1/mux=0/out=1 %s iocell_io1 != 1" %
+            str(dut.iocell_side_io1_cell_out))
+
+    # Test for in
+    # first check for tristate
+    if str(dut.peripheral_side_twi_sda_in) != "x":
+        raise TestFailure(
+            "twi_sda=0/mux=0/out=1 %s twi_sda_in != x" %
+            str(dut.peripheral_side_twi_sda_in))
+
+    dut.peripheral_side_twi_sda_outen_in = 0
+    dut.iocell_side_io1_cell_in_in = 0
+    yield Timer(2)
+
+    if dut.peripheral_side_twi_sda_in != 0:
+        raise TestFailure(
+            "iocell_io1=0/mux=0/out=0 %s twi_sda != 0" %
+            str(dut.peripheral_side_twi_sda_in))
+
+    dut.iocell_side_io1_cell_in_in = 1
+    yield Timer(2)
+
+    if dut.peripheral_side_twi_sda_in != 1:
+        raise TestFailure(
+            "iocell_io1=0/mux=0/out=0 %s twi_sda != 0" %
+            str(dut.peripheral_side_twi_sda_in))
+
+    dut.peripheral_side_twi_sda_outen_in = 1
+    dut.iocell_side_io1_cell_in_in = 0
+    yield Timer(2)
+    dut._log.info("twi_sda_in %s" % dut.peripheral_side_twi_sda_in)
+
+    if dut.iocell_side_io1_cell_out != 1:
+        raise TestFailure(
+            "twi_sda=0/mux=0/out=1 %s iocell_io1 != 1" %
+            str(dut.iocell_side_io1_cell_out))
+
+    yield Timer(2)
+
