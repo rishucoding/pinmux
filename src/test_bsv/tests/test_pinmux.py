@@ -8,7 +8,12 @@ import random
 
 """ dut is design under test """
 
-
+"""
+for gpio2, there are three ports at peripheral side:
+    peripheral_side_gpioa_a2_out_in
+    peripheral_side_gpioa_a2_outen_in
+    peripheral_side_gpioa_a2_in
+"""
 @cocotb.test()
 def pinmux_gpio2(dut):
     """Test for GPIO2"""
