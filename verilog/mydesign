@@ -1,0 +1,24 @@
+module test;
+reg in1,in2;
+wire [1:0] out;
+adder a (out, in1, in2);
+
+initial begin
+	#5 in1 = 1 ; in2 = 0;
+	#10 in1 = 0 ;in2 = 0;
+end
+
+// Dump waves
+initial begin
+    $dumpfile("dump.vcd");
+   	$dumpvars(1, out);
+end
+
+endmodule
+
+	
+module adder(out, in1, in2);
+	input in1, in2;
+	output [1:0] out;
+	assign out = in1 + in2;
+endmodule
