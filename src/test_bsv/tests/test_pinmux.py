@@ -256,3 +256,50 @@ def pinmux_twi_sda(dut):
     yield Timer(2)
 
     dut._log.info("Ok!, twi_sda passed")
+
+
+@cocotb.test()
+def pinmux_twi_sda2(dut):
+    """Test for I2C multi-input (route 2 inputs to same function)"""
+    yield Timer(2)
+    # mux selection lines, each input two bit wide
+    dut.mux_lines_cell0_mux_in = 0
+    dut.mux_lines_cell1_mux_in = 2
+    yield Timer(2)
+    # enable input for mux
+    dut.EN_mux_lines_cell0_mux = 1
+    dut.EN_mux_lines_cell1_mux = 1
+    dut.EN_mux_lines_cell2_mux = 0
+
+    # TWI
+    yield Timer(2)
+    # Test for in
+    dut.peripheral_side_twi_sda_outen_in = 0
+    dut.iocell_side_io1_cell_in_in = 0
+    yield Timer(2)
+
+    if dut.peripheral_side_twi_sda_in != 0:
+        raise TestFailure(
+            "iocell_io1=0/mux=0/out=0 %s twi_sda != 0" %
+            str(dut.peripheral_side_twi_sda_in))
+
+    dut.iocell_side_io1_cell_in_in = 1
+    yield Timer(2)
+
+    if dut.peripheral_side_twi_sda_in != 1:
+        raise TestFailure(
+            "iocell_io1=1/mux=0/out=0 %s twi_sda != 1" %
+            str(dut.peripheral_side_twi_sda_in))
+
+    dut.iocell_side_io1_cell_in_in = 0
+    yield Timer(2)
+    dut._log.info("twi_sda_in %s" % dut.peripheral_side_twi_sda_in)
+
+    if dut.peripheral_side_twi_sda_in != 0:
+        raise TestFailure(
+            "iocell_io1=1/mux=0/out=0 %s twi_sda != 0" %
+            str(dut.peripheral_side_twi_sda_in))
+
+    yield Timer(2)
+
+    dut._log.info("Ok!, twi_sda test2 passed")
