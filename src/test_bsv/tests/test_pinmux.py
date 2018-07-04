@@ -100,8 +100,6 @@ def pinmux_uart(dut):
     dut.EN_mux_lines_cell1_mux = 0
     dut.EN_mux_lines_cell2_mux = 0
 
-    yield Timer(2)
-
     # UART
     yield Timer(2)
     dut.peripheral_side_uart_tx_in = 1
