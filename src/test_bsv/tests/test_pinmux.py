@@ -260,14 +260,14 @@ def pinmux_twi_sda(dut):
 
 @cocotb.test()
 def pinmux_twi_sda2(dut):
-    """Test for I2C multi-input (route 2 inputs to same function)"""
+    """Test for I2C multi-input (route 2 inputs to same function)
+    """
     yield Timer(2)
     # mux selection lines, each input two bit wide
-    dut.mux_lines_cell0_mux_in = 0
     dut.mux_lines_cell1_mux_in = 2
     yield Timer(2)
     # enable input for mux
-    dut.EN_mux_lines_cell0_mux = 1
+    dut.EN_mux_lines_cell0_mux = 0
     dut.EN_mux_lines_cell1_mux = 1
     dut.EN_mux_lines_cell2_mux = 0
 
@@ -300,6 +300,70 @@ def pinmux_twi_sda2(dut):
             "iocell_io1=1/mux=0/out=0 %s twi_sda != 0" %
             str(dut.peripheral_side_twi_sda_in))
 
+    # ok now set up gpioa0, set it to the opposite of twi_sda (0) i.e. gpioa0=1
+    # and test that... then switch over pin0/mux=3
+    dut.peripheral_side_gpioa_a0_outen_in = 1
+    dut.mux_lines_cell0_mux_in = 0
+    dut.EN_mux_lines_cell0_mux = 1
+    dut.iocell_side_io0_cell_in_in = 1 # twi_sda=0, so gpioa0 should be 1
     yield Timer(2)
 
+    if dut.peripheral_side_gpioa_a0_in != 1:  # output of iopad
+        raise TestFailure(
+            "iocell_io0=1/mux=0/out=0 %s gpio_a0 != 1" %
+            str(dut.peripheral_side_gpioa_a0_in))
+
+    # also twi_sda should also = 0, because.. because...
+    # pin1 is still routed to it, and pin1 is still set to 0...
+    if dut.peripheral_side_twi_sda_in != 0:
+        raise TestFailure(
+            "iocell_io0=1/mux=0/out=0 %s twi_sda != 0" %
+            str(dut.peripheral_side_twi_sda_in))
+
+    # ok flip over to test 3
+    dut.mux_lines_cell0_mux_in = 3
+    yield Timer(2)
+
+    # ok now this should drop to 0 because the muxer's no longer
+    # routing iopad0 to gpioa0...
+    if dut.peripheral_side_gpioa_a0_in != 0:  # output of iopad
+        raise TestFailure(
+            "iocell_io0=1/mux=0/out=0 %s gpio_a0 != 0" %
+            str(dut.peripheral_side_gpioa_a0_in))
+
+    # AND, at the same time, twi_sda should also = 1, because.. because...
+    # pin1 is no longer routed to it, because of the priority muxer
+    # now points pin *0* at twi_sda: that's the point of a priority
+    # muxer, pin0 and pin1 are both pointint to twi_sda but pin0
+    # gets precedence.
+    if dut.peripheral_side_twi_sda_in != 1:
+        raise TestFailure(
+            "iocell_io0=1/mux=0/out=0 %s twi_sda != 1" %
+            str(dut.peripheral_side_twi_sda_in))
+
+    # ok so now set cell1 muxer to point to gpioa1...
+    dut.mux_lines_cell1_mux_in = 0
+    yield Timer(2)
+
+    # now we test twi sda again (it shouldn't change)
+    if dut.peripheral_side_twi_sda_in != 1:
+        raise TestFailure(
+            "iocell_io0=1/mux=0/out=0 %s twi_sda != 1" %
+            str(dut.peripheral_side_twi_sda_in))
+
+    dut.iocell_side_io1_cell_in_in = 1 # now try setting cell1 to 0
+    yield Timer(2)
+
+    # now we test twi sda again after changing io0, it *still* shouldn't change
+    if dut.peripheral_side_twi_sda_in != 1:
+        raise TestFailure(
+            "iocell_io0=1/mux=0/out=0 %s twi_sda != 1" %
+            str(dut.peripheral_side_twi_sda_in))
+
+    # ok that's probably enough, we could check here that actually gpioa1
+    # was what got set, or we could flip cell1 mux back to 2
+    # and set cell0 mux back to 0 but things are probably tested
+    # enough by now
+
     dut._log.info("Ok!, twi_sda test2 passed")
+
