@@ -1,6 +1,0 @@
-BCD ripple counter circuiter
-Cascading two counters
-
-
-///KEYWORDS: ///
-
