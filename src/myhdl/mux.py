@@ -19,6 +19,7 @@ def mux4(clk, in_a, in_b, in_c, in_d,
 
     return instances()  # return all instances
 
+
 @block
 def pmux1(clk, in_a,
           sel_a, out):
@@ -71,8 +72,10 @@ def pmux3(clk, in_a, in_b, in_c,
 
 
 @block
-def pmux4(clk, in_a, in_b, in_c, in_d,
-          sel_a, sel_b, sel_c, sel_d, out):
+def pmux4(clk, ins, sels, out):
+
+    (sel_a, sel_b, sel_c, sel_d) = sels
+    (in_a, in_b, in_c, in_d) = ins
 
     @always(sel_a, sel_b, sel_c, sel_d,
             in_a, in_b, in_c, in_d)
@@ -106,8 +109,9 @@ def pmux_tb4():
     sel_d = Signal(bool(0))
     out = Signal(bool(0))
 
-    mux_inst = pmux4(clk, in_a, in_b, in_c, in_d,
-                    sel_a, sel_b, sel_c, sel_d, out)
+    sels = (sel_a, sel_b, sel_c, sel_d)
+    ins = (in_a, in_b, in_c, in_d)
+    mux_inst = pmux4(clk, ins, sels, out)
 
     @instance
     def clk_signal():
@@ -138,9 +142,9 @@ def pmux_tb4():
     file_data = open("pmux.csv", 'w')  # file for saving data
     # # print header on screen
     s = "{0},{1},{2},{3},{4},{5},{6},{7},{8}".format(
-                                    "in_a", "in_b", "in_c", "in_d",
-                                    "sel_a", "sel_b", "sel_c", "sel_d",
-                                    "out")
+        "in_a", "in_b", "in_c", "in_d",
+        "sel_a", "sel_b", "sel_c", "sel_d",
+        "out")
     print(s)
     # # print header to file
     file_data.write(s)
@@ -171,6 +175,8 @@ def pmux_tb4():
     return instances()
 
 # testbench
+
+
 @block
 def mux_tb():
 
@@ -272,8 +278,9 @@ def test_pmux4():
     sel_d = Signal(bool(0))
     out = Signal(bool(0))
 
-    pmux_v = pmux4(clk, in_a, in_b, in_c, in_d,
-                  sel_a, sel_b, sel_c, sel_d, out)
+    sels = (sel_a, sel_b, sel_c, sel_d)
+    ins = (in_a, in_b, in_c, in_d)
+    pmux_v = pmux4(clk, ins, sels, out)
     pmux_v.convert(hdl="Verilog", initial_values=True)
 
     # test bench
@@ -282,10 +289,10 @@ def test_pmux4():
     # keep following lines below the 'tb.convert' line
     # otherwise error will be reported
     tb.config_sim(trace=True)
-    tb.run_sim(4*66 * period)  # run for 15 clock cycle
+    tb.run_sim(4 * 66 * period)  # run for 15 clock cycle
 
 
 if __name__ == '__main__':
-    #test_mux()
+    # test_mux()
     print "test pmux"
     test_pmux4()
