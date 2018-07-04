@@ -127,14 +127,12 @@ def pinmux_twi_scl(dut):
     """Test for I2C SCL"""
     yield Timer(2)
     # mux selection lines, each input two bit wide
-    dut.mux_lines_cell0_mux_in = 1
     dut.mux_lines_cell1_mux_in = 2
-    dut.mux_lines_cell2_mux_in = 2
     yield Timer(2)
     # enable input for mux
     dut.EN_mux_lines_cell0_mux = 0
-    dut.EN_mux_lines_cell1_mux = 0
-    dut.EN_mux_lines_cell2_mux = 1
+    dut.EN_mux_lines_cell1_mux = 1
+    dut.EN_mux_lines_cell2_mux = 0
 
     yield Timer(2)
 
