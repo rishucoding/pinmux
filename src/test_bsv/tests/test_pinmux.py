@@ -50,6 +50,7 @@ def pinmux_gpio2(dut):
             str(dut.iocell_side_io2_cell_out))
 
     # GPIO2-in test (first see if it's tri-state)
+    # 
     if str(dut.peripheral_side_gpioa_a2_in) != "x":
         raise TestFailure(
             "gpioa_a2=0/mux=0/out=1 %s gpio_a2_in != x" %
@@ -128,12 +129,12 @@ def pinmux_twi_scl(dut):
     # mux selection lines, each input two bit wide
     dut.mux_lines_cell0_mux_in = 1
     dut.mux_lines_cell1_mux_in = 2
-    dut.mux_lines_cell2_mux_in = 0
+    dut.mux_lines_cell2_mux_in = 2
     yield Timer(2)
     # enable input for mux
     dut.EN_mux_lines_cell0_mux = 0
-    dut.EN_mux_lines_cell1_mux = 1
-    dut.EN_mux_lines_cell2_mux = 0
+    dut.EN_mux_lines_cell1_mux = 0
+    dut.EN_mux_lines_cell2_mux = 1
 
     yield Timer(2)
 
