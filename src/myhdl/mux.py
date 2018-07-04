@@ -9,41 +9,81 @@ period = 20  # clk frequency = 50 MHz
 @block
 def mux4(clk, in_a, in_b, in_c, in_d,
          selector, out):
-    sel_r = Signal(intbv(0)[2:0])
-    sel25 = Signal(intbv(0)[4:0])
 
-    #@always(clk.posedge, reset_n.negedge)
-    # def logic_reg():
-    #    if reset_n == 0:
-    #        out.next = 0
-    #    else:
-    #        out.next = count_next
-
-    @always(clk.posedge)
-    def logic_selection():
-        sel_r.next = selector
-
-    @always(clk.posedge, sel_r)
-    def logic_next():
-        if selector != sel_r:
-            sel25.next = intbv(0)[2:0]
-        else:
-            if selector == intbv(0)[2:0]:
-                sel25.next = intbv(1)[4:0]
-            if selector == intbv(1)[2:0]:
-                sel25.next = intbv(2)[4:0]
-            if selector == intbv(2)[2:0]:
-                sel25.next = intbv(4)[4:0]
-            if selector == intbv(3)[2:0]:
-                sel25.next = intbv(8)[4:0]
-
-    #@always(clk.posedge, clk.negedge)
-    @always(sel25, in_a, in_b, in_c, in_d)
+    @always(selector, in_a, in_b, in_c, in_d)
     def make_out():
-        out.next = bool(in_a if sel25[0] else False) | \
-            bool(in_b if sel25[1] else False) | \
-            bool(in_c if sel25[2] else False) | \
-            bool(in_d if sel25[3] else False)
+        out.next = bool(in_a if selector == 0 else False) | \
+            bool(in_b if selector == 1 else False) | \
+            bool(in_c if selector == 2 else False) | \
+            bool(in_d if selector == 3 else False)
+
+    return instances()  # return all instances
+
+
+def pmux1(clk, in_a,
+          selector_a, out):
+
+    @always(selector_a,
+            in_a)
+    def make_out():
+        if selector_a:
+            out.next = in_a
+        else:
+            out.next = False
+
+    return instances()  # return all instances
+
+
+def pmux2(clk, in_a, in_b,
+          selector_a, selector_b, out):
+
+    @always(selector_a, selector_b,
+            in_a, in_b)
+    def make_out():
+        if selector_a:
+            out.next = in_a
+        elif selector_b:
+            out.next = in_b
+        else:
+            out.next = False
+
+    return instances()  # return all instances
+
+
+def pmux3(clk, in_a, in_b, in_c,
+          selector_a, selector_b, selector_c, out):
+
+    @always(selector_a, selector_b, selector_c,
+            in_a, in_b, in_c)
+    def make_out():
+        if selector_a:
+            out.next = in_a
+        elif selector_b:
+            out.next = in_b
+        elif selector_c:
+            out.next = in_c
+        else:
+            out.next = False
+
+    return instances()  # return all instances
+
+
+def pmux4(clk, in_a, in_b, in_c, in_d,
+          selector_a, selector_b, selector_c, selector_d, out):
+
+    @always(selector_a, selector_b, selector_c, selector_d,
+            in_a, in_b, in_c, in_d)
+    def make_out():
+        if selector_a:
+            out.next = in_a
+        elif selector_b:
+            out.next = in_b
+        elif selector_c:
+            out.next = in_c
+        elif selector_d:
+            out.next = in_d
+        else:
+            out.next = False
 
     return instances()  # return all instances
 
@@ -53,10 +93,10 @@ def mux4(clk, in_a, in_b, in_c, in_d,
 def mux_tb():
 
     clk = Signal(bool(0))
-    in_a = Signal(intbv(0)[1:0])
-    in_b = Signal(intbv(0)[1:0])
-    in_c = Signal(intbv(0)[1:0])
-    in_d = Signal(intbv(0)[1:0])
+    in_a = Signal(bool(0))
+    in_b = Signal(bool(0))
+    in_c = Signal(bool(0))
+    in_d = Signal(bool(0))
     selector = Signal(intbv(0)[2:0])
     out = Signal(bool(0))
 
@@ -100,6 +140,14 @@ def mux_tb():
                 in_c, in_d,
                 selector, out))
 
+        if selector == 0:
+            assert out == in_a
+        elif selector == 1:
+            assert out == in_b
+        elif selector == 2:
+            assert out == in_c
+        elif selector == 3:
+            assert out == in_d
         # print in file
         # print.format is not supported in MyHDL 1.0
         #file_data.write(s + "\n")
@@ -110,10 +158,10 @@ def mux_tb():
 def main():
 
     clk = Signal(bool(0))
-    in_a = Signal(intbv(0)[1:0])
-    in_b = Signal(intbv(0)[1:0])
-    in_c = Signal(intbv(0)[1:0])
-    in_d = Signal(intbv(0)[1:0])
+    in_a = Signal(bool(0))
+    in_b = Signal(bool(0))
+    in_c = Signal(bool(0))
+    in_d = Signal(bool(0))
     selector = Signal(intbv(0)[2:0])
     out = Signal(bool(0))
 
