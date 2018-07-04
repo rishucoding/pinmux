@@ -19,14 +19,14 @@ def mux4(clk, in_a, in_b, in_c, in_d,
 
     return instances()  # return all instances
 
-
+@block
 def pmux1(clk, in_a,
-          selector_a, out):
+          sel_a, out):
 
-    @always(selector_a,
+    @always(sel_a,
             in_a)
     def make_out():
-        if selector_a:
+        if sel_a:
             out.next = in_a
         else:
             out.next = False
@@ -34,15 +34,16 @@ def pmux1(clk, in_a,
     return instances()  # return all instances
 
 
+@block
 def pmux2(clk, in_a, in_b,
-          selector_a, selector_b, out):
+          sel_a, sel_b, out):
 
-    @always(selector_a, selector_b,
+    @always(sel_a, sel_b,
             in_a, in_b)
     def make_out():
-        if selector_a:
+        if sel_a:
             out.next = in_a
-        elif selector_b:
+        elif sel_b:
             out.next = in_b
         else:
             out.next = False
@@ -50,17 +51,18 @@ def pmux2(clk, in_a, in_b,
     return instances()  # return all instances
 
 
+@block
 def pmux3(clk, in_a, in_b, in_c,
-          selector_a, selector_b, selector_c, out):
+          sel_a, sel_b, sel_c, out):
 
-    @always(selector_a, selector_b, selector_c,
+    @always(sel_a, sel_b, sel_c,
             in_a, in_b, in_c)
     def make_out():
-        if selector_a:
+        if sel_a:
             out.next = in_a
-        elif selector_b:
+        elif sel_b:
             out.next = in_b
-        elif selector_c:
+        elif sel_c:
             out.next = in_c
         else:
             out.next = False
@@ -68,25 +70,105 @@ def pmux3(clk, in_a, in_b, in_c,
     return instances()  # return all instances
 
 
+@block
 def pmux4(clk, in_a, in_b, in_c, in_d,
-          selector_a, selector_b, selector_c, selector_d, out):
+          sel_a, sel_b, sel_c, sel_d, out):
 
-    @always(selector_a, selector_b, selector_c, selector_d,
+    @always(sel_a, sel_b, sel_c, sel_d,
             in_a, in_b, in_c, in_d)
     def make_out():
-        if selector_a:
+        if sel_a:
             out.next = in_a
-        elif selector_b:
+        elif sel_b:
             out.next = in_b
-        elif selector_c:
+        elif sel_c:
             out.next = in_c
-        elif selector_d:
+        elif sel_d:
             out.next = in_d
         else:
             out.next = False
 
     return instances()  # return all instances
 
+
+# testbench
+@block
+def pmux_tb4():
+
+    clk = Signal(bool(0))
+    in_a = Signal(bool(0))
+    in_b = Signal(bool(0))
+    in_c = Signal(bool(0))
+    in_d = Signal(bool(0))
+    sel_a = Signal(bool(0))
+    sel_b = Signal(bool(0))
+    sel_c = Signal(bool(0))
+    sel_d = Signal(bool(0))
+    out = Signal(bool(0))
+
+    mux_inst = pmux4(clk, in_a, in_b, in_c, in_d,
+                    sel_a, sel_b, sel_c, sel_d, out)
+
+    @instance
+    def clk_signal():
+        while True:
+            sel_set = False
+            clk.next = not clk
+            if clk:
+                in_a.next = not in_a
+                if in_a:
+                    in_b.next = not in_b
+                    if in_b:
+                        in_c.next = not in_c
+                        if in_c:
+                            in_d.next = not in_d
+                            if in_d:
+                                sel_set = True
+            if sel_set:
+                sel_a.next = not sel_a
+                if sel_a:
+                    sel_b.next = not sel_b
+                    if sel_b:
+                        sel_c.next = not sel_c
+                        if sel_c:
+                            sel_d.next = not sel_d
+            yield delay(period // 2)
+
+    # print simulation data on screen and file
+    file_data = open("pmux.csv", 'w')  # file for saving data
+    # # print header on screen
+    s = "{0},{1},{2},{3},{4},{5},{6},{7},{8}".format(
+                                    "in_a", "in_b", "in_c", "in_d",
+                                    "sel_a", "sel_b", "sel_c", "sel_d",
+                                    "out")
+    print(s)
+    # # print header to file
+    file_data.write(s)
+    # print data on each clock
+
+    @always(clk.posedge)
+    def print_data():
+        # print on screen
+        # print.format is not supported in MyHDL 1.0
+        print ("%s,%s,%s,%s,%s,%s,%s,%s,%s" %
+               (in_a, in_b,
+                in_c, in_d,
+                sel_a, sel_b,
+                sel_c, sel_d, out))
+
+        if sel_a:
+            assert out == in_a
+        elif sel_b:
+            assert out == in_b
+        elif sel_c:
+            assert out == in_c
+        elif sel_d:
+            assert out == in_d
+        # print in file
+        # print.format is not supported in MyHDL 1.0
+        #file_data.write(s + "\n")
+
+    return instances()
 
 # testbench
 @block
@@ -155,7 +237,7 @@ def mux_tb():
     return instances()
 
 
-def main():
+def test_mux():
 
     clk = Signal(bool(0))
     in_a = Signal(bool(0))
@@ -177,5 +259,33 @@ def main():
     tb.run_sim(66 * period)  # run for 15 clock cycle
 
 
+def test_pmux4():
+
+    clk = Signal(bool(0))
+    in_a = Signal(bool(0))
+    in_b = Signal(bool(0))
+    in_c = Signal(bool(0))
+    in_d = Signal(bool(0))
+    sel_a = Signal(bool(0))
+    sel_b = Signal(bool(0))
+    sel_c = Signal(bool(0))
+    sel_d = Signal(bool(0))
+    out = Signal(bool(0))
+
+    pmux_v = pmux4(clk, in_a, in_b, in_c, in_d,
+                  sel_a, sel_b, sel_c, sel_d, out)
+    pmux_v.convert(hdl="Verilog", initial_values=True)
+
+    # test bench
+    tb = pmux_tb4()
+    tb.convert(hdl="Verilog", initial_values=True)
+    # keep following lines below the 'tb.convert' line
+    # otherwise error will be reported
+    tb.config_sim(trace=True)
+    tb.run_sim(4*66 * period)  # run for 15 clock cycle
+
+
 if __name__ == '__main__':
-    main()
+    #test_mux()
+    print "test pmux"
+    test_pmux4()
