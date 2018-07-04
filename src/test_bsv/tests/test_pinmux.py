@@ -14,6 +14,8 @@ for gpio2, there are three ports at peripheral side:
     peripheral_side_gpioa_a2_outen_in
     peripheral_side_gpioa_a2_in
 """
+
+
 @cocotb.test()
 def pinmux_gpio2(dut):
     """Test for GPIO2"""
@@ -50,7 +52,7 @@ def pinmux_gpio2(dut):
             str(dut.iocell_side_io2_cell_out))
 
     # GPIO2-in test (first see if it's tri-state)
-    # 
+    #
     if str(dut.peripheral_side_gpioa_a2_in) != "x":
         raise TestFailure(
             "gpioa_a2=0/mux=0/out=1 %s gpio_a2_in != x" %
@@ -84,6 +86,7 @@ def pinmux_gpio2(dut):
             str(dut.iocell_side_io2_cell_out))
 
     dut._log.info("Ok!, gpio2 passed")
+
 
 @cocotb.test()
 def pinmux_uart(dut):
@@ -121,6 +124,7 @@ def pinmux_uart(dut):
             str(dut.iocell_side_io0_cell_out))
 
     dut._log.info("Ok!, uart passed")
+
 
 @cocotb.test()
 def pinmux_twi_scl(dut):
@@ -187,6 +191,7 @@ def pinmux_twi_scl(dut):
     yield Timer(2)
 
     dut._log.info("Ok!, twi_scl passed")
+
 
 @cocotb.test()
 def pinmux_twi_sda(dut):
@@ -305,7 +310,7 @@ def pinmux_twi_sda2(dut):
     dut.peripheral_side_gpioa_a0_outen_in = 1
     dut.mux_lines_cell0_mux_in = 0
     dut.EN_mux_lines_cell0_mux = 1
-    dut.iocell_side_io0_cell_in_in = 1 # twi_sda=0, so gpioa0 should be 1
+    dut.iocell_side_io0_cell_in_in = 1  # twi_sda=0, so gpioa0 should be 1
     yield Timer(2)
 
     if dut.peripheral_side_gpioa_a0_in != 1:  # output of iopad
@@ -351,7 +356,7 @@ def pinmux_twi_sda2(dut):
             "iocell_io0=1/mux=0/out=0 %s twi_sda != 1" %
             str(dut.peripheral_side_twi_sda_in))
 
-    dut.iocell_side_io1_cell_in_in = 1 # now try setting cell1 to 0
+    dut.iocell_side_io1_cell_in_in = 1  # now try setting cell1 to 0
     yield Timer(2)
 
     # now we test twi sda again after changing io0, it *still* shouldn't change
@@ -366,4 +371,3 @@ def pinmux_twi_sda2(dut):
     # enough by now
 
     dut._log.info("Ok!, twi_sda test2 passed")
-
