@@ -30,7 +30,11 @@ class PinGen(object):
         mux   : which column in the multiplexer
         start : the start of a subset of pins to be inserted
         limit : the end of the subset (or the number if start also given)
-        spec  : *EXTRA* pins to be inserted.
+        spec  : *EXTRA* pins to be inserted (at different implicit positions)
+
+        the pins are inserted with the suffix, starting from the
+        offset position using offs as the row and mux as the column,
+        and working in a constant increment down the rows.
 
         spec is slightly complicated, basically there's extra
         functions that we want to be on the same pin (but a different mux)
