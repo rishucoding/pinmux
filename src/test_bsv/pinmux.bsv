@@ -4,7 +4,7 @@
    https://bitbucket.org/casl/pinmux.
 
    Authors: Neel Gala, Luke
-   Date of generation: Mon Jul  2 00:31:10 2018
+   Date of generation: Wed Jul  4 14:04:17 2018
 */
 
 package pinmux;
@@ -157,18 +157,22 @@ package pinmux;
 			wrcell0_mux==0?wrgpioa_a0_out:
 			wrcell0_mux==1?wruart_tx:
 			wrcell0_mux==2?val0: // unused
-			val0; // unused
+			wrtwi_sda_out;
 
       // outen muxer for cell idx 0
       cell0_mux_outen=
 			wrcell0_mux==0?wrgpioa_a0_outen: // bi-directional
 			wrcell0_mux==1?wrgpioa_a0_outen: // uart_tx is an output
 			wrcell0_mux==2?val0: // unused
-			val0; // unused
+			wrtwi_sda_outen; // bi-directional
 
       // priority-in-muxer for cell idx 0
       rule assign_wrgpioa_a0_in_on_cell0(wrcell0_mux==0);
         wrgpioa_a0_in<=cell0_mux_in;
+      endrule
+
+      rule assign_wrtwi_sda_in_on_cell0(wrcell0_mux==3);
+        wrtwi_sda_in<=cell0_mux_in;
       endrule
 
       // output muxer for cell idx 1
