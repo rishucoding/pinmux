@@ -200,8 +200,6 @@ def pinmux_twi_sda(dut):
     dut.EN_mux_lines_cell1_mux = 1
     dut.EN_mux_lines_cell2_mux = 0
 
-    yield Timer(2)
-
     # TWI
     yield Timer(2)
     # define input variables
