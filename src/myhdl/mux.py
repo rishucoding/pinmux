@@ -5,6 +5,21 @@ from myhdl import *
 
 period = 20  # clk frequency = 50 MHz
 
+class Inputs(object):
+    def __init__(self, ins):
+        self.ins = ins
+        self.in_a = ins[0]
+        self.in_b = ins[1]
+        self.in_c = ins[2]
+        self.in_d = ins[3]
+
+class Selectors(object):
+    def __init__(self, sels):
+        self.sels = sels
+        self.sel_a = sels[0]
+        self.sel_b = sels[1]
+        self.sel_c = sels[2]
+        self.sel_d = sels[3]
 
 @block
 def mux4(clk, in_a, in_b, in_c, in_d,
@@ -74,24 +89,22 @@ def pmux3(clk, in_a, in_b, in_c,
 @block
 def pmux4(clk, ins, sels, out):
 
-    (sel_a, sel_b, sel_c, sel_d) = sels
-    (in_a, in_b, in_c, in_d) = ins
-
-    @always(sel_a, sel_b, sel_c, sel_d,
-            in_a, in_b, in_c, in_d)
+    @always(*list(sels.sels) + list(ins.ins))
     def make_out():
-        if sel_a:
-            out.next = in_a
-        elif sel_b:
-            out.next = in_b
-        elif sel_c:
-            out.next = in_c
-        elif sel_d:
-            out.next = in_d
+        if sels.sel_a:
+            out.next = ins.in_a
+        elif sels.sel_b:
+            out.next = ins.in_b
+        elif sels.sel_c:
+            out.next = ins.in_c
+        elif sels.sel_d:
+            out.next = ins.in_d
         else:
             out.next = False
 
-    return instances()  # return all instances
+    i = instances()
+    print dir(i), i
+    return i  # return all instances
 
 
 # testbench
@@ -109,8 +122,8 @@ def pmux_tb4():
     sel_d = Signal(bool(0))
     out = Signal(bool(0))
 
-    sels = (sel_a, sel_b, sel_c, sel_d)
-    ins = (in_a, in_b, in_c, in_d)
+    sels = Selectors((sel_a, sel_b, sel_c, sel_d))
+    ins = Inputs((in_a, in_b, in_c, in_d))
     mux_inst = pmux4(clk, ins, sels, out)
 
     @instance
@@ -278,8 +291,8 @@ def test_pmux4():
     sel_d = Signal(bool(0))
     out = Signal(bool(0))
 
-    sels = (sel_a, sel_b, sel_c, sel_d)
-    ins = (in_a, in_b, in_c, in_d)
+    sels = Selectors((sel_a, sel_b, sel_c, sel_d))
+    ins = Inputs((in_a, in_b, in_c, in_d))
     pmux_v = pmux4(clk, ins, sels, out)
     pmux_v.convert(hdl="Verilog", initial_values=True)
 
