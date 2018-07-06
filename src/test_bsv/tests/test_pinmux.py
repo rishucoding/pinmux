@@ -370,3 +370,105 @@ def pinmux_twi_sda2(dut):
 
     dut._log.info("Ok!, twi_sda test2 passed")
 
+@cocotb.test()
+def pinmux_twi_sda3(dut):
+    """Test for I2C multi-pin one FN_out (route 2 pins out to same function)
+    """
+    yield Timer(2)
+    # mux selection lines, each input two bit wide
+    dut.mux_lines_cell1_mux_in = 2
+    yield Timer(2)
+    # enable input for mux
+    dut.EN_mux_lines_cell0_mux = 0
+    dut.EN_mux_lines_cell1_mux = 1
+    dut.EN_mux_lines_cell2_mux = 0
+
+    # first check the working of twi_sda at cell1
+    
+    # TWI
+    yield Timer(2)
+    # define input variables
+    dut.peripheral_side_twi_sda_out_in = 0
+    dut.peripheral_side_twi_sda_outen_in = 1
+
+    yield Timer(2)
+    # the output passed by twi_sda = 0 should be passed 
+    # to io1_cell__out
+    dut._log.info("io1_out %s" % dut.iocell_side_io1_cell_out)
+    # Test for out for twi_sda
+    if dut.iocell_side_io1_cell_out != 0:
+        raise TestFailure(
+            "twi_sda=0/mux=0/out=1 %s iocell_io1 != 0" %
+            str(dut.iocell_side_io1_cell_out))
+    
+    dut.peripheral_side_twi_sda_out_in = 1
+    yield Timer(2)
+    # ok, now io1_cell_out should be equal to 1
+    if dut.iocell_side_io1_cell_out != 1:
+        raise TestFailure(
+            "twi_sda=1/mux=0/out=1 %s iocell_io1 != 1" %
+            str(dut.iocell_side_io1_cell_out))
+
+    # ok, now let's set the mux lines to cell0
+    # and select twi_sda : pin 0/mux 3
+
+    dut.mux_lines_cell0_mux_in = 3
+    dut.EN_mux_lines_cell0_mux = 1
+    yield Timer(2)
+    # ok, now the output io0_cell_out should be 1 as 
+    # FNout remains is not changed
+    # this also tests the working of twi_sda at cell0
+
+    if dut.iocell_side_io0_cell_out != 1:
+        raise TestFailure(
+            "twi_sda=1/mux=0/out=1 %s iocell_io1 != 1" %
+            str(dut.iocell_side_io1_cell_out))
+
+    # Now, let's test the working of output muxing logic
+    # at cell 0, by enabling the mux selection line for
+    # gpio 0. The io0_cell_out should change, but 
+    # twi_sda should remain at value 1
+    # so set value of gpio0_out_in  = 0
+
+    dut.mux_lines_cell0_mux_in = 0
+    dut.peripheral_side_gpioa_a0_out_in = 0
+    dut.peripheral_side_gpioa_a0_outen_in = 1
+
+    yield Timer(2)
+    # check the output is correctly getting passed
+    if dut.iocell_side_io0_cell_out != 0:  # output of iopad
+        raise TestFailure(
+            "gpioa_a2=0/mux=0/out=1 %s iocell_io2 != 0" %
+            str(dut.iocell_side_io2_cell_out))
+
+    yield Timer(2)
+
+    if dut.peripheral_side_twi_sda_out_in != 1:  # output of twi_sda
+        raise TestFailure(
+            "gpioa_a2=0/mux=0/out=1 %s iocell_io2 != 0" %
+            str(dut.iocell_side_io2_cell_out))
+
+    # Now, let's test the working of output muxing logic 
+    # at cell1. First, the output of io1_cell_out should 
+    # be the previous value (1). 
+
+    yield Timer(2)
+    if dut.iocell_side_io1_cell_out != 1:
+        raise TestFailure(
+            "twi_sda=1/mux=0/out=1 %s iocell_io1 != 1" %
+            str(dut.iocell_side_io1_cell_out))
+   
+    # ok, now set the muxing selection line for gpio1
+    # again, the value of gpio_out_in should be 0
+    # ie. opposite of twi_sda_out
+    dut.mux_lines_cell1_mux_in = 1
+    dut.peripheral_side_gpioa_a1_out_in = 0
+    dut.peripheral_side_gpioa_a1_outen_in = 1
+
+    yield Timer(2)
+    if dut.iocell_side_io1_cell_out != 0:
+        raise TestFailure(
+            "twi_sda=1/mux=0/out=1 %s iocell_io1 != 1" %
+            str(dut.iocell_side_io1_cell_out))
+
+    dut._log.info("Ok!, twi_sda test3 passed")
