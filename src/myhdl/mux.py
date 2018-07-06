@@ -5,6 +5,7 @@ from myhdl import *
 
 period = 20  # clk frequency = 50 MHz
 
+
 class Inputs(object):
     def __init__(self, ins):
         self.ins = ins
@@ -12,6 +13,7 @@ class Inputs(object):
         self.in_b = ins[1]
         self.in_c = ins[2]
         self.in_d = ins[3]
+
 
 class Selectors(object):
     def __init__(self, sels):
@@ -21,9 +23,13 @@ class Selectors(object):
         self.sel_c = sels[2]
         self.sel_d = sels[3]
 
+
 @block
-def mux4(clk, in_a, in_b, in_c, in_d,
+def mux4(clk, ins,
          selector, out):
+
+    (in_a, in_b, in_c, in_d) = ins
+    print repr(clk), ins, repr(selector), repr(out)
 
     @always(selector, in_a, in_b, in_c, in_d)
     def make_out():
