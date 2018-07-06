@@ -305,7 +305,7 @@ def pinmux_twi_sda2(dut):
 
     # ok now set up gpioa0, set it to the opposite of twi_sda (0) i.e. gpioa0=1
     # and test that... then switch over pin0/mux=3
-    dut.peripheral_side_gpioa_a0_outen_in = 1
+    dut.peripheral_side_gpioa_a0_outen_in = 1 # 
     dut.mux_lines_cell0_mux_in = 0
     dut.EN_mux_lines_cell0_mux = 1
     dut.iocell_side_io0_cell_in_in = 1  # twi_sda=0, so gpioa0 should be 1
@@ -369,3 +369,15 @@ def pinmux_twi_sda2(dut):
     # enough by now
 
     dut._log.info("Ok!, twi_sda test2 passed")
+
+def pinmux_twi_sda3(dut):
+    """Test for I2C multi-pin one FN_out (route 2 pins out to same function)
+    """
+    yield Timer(2)
+    # mux selection lines, each input two bit wide
+    dut.mux_lines_cell0_mux_in = 2
+    yield Timer(2)
+    # enable input for mux
+    dut.EN_mux_lines_cell0_mux = 0
+    dut.EN_mux_lines_cell1_mux = 1
+    dut.EN_mux_lines_cell2_mux = 0
