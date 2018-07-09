@@ -10,20 +10,20 @@ period = 20  # clk frequency = 50 MHz
 
 
 class IO(object):
-    def __init__(self, typ, name, inp=None, out=None, dirn=None):
+    def __init__(self, typ, name):
         self.typ = typ
         self.name = name
         if typ == 'in' or typ == 'inout':
-            self.inp = inp # Signal(bool(0))
+            self.inp = Signal(bool(0))
         if typ == 'out' or typ == 'inout':
-            self.out = out # Signal(bool(0))
+            self.out = Signal(bool(0))
         if typ == 'inout':
-            self.dirn = dirn # Signal(bool(0))
+            self.dirn = Signal(bool(0))
 
 
 class Mux(object):
-    def __init__(self, sel):#bwidth=2):
-        self.sel = sel
+    def __init__(self, bwidth=2):
+        self.sel = Signal(intbv(0)[bwidth:0])
 
 
 def f(obj):
@@ -54,7 +54,7 @@ def create_test(npins=2, nfns=4):
 from myhdl import block
 @block
 def test(testfn, clk, num_pins, num_fns, {0}):
-    args = ({0})
+    args = [{0}]
     return testfn(clk, num_pins, num_fns, args)
 """
 
@@ -92,7 +92,6 @@ def test2(clk, num_pins, num_fns, args):
     muxes = []
     pins = []
     fns = []
-    args = list(args)
     for i in range(num_pins):
         muxes.append(args.pop(0))
         pins.append(args.pop(0))
@@ -131,30 +130,23 @@ def mux_tb():
     fdirs = []
     args = []
     for i in range(2):
-        sel = Signal(intbv(0)[2:0])
-        m = Mux(sel)
+        m = Mux()
         muxes.append(m)
-        muxvals.append(sel)
+        muxvals.append(m.sel)
         args.append(m)
-        inp = Signal(bool(0))
-        out = Signal(bool(0))
-        dirn = Signal(bool(0))
-        pin = IO("inout", "name%d" % i, inp=inp, out=out, dirn=dirn)
+        pin = IO("inout", "name%d" % i)
         pins.append(pin)
         args.append(pin)
-        ins.append(inp)
-        outs.append(out)
-        dirs.append(dirn)
+        ins.append(pin.inp)
+        outs.append(pin.out)
+        dirs.append(pin.dirn)
     fns = []
     for i in range(4):
-        inp = Signal(bool(0))
-        out = Signal(bool(0))
-        dirn = Signal(bool(0))
-        fn = IO("inout", "fnname%d" % i, inp=inp, out=out, dirn=dirn)
+        fn = IO("inout", "fnname%d" % i)
         fns.append(fn)
-        fins.append(inp)
-        fouts.append(out)
-        fdirs.append(dirn)
+        fins.append(fn.inp)
+        fouts.append(fn.out)
+        fdirs.append(fn.dirn)
         args.append(fn)
     clk = Signal(bool(0))
 
@@ -196,30 +188,23 @@ def test_mux():
     fdirs = []
     args = []
     for i in range(2):
-        sel = Signal(intbv(0)[2:0])
-        m = Mux(sel)
+        m = Mux()
         muxes.append(m)
-        muxvals.append(sel)
+        muxvals.append(m.sel)
         args.append(m)
-        inp = Signal(bool(0))
-        out = Signal(bool(0))
-        dirn = Signal(bool(0))
-        pin = IO("inout", "name%d" % i, inp=inp, out=out, dirn=dirn)
+        pin = IO("inout", "name%d" % i)
         pins.append(pin)
         args.append(pin)
-        ins.append(inp)
-        outs.append(out)
-        dirs.append(dirn)
+        ins.append(pin.inp)
+        outs.append(pin.out)
+        dirs.append(pin.dirn)
     fns = []
     for i in range(4):
-        inp = Signal(bool(0))
-        out = Signal(bool(0))
-        dirn = Signal(bool(0))
-        fn = IO("inout", "fnname%d" % i, inp=inp, out=out, dirn=dirn)
+        fn = IO("inout", "fnname%d" % i)
         fns.append(fn)
-        fins.append(inp)
-        fouts.append(out)
-        fdirs.append(dirn)
+        fins.append(fn.inp)
+        fouts.append(fn.out)
+        fdirs.append(fn.dirn)
         args.append(fn)
     clk = Signal(bool(0))
 
