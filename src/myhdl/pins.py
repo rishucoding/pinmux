@@ -54,8 +54,7 @@ from myhdl import block
 @block
 def test(testfn, {0}):
     args = ({0})
-    return testfn(*args)
-    return test
+    return testfn(args)
 """
     args = ['clk', 'muxes', 'pins', 'fns']
     args = ','.join(args)
@@ -82,7 +81,8 @@ def proxy(func):
 
 
 @block
-def test2(clk, muxes, pins, fns):
+def test2(args):
+    (clk, muxes, pins, fns) = args
 
     muxinst = []
 
