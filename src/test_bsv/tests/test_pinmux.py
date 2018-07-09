@@ -48,14 +48,14 @@ def pinmux_gpio2(dut):
 
     if dut.iocell_side_io2_cell_out != 1:
         raise TestFailure(
-            "gpioa_a2=0/mux=0/out=1 %s iocell_io2 != 1" %
+            "gpioa_a2=1/mux=0/out=1 %s iocell_io2 != 1" %
             str(dut.iocell_side_io2_cell_out))
 
     # GPIO2-in test (first see if it's tri-state)
     #
     if str(dut.peripheral_side_gpioa_a2_in) != "x":
         raise TestFailure(
-            "gpioa_a2=0/mux=0/out=1 %s gpio_a2_in != x" %
+            "gpioa_a2=x/mux=0/out=1 %s gpio_a2_in != x" %
             str(dut.peripheral_side_gpioa_a2_in))
 
     dut.peripheral_side_gpioa_a2_outen_in = 0
@@ -109,7 +109,7 @@ def pinmux_uart(dut):
 
     if dut.iocell_side_io0_cell_out != 1:
         raise TestFailure(
-            "uart_tx=1/mux=0/out=1 %s iocell_io0 != 1" %
+            "uart_tx=1/mux=1/out=1 %s iocell_io0 != 1" %
             str(dut.iocell_side_io0_cell_out))
 
     dut.peripheral_side_uart_tx_in = 0
@@ -118,7 +118,7 @@ def pinmux_uart(dut):
 
     if dut.iocell_side_io0_cell_out != 0:
         raise TestFailure(
-            "uart_tx=0/mux=0/out=1 %s iocell_io0 != 0" %
+            "uart_tx=0/mux=1/out=1 %s iocell_io0 != 0" %
             str(dut.iocell_side_io0_cell_out))
 
     dut._log.info("Ok!, uart passed")
@@ -145,7 +145,7 @@ def pinmux_twi_scl(dut):
 
     if dut.iocell_side_io2_cell_out != 0:
         raise TestFailure(
-            "twi_scl=0/mux=0/out=1 %s iocell_io2 != 0" %
+            "twi_scl=0/mux=2/out=1 %s iocell_io2 != 0" %
             str(dut.iocell_side_io2_cell_out))
 
     dut.peripheral_side_twi_scl_out_in = 1
@@ -153,7 +153,7 @@ def pinmux_twi_scl(dut):
 
     if dut.iocell_side_io2_cell_out != 1:
         raise TestFailure(
-            "twi_scl=0/mux=0/out=1 %s iocell_io2 != 0" %
+            "twi_scl=1/mux=2/out=1 %s iocell_io2 != 1" %
             str(dut.iocell_side_io2_cell_out))
 
     dut._log.info("twi_scl_in %s" % dut.peripheral_side_twi_scl_in)
@@ -165,7 +165,7 @@ def pinmux_twi_scl(dut):
 
     if dut.peripheral_side_twi_scl_in != 0:
         raise TestFailure(
-            "iocell_io2=0/mux=0/out=0 %s twi_scl != 0" %
+            "iocell_io2=0/mux=2/out=0 %s twi_scl != 0" %
             str(dut.peripheral_side_twi_scl_in))
 
     dut.iocell_side_io2_cell_in_in = 1
@@ -173,7 +173,7 @@ def pinmux_twi_scl(dut):
 
     if dut.peripheral_side_twi_scl_in != 1:
         raise TestFailure(
-            "iocell_io2=1/mux=0/out=0 %s twi_scl != 1" %
+            "iocell_io2=1/mux=2/out=0 %s twi_scl != 1" %
             str(dut.peripheral_side_twi_scl_in))
 
     dut.peripheral_side_twi_scl_outen_in = 1
@@ -183,7 +183,7 @@ def pinmux_twi_scl(dut):
 
     if dut.iocell_side_io2_cell_out != 1:
         raise TestFailure(
-            "twi_scl=0/mux=0/out=1 %s iocell_io2 != 1" %
+            "twi_scl=0/mux=2/out=1 %s iocell_io2 != 1" %
             str(dut.iocell_side_io2_cell_out))
 
     yield Timer(2)
@@ -215,7 +215,7 @@ def pinmux_twi_sda(dut):
     # Test for out for twi_sda
     if dut.iocell_side_io1_cell_out != 0:
         raise TestFailure(
-            "twi_sda=0/mux=0/out=1 %s iocell_io1 != 0" %
+            "twi_sda=0/mux=2/out=1 %s iocell_io1 != 0" %
             str(dut.iocell_side_io1_cell_out))
 
     dut.peripheral_side_twi_sda_out_in = 1
@@ -223,7 +223,7 @@ def pinmux_twi_sda(dut):
 
     if dut.iocell_side_io1_cell_out != 1:
         raise TestFailure(
-            "twi_sda=1/mux=0/out=1 %s iocell_io1 != 1" %
+            "twi_sda=1/mux=2/out=1 %s iocell_io1 != 1" %
             str(dut.iocell_side_io1_cell_out))
 
     dut._log.info("twi_sda_in %s" % dut.peripheral_side_twi_sda_in)
@@ -235,7 +235,7 @@ def pinmux_twi_sda(dut):
 
     if dut.peripheral_side_twi_sda_in != 0:
         raise TestFailure(
-            "iocell_io1=0/mux=0/out=0 %s twi_sda != 0" %
+            "iocell_io1=0/mux=2/out=0 %s twi_sda != 0" %
             str(dut.peripheral_side_twi_sda_in))
 
     dut.iocell_side_io1_cell_in_in = 1
@@ -243,7 +243,7 @@ def pinmux_twi_sda(dut):
 
     if dut.peripheral_side_twi_sda_in != 1:
         raise TestFailure(
-            "iocell_io1=1/mux=0/out=0 %s twi_sda != 1" %
+            "iocell_io1=1/mux=2/out=0 %s twi_sda != 1" %
             str(dut.peripheral_side_twi_sda_in))
 
     dut.peripheral_side_twi_sda_outen_in = 1
@@ -253,7 +253,7 @@ def pinmux_twi_sda(dut):
 
     if dut.iocell_side_io1_cell_out != 1:
         raise TestFailure(
-            "twi_sda=0/mux=0/out=1 %s iocell_io1 != 1" %
+            "twi_sda=1/mux=2/out=1 %s iocell_io1 != 1" %
             str(dut.iocell_side_io1_cell_out))
 
     yield Timer(2)
@@ -283,7 +283,7 @@ def pinmux_twi_sda2(dut):
 
     if dut.peripheral_side_twi_sda_in != 0:
         raise TestFailure(
-            "iocell_io1=0/mux=0/out=0 %s twi_sda != 0" %
+            "iocell_io1=0/mux=2/out=0 %s twi_sda != 0" %
             str(dut.peripheral_side_twi_sda_in))
 
     dut.iocell_side_io1_cell_in_in = 1
@@ -291,7 +291,7 @@ def pinmux_twi_sda2(dut):
 
     if dut.peripheral_side_twi_sda_in != 1:
         raise TestFailure(
-            "iocell_io1=1/mux=0/out=0 %s twi_sda != 1" %
+            "iocell_io1=1/mux=2/out=0 %s twi_sda != 1" %
             str(dut.peripheral_side_twi_sda_in))
 
     dut.iocell_side_io1_cell_in_in = 0
@@ -300,7 +300,7 @@ def pinmux_twi_sda2(dut):
 
     if dut.peripheral_side_twi_sda_in != 0:
         raise TestFailure(
-            "iocell_io1=1/mux=0/out=0 %s twi_sda != 0" %
+            "iocell_io1=0/mux=2/out=0 %s twi_sda != 0" %
             str(dut.peripheral_side_twi_sda_in))
 
     # ok now set up gpioa0, set it to the opposite of twi_sda (0) i.e. gpioa0=1
@@ -313,14 +313,14 @@ def pinmux_twi_sda2(dut):
 
     if dut.peripheral_side_gpioa_a0_in != 1:  # output of iopad
         raise TestFailure(
-            "iocell_io0=1/mux=0/out=0 %s gpio_a0 != 1" %
+            "iocell_io0=1/mux=2/out=0 %s gpio_a0 != 1" %
             str(dut.peripheral_side_gpioa_a0_in))
 
     # also twi_sda should also = 0, because.. because...
     # pin1 is still routed to it, and pin1 is still set to 0...
     if dut.peripheral_side_twi_sda_in != 0:
         raise TestFailure(
-            "iocell_io0=1/mux=0/out=0 %s twi_sda != 0" %
+            "iocell_io0=1/mux=2/out=0 %s twi_sda != 0" %
             str(dut.peripheral_side_twi_sda_in))
 
     # ok flip over to test 3
@@ -331,7 +331,7 @@ def pinmux_twi_sda2(dut):
     # routing iopad0 to gpioa0...
     if dut.peripheral_side_gpioa_a0_in != 0:  # output of iopad
         raise TestFailure(
-            "iocell_io0=1/mux=0/out=0 %s gpio_a0 != 0" %
+            "iocell_io0=1/mux=2/out=0 %s gpio_a0 != 0" %
             str(dut.peripheral_side_gpioa_a0_in))
 
     # AND, at the same time, twi_sda should also = 1, because.. because...
@@ -341,7 +341,7 @@ def pinmux_twi_sda2(dut):
     # gets precedence.
     if dut.peripheral_side_twi_sda_in != 1:
         raise TestFailure(
-            "iocell_io0=1/mux=0/out=0 %s twi_sda != 1" %
+            "iocell_io0=1/mux=2/out=0 %s twi_sda != 1" %
             str(dut.peripheral_side_twi_sda_in))
 
     # ok so now set cell1 muxer to point to gpioa1...
@@ -351,7 +351,7 @@ def pinmux_twi_sda2(dut):
     # now we test twi sda again (it shouldn't change)
     if dut.peripheral_side_twi_sda_in != 1:
         raise TestFailure(
-            "iocell_io0=1/mux=0/out=0 %s twi_sda != 1" %
+            "iocell_io0=1/mux=2/out=0 %s twi_sda != 1" %
             str(dut.peripheral_side_twi_sda_in))
 
     dut.iocell_side_io1_cell_in_in = 1  # now try setting cell1 to 0
@@ -360,7 +360,7 @@ def pinmux_twi_sda2(dut):
     # now we test twi sda again after changing io0, it *still* shouldn't change
     if dut.peripheral_side_twi_sda_in != 1:
         raise TestFailure(
-            "iocell_io0=1/mux=0/out=0 %s twi_sda != 1" %
+            "iocell_io0=1/mux=2/out=0 %s twi_sda != 1" %
             str(dut.peripheral_side_twi_sda_in))
 
     # ok that's probably enough, we could check here that actually gpioa1
@@ -398,7 +398,7 @@ def pinmux_twi_sda3(dut):
     # Test for out for twi_sda
     if dut.iocell_side_io1_cell_out != 0:
         raise TestFailure(
-            "twi_sda=0/mux=0/out=1 %s iocell_io1 != 0" %
+            "twi_sda=0/mux=2/out=1 %s iocell_io1 != 0" %
             str(dut.iocell_side_io1_cell_out))
     
     dut.peripheral_side_twi_sda_out_in = 1
@@ -406,8 +406,8 @@ def pinmux_twi_sda3(dut):
     # ok, now io1_cell_out should be equal to 1
     if dut.iocell_side_io1_cell_out != 1:
         raise TestFailure(
-            "twi_sda=1/mux=0/out=1 %s iocell_io1 != 1" %
-            str(dut.iocell_side_io1_cell_out))
+            "twi_sda=1/mux=2/out=1 %s iocell_io1 != 1" %
+            str(dut.peripheral_side_twi_sda_out_in))
 
     # ok, now let's set the mux lines to cell0
     # and select twi_sda : pin 0/mux 3
@@ -421,8 +421,8 @@ def pinmux_twi_sda3(dut):
 
     if dut.iocell_side_io0_cell_out != 1:
         raise TestFailure(
-            "twi_sda=1/mux=0/out=1 %s iocell_io1 != 1" %
-            str(dut.iocell_side_io1_cell_out))
+            "twi_sda=1/mux=3/out=1 %s iocell_io0 != 1" %
+            str(dut.iocell_side_io0_cell_out))
 
     # Now, let's test the working of output muxing logic
     # at cell 0, by enabling the mux selection line for
@@ -438,14 +438,14 @@ def pinmux_twi_sda3(dut):
     # check the output is correctly getting passed
     if dut.iocell_side_io0_cell_out != 0:  # output of iopad
         raise TestFailure(
-            "gpioa_a2=0/mux=0/out=1 %s iocell_io2 != 0" %
+            "gpioa_a0=0/mux=0/out=1 %s iocell_io0 != 0" %
             str(dut.iocell_side_io2_cell_out))
 
     yield Timer(2)
 
     if dut.peripheral_side_twi_sda_out_in != 1:  # output of twi_sda
         raise TestFailure(
-            "gpioa_a2=0/mux=0/out=1 %s iocell_io2 != 0" %
+            "twi_sda=0/mux=0/out=1 %s iocell_io0 != 0" %
             str(dut.iocell_side_io2_cell_out))
 
     # Now, let's test the working of output muxing logic 
@@ -455,7 +455,7 @@ def pinmux_twi_sda3(dut):
     yield Timer(2)
     if dut.iocell_side_io1_cell_out != 1:
         raise TestFailure(
-            "twi_sda=1/mux=0/out=1 %s iocell_io1 != 1" %
+            "twi_sda=1/mux=2/out=1 %s iocell_io1 != 1" %
             str(dut.iocell_side_io1_cell_out))
    
     # ok, now set the muxing selection line for gpio1
@@ -468,7 +468,7 @@ def pinmux_twi_sda3(dut):
     yield Timer(2)
     if dut.iocell_side_io1_cell_out != 0:
         raise TestFailure(
-            "twi_sda=1/mux=0/out=1 %s iocell_io1 != 1" %
+            "gpioa_a1=1/mux=0/out=1 %s iocell_io1 != 1" %
             str(dut.iocell_side_io1_cell_out))
 
     dut._log.info("Ok!, twi_sda test3 passed")
