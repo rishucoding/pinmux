@@ -10,19 +10,20 @@ period = 20  # clk frequency = 50 MHz
 
 
 class IO(object):
-    def __init__(self, typ, name):
+    def __init__(self, typ, name, inp=None, out=None, dirn=None):
         self.typ = typ
+        self.name = name
         if typ == 'in' or typ == 'inout':
-            self.inp = Signal(bool(0))
+            self.inp = inp # Signal(bool(0))
         if typ == 'out' or typ == 'inout':
-            self.out = Signal(bool(0))
+            self.out = out # Signal(bool(0))
         if typ == 'inout':
-            self.dirn = Signal(bool(0))
+            self.dirn = dirn # Signal(bool(0))
 
 
 class Mux(object):
-    def __init__(self, bwidth=2):
-        self.sel = Signal(intbv(0)[bwidth:0])
+    def __init__(self, sel):#bwidth=2):
+        self.sel = sel
 
 
 def f(obj):
@@ -48,15 +49,21 @@ def Test(*args):
     return Foo(test2)
 
 
-def create_test():
+def create_test(npins=2, nfns=4):
     x = """\
 from myhdl import block
 @block
-def test(testfn, {0}):
+def test(testfn, clk, num_pins, num_fns, {0}):
     args = ({0})
-    return testfn(args)
+    return testfn(clk, num_pins, num_fns, args)
 """
-    args = ['clk', 'muxes', 'pins', 'fns']
+
+    args = []
+    for pnum in range(npins):
+        args.append("sel%d" % pnum)
+        args.append("pin%d" % pnum)
+    for pnum in range(nfns):
+        args.append("fn%d" % pnum)
     args = ','.join(args)
     x = x.format(args)
     print x
@@ -81,8 +88,16 @@ def proxy(func):
 
 
 @block
-def test2(args):
-    (clk, muxes, pins, fns) = args
+def test2(clk, num_pins, num_fns, args):
+    muxes = []
+    pins = []
+    fns = []
+    args = list(args)
+    for i in range(num_pins):
+        muxes.append(args.pop(0))
+        pins.append(args.pop(0))
+    for i in range(num_fns):
+        fns.append(args.pop(0))
 
     muxinst = []
 
@@ -110,20 +125,40 @@ def mux_tb():
     pins = []
     ins = []
     outs = []
+    dirs = []
+    fins = []
+    fouts = []
+    fdirs = []
+    args = []
     for i in range(2):
-        m = Mux()
+        sel = Signal(intbv(0)[2:0])
+        m = Mux(sel)
         muxes.append(m)
-        muxvals.append(m.sel)
-        pin = IO("inout", "name%d" % i)
+        muxvals.append(sel)
+        args.append(m)
+        inp = Signal(bool(0))
+        out = Signal(bool(0))
+        dirn = Signal(bool(0))
+        pin = IO("inout", "name%d" % i, inp=inp, out=out, dirn=dirn)
         pins.append(pin)
-        ins.append(pin.inp)
-        outs.append(pin.out)
+        args.append(pin)
+        ins.append(inp)
+        outs.append(out)
+        dirs.append(dirn)
     fns = []
     for i in range(4):
-        fns.append(IO("inout", "fnname%d" % i))
+        inp = Signal(bool(0))
+        out = Signal(bool(0))
+        dirn = Signal(bool(0))
+        fn = IO("inout", "fnname%d" % i, inp=inp, out=out, dirn=dirn)
+        fns.append(fn)
+        fins.append(inp)
+        fouts.append(out)
+        fdirs.append(dirn)
+        args.append(fn)
     clk = Signal(bool(0))
 
-    mux_inst = test(test2, clk, muxes, pins, fns)
+    mux_inst = test(test2, clk, 2, 4, *args)
 
     @instance
     def clk_signal():
@@ -155,21 +190,40 @@ def test_mux():
     pins = []
     ins = []
     outs = []
-
+    dirs = []
+    fins = []
+    fouts = []
+    fdirs = []
+    args = []
     for i in range(2):
-        m = Mux()
+        sel = Signal(intbv(0)[2:0])
+        m = Mux(sel)
         muxes.append(m)
-        muxvals.append(m.sel)
-        pin = IO("inout", "name%d" % i)
+        muxvals.append(sel)
+        args.append(m)
+        inp = Signal(bool(0))
+        out = Signal(bool(0))
+        dirn = Signal(bool(0))
+        pin = IO("inout", "name%d" % i, inp=inp, out=out, dirn=dirn)
         pins.append(pin)
-        ins.append(pin.inp)
-        outs.append(pin.out)
+        args.append(pin)
+        ins.append(inp)
+        outs.append(out)
+        dirs.append(dirn)
     fns = []
     for i in range(4):
-        fns.append(IO("inout", "fnname%d" % i))
+        inp = Signal(bool(0))
+        out = Signal(bool(0))
+        dirn = Signal(bool(0))
+        fn = IO("inout", "fnname%d" % i, inp=inp, out=out, dirn=dirn)
+        fns.append(fn)
+        fins.append(inp)
+        fouts.append(out)
+        fdirs.append(dirn)
+        args.append(fn)
     clk = Signal(bool(0))
 
-    mux_inst = test(test2, clk, muxes, pins, fns)
+    mux_inst = test(test2, clk, 2, 4, *args)
     mux_inst.convert(hdl="Verilog", initial_values=True)
     #mux_inst = Test(clk, muxes, pins, fns)
     #toVerilog(mux_inst, clk, muxes, pins, fns)
