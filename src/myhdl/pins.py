@@ -12,6 +12,7 @@ period = 20  # clk frequency = 50 MHz
 class IO(object):
     def __init__(self, typ, name):
         self.typ = typ
+        self.name = name
         if typ == 'in' or typ == 'inout':
             self.inp = Signal(bool(0))
         if typ == 'out' or typ == 'inout':
@@ -48,25 +49,32 @@ def Test(*args):
     return Foo(test2)
 
 
-def create_test():
+def create_test(npins=2, nfns=4):
     x = """\
-def getfn({0}):
-    def test({0}):
-        args = ({0})
-        return test2(*args)
-    return test
+from myhdl import block
+@block
+def test(testfn, clk, num_pins, num_fns, {0}):
+    args = [{0}]
+    return testfn(clk, num_pins, num_fns, args)
 """
-    args = ['clk', 'muxes', 'pins', 'fns']
+
+    args = []
+    for pnum in range(npins):
+        args.append("sel%d" % pnum)
+        args.append("pin%d" % pnum)
+    for pnum in range(nfns):
+        args.append("fn%d" % pnum)
     args = ','.join(args)
     x = x.format(args)
     print x
     print repr(x)
-    y = {'test2': test2, 'block': block}
+    with open("testmod.py", "w") as f:
+        f.write(x)
+    x = "from testmod import test"
     code = compile(x, '<string>', 'exec')
+    y = {}
     exec code in y
-    x = y["getfn"]
-    #print inspect.getsourcelines(proxy)
-    #print inspect.getsourcelines(x)
+    x = y["test"]
 
     def fn(*args):
         return block(x)
@@ -79,7 +87,16 @@ def proxy(func):
     return wrapper
 
 
-def test2(clk, muxes, pins, fns):
+@block
+def test2(clk, num_pins, num_fns, args):
+    muxes = []
+    pins = []
+    fns = []
+    for i in range(num_pins):
+        muxes.append(args.pop(0))
+        pins.append(args.pop(0))
+    for i in range(num_fns):
+        fns.append(args.pop(0))
 
     muxinst = []
 
@@ -107,20 +124,33 @@ def mux_tb():
     pins = []
     ins = []
     outs = []
+    dirs = []
+    fins = []
+    fouts = []
+    fdirs = []
+    args = []
     for i in range(2):
         m = Mux()
         muxes.append(m)
         muxvals.append(m.sel)
+        args.append(m)
         pin = IO("inout", "name%d" % i)
         pins.append(pin)
+        args.append(pin)
         ins.append(pin.inp)
         outs.append(pin.out)
+        dirs.append(pin.dirn)
     fns = []
     for i in range(4):
-        fns.append(IO("inout", "fnname%d" % i))
+        fn = IO("inout", "fnname%d" % i)
+        fns.append(fn)
+        fins.append(fn.inp)
+        fouts.append(fn.out)
+        fdirs.append(fn.dirn)
+        args.append(fn)
     clk = Signal(bool(0))
 
-    mux_inst = Test(clk, muxes, pins, fns)
+    mux_inst = test(test2, clk, 2, 4, *args)
 
     @instance
     def clk_signal():
@@ -152,21 +182,35 @@ def test_mux():
     pins = []
     ins = []
     outs = []
-
+    dirs = []
+    fins = []
+    fouts = []
+    fdirs = []
+    args = []
     for i in range(2):
         m = Mux()
         muxes.append(m)
         muxvals.append(m.sel)
+        args.append(m)
         pin = IO("inout", "name%d" % i)
         pins.append(pin)
+        args.append(pin)
         ins.append(pin.inp)
         outs.append(pin.out)
+        dirs.append(pin.dirn)
     fns = []
     for i in range(4):
-        fns.append(IO("inout", "fnname%d" % i))
+        fn = IO("inout", "fnname%d" % i)
+        fns.append(fn)
+        fins.append(fn.inp)
+        fouts.append(fn.out)
+        fdirs.append(fn.dirn)
+        args.append(fn)
     clk = Signal(bool(0))
 
-    mux_inst = Test(clk, muxes, pins, fns)
+    mux_inst = test(test2, clk, 2, 4, *args)
+    mux_inst.convert(hdl="Verilog", initial_values=True)
+    #mux_inst = Test(clk, muxes, pins, fns)
     #toVerilog(mux_inst, clk, muxes, pins, fns)
     #deco = Deco()
     #b = _Block(mux_inst, deco, "test", "test.py", 1, clk, muxes, pins, fns)
@@ -182,7 +226,7 @@ def test_mux():
     tb.config_sim(trace=True)
     tb.run_sim(66 * period)  # run for 15 clock cycle
 
-#test = create_test()
+test = create_test()
 
 
 if __name__ == '__main__':
