@@ -209,18 +209,18 @@ def test_mux():
     clk = Signal(bool(0))
 
     mux_inst = test(test2, clk, 2, 4, *args)
-    mux_inst.convert(hdl="Verilog", initial_values=True)
+    mux_inst.convert(hdl="Verilog", initial_values=True, testbench=False)
     #mux_inst = Test(clk, muxes, pins, fns)
     #toVerilog(mux_inst, clk, muxes, pins, fns)
     #deco = Deco()
     #b = _Block(mux_inst, deco, "test", "test.py", 1, clk, muxes, pins, fns)
     #b.convert(hdl="Verilog", name="test", initial_values=True)
-    mux_inst.convert(hdl="Verilog", initial_values=True)
+    #mux_inst.convert(hdl="Verilog", initial_values=True)
     #block(mux_inst).convert(hdl="Verilog", initial_values=True)
 
     # test bench
     tb = mux_tb()
-    tb.convert(hdl="Verilog", initial_values=True)
+    tb.convert(hdl="Verilog", initial_values=True, testbench=True)
     # keep following lines below the 'tb.convert' line
     # otherwise error will be reported
     tb.config_sim(trace=True)
