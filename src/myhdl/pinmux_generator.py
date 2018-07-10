@@ -5,6 +5,7 @@ try:
 except ImportError:
     maketrans = str.maketrans
 
+# XXX hmmm duplicated from src/bsc/actual_pinmux.py
 digits = maketrans('0123456789', ' ' * 10)  # delete space later
 
 # XXX hmmm duplicated from src/bsc/actual_pinmux.py
