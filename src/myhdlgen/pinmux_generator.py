@@ -1,3 +1,5 @@
+import os
+import sys
 from parse import Parse
 from myhdlgen.pins import IO
 from ifacebase import InterfacesBase
@@ -22,29 +24,6 @@ def transfn(temp):
     return '_'.join(temp)
 
 
-class Pin(object):
-    """ pin interface declaration.
-        * name is the name of the pin
-        * ready, enabled and io all create a (* .... *) prefix
-        * action changes it to an "in" if true
-    """
-
-    def __init__(self, name,
-                 ready=True,
-                 enabled=True,
-                 io=False,
-                 action=False,
-                 bitspec=None,
-                 outenmode=False):
-        self.name = name
-        self.ready = ready
-        self.enabled = enabled
-        self.io = io
-        self.action = action
-        self.bitspec = bitspec if bitspec else 'Bit#(1)'
-        self.outenmode = outenmode
-
-
 class Interface(object):
     """ create an interface from a list of pinspecs.
         each pinspec is a dictionary, see Pin class arguments
@@ -54,8 +33,8 @@ class Interface(object):
     # sample interface object:
     """
     twiinterface_decl = Interface('twi',
-                                  [{'name': 'sda', 'outen': True},
-                                   {'name': 'scl', 'outen': True},
+                                  [{'name': 'sda', 'type': 'in'},
+                                   {'name': 'scl', 'type': 'inout'},
                                    ])
     """
 
@@ -102,6 +81,43 @@ class Interfaces(InterfacesBase):
     def __init__(self, pth=None):
         InterfacesBase.__init__(self, Interface, pth)
 
+def create_module(p, ifaces):
+    x = """\
+from myhdl import block
+@block
+def pinmux(muxfn, clk, p, ifaces, {0}):
+    args = [{0}]
+    return muxfn(clk, p, ifaces, args)
+"""
+
+    args = []
+    for cell in p.muxed_cells:
+        args.append("sel%d" % int(cell[0]))
+        args.append("io%d" % int(cell[0]))
+    print args
+    kl = ifaces.keys()
+    kl.sort()
+    for k, count in ifaces.ifacecount:
+        i = ifaces[k]
+        for c in range(count):
+            print k
+            args.append("%s%d" % (k, c))
+    args = ',\n\t\t'.join(args)
+    x = x.format(args)
+    path = os.path.abspath(__file__)
+    fname = os.path.split(path)[0]
+    fname = os.path.join(fname, "myhdlautogen.py")
+
+    with open(fname, "w") as f:
+        f.write(x)
+    x = "from myhdlgen.myhdlautogen import pinmux"
+    code = compile(x, '<string>', 'exec')
+    y = {}
+    exec code in y
+    x = y["pinmux"]
+
+    return x
+
 
 def init(p, ifaces):
     for cell in p.muxed_cells:
@@ -120,3 +136,4 @@ def pinmuxgen(pth=None, verify=True):
     print (p, dir(p))
     ifaces = Interfaces(pth)
     init(p, ifaces)
+    create_module(p, ifaces)
