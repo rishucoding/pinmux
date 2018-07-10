@@ -1,4 +1,5 @@
 from parse import Parse
+from myhdl.pins import IO
 from ifacebase import InterfacesBase
 try:
     from string import maketrans
@@ -66,21 +67,9 @@ class Interface(object):
         self.single = single
         for p in pinspecs:
             _p = {}
-            _p.update(p)
-            if p.get('outen') is True:  # special case, generate 3 pins
-                del _p['outen']
-                for psuffix in ['out', 'outen', 'in']:
-                    # changing the name (like sda) to (twi_sda_out)
-                    _p['name'] = "%s_%s" % (self.pname(p['name']), psuffix)
-                    _p['action'] = psuffix != 'in'
-                    self.pins.append(Pin(**_p))
-                    # will look like {'name': 'twi_sda_out', 'action': True}
-                    # {'name': 'twi_sda_outen', 'action': True}
-                    #{'name': 'twi_sda_in', 'action': False}
-                    # NOTice - outen key is removed
-            else:
-                _p['name'] = self.pname(p['name'])
-                self.pins.append(Pin(**_p))
+            _p['name'] = self.pname(p['name'])
+            _p['typ'] = self.pname(p['type'])
+            self.pins.append(IO(**_p))
 
     def getifacetype(self, name):
         for p in self.pinspecs:
@@ -128,6 +117,6 @@ def init(p, ifaces):
 
 def pinmuxgen(pth=None, verify=True):
     p = Parse(pth, verify)
-    print p, dir(p)
+    print (p, dir(p))
     ifaces = Interfaces(pth)
     init(p, ifaces)

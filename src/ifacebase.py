@@ -66,7 +66,8 @@ class InterfacesBase(UserDict):
                 ln = ln.strip()
                 ln = ln.split("\t")
                 name = ln[0]
-                d = {'name': name}  # here we start to make the dictionary
+                d = {'name': name,  # here we start to make the dictionary
+                     'type': ln[1]}
                 if ln[1] == 'out':
                     d['action'] = True  # adding element to the dict
                 elif ln[1] == 'inout':
