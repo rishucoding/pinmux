@@ -22,7 +22,7 @@ import sys
 from spec import modules, specgen, dummytest
 
 from bsv.pinmux_generator import pinmuxgen as bsvgen
-from myhdl.pinmux_generator import pinmuxgen as myhdlgen
+from myhdlgen.pinmux_generator import pinmuxgen as myhdlgen
 
 
 def printhelp():

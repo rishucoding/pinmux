@@ -227,7 +227,7 @@ def test_mux():
     tb.run_sim(66 * period)  # run for 15 clock cycle
 
 
-test = create_test()
+#test = create_test()
 
 
 if __name__ == '__main__':
