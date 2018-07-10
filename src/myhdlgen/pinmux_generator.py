@@ -1,5 +1,5 @@
 from parse import Parse
-from myhdl.pins import IO
+from myhdlgen.pins import IO
 from ifacebase import InterfacesBase
 try:
     from string import maketrans
