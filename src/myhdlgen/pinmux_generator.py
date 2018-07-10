@@ -81,6 +81,7 @@ class Interfaces(InterfacesBase):
     def __init__(self, pth=None):
         InterfacesBase.__init__(self, Interface, pth)
 
+
 def create_module(p, ifaces):
     x = """\
 from myhdl import block
@@ -95,8 +96,7 @@ def pinmux(muxfn, clk, p, ifaces, {0}):
         args.append("sel%d" % int(cell[0]))
         args.append("io%d" % int(cell[0]))
     print args
-    kl = ifaces.keys()
-    kl.sort()
+    kl = sorted(ifaces.keys())
     for k, count in ifaces.ifacecount:
         i = ifaces[k]
         for c in range(count):
