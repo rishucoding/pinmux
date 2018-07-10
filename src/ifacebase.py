@@ -78,4 +78,3 @@ class InterfacesBase(UserDict):
                         ganged[bus].append(name)
                 spec.append(d)
         return spec, ganged
-

@@ -9,6 +9,7 @@ from bsv.wire_def import generic_io  # special case
 from bsv.wire_def import muxwire  # special case
 from ifacebase import InterfacesBase
 
+
 class Pin(object):
     """ pin interface declaration.
         * name is the name of the pin
@@ -312,9 +313,9 @@ class Interfaces(InterfacesBase):
 
 # ========= Interface declarations ================ #
 
-mux_interface = MuxInterface('cell', [{'name': 'mux', 'ready': False,
-                                       'enabled': False,
-                                       'bitspec': '{1}', 'action': True}])
+mux_interface = MuxInterface('cell',
+                             [{'name': 'mux', 'ready': False, 'enabled': False,
+                               'bitspec': '{1}', 'action': True}])
 
 io_interface = IOInterface(
     'io',

@@ -95,7 +95,7 @@ if __name__ == '__main__':
             else:
                 specgen(of, output_dir, pinout, bankspec, pinspec, fixedpins)
     else:
-        gentypes = {'bsv': bsvgen, 'myhdl': myhdlgen }
+        gentypes = {'bsv': bsvgen, 'myhdl': myhdlgen}
         if output_type not in gentypes:
             print ("ERROR: output type '%s' does not exist" % output_type)
             printhelp()

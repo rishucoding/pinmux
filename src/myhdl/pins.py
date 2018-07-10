@@ -226,6 +226,7 @@ def test_mux():
     tb.config_sim(trace=True)
     tb.run_sim(66 * period)  # run for 15 clock cycle
 
+
 test = create_test()
 
 

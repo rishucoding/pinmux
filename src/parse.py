@@ -110,7 +110,6 @@ class Parse(object):
         return int(math.log(max_num_cells + 1, 2))
 
 
-
 if __name__ == '__main__':
     p = Parse()
     print (p.N_IO)

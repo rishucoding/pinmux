@@ -8,6 +8,8 @@ except ImportError:
 digits = maketrans('0123456789', ' ' * 10)  # delete space later
 
 # XXX hmmm duplicated from src/bsc/actual_pinmux.py
+
+
 def transfn(temp):
     """ removes the number from the string of signal name.
     """
@@ -101,7 +103,6 @@ class Interface(object):
         if self.single:
             return '%s_%s' % (self.ifacename, name)
         return '%s{0}_%s' % (self.ifacename, name)
-
 
 
 class Interfaces(InterfacesBase):
