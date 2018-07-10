@@ -174,7 +174,7 @@ def init(p, ifaces):
                 continue
             temp = transfn(cname)
             x = ifaces.getifacetype(temp)
-            #print (cname, temp, x)
+            print (cname, temp, x)
             assert x is not None, "ERROR: The signal : " + \
                 str(cname) + \
                 " of pinmap.txt isn't present \nin the current" + \
