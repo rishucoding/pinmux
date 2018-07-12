@@ -1,0 +1,1534 @@
+commit a7d694c19ebcbb5f997a068f96d5505d621a9c7b
+Author: rishucoding <rishucoding@gmail.com>
+Date:   Fri Jun 29 18:10:58 2018 +0530
+
+    added comments in interface_decl.py
+
+commit 031e92d1326726567958c134c350cbba08bcb7e5
+Author: rishucoding <rishucoding@gmail.com>
+Date:   Wed Jun 27 22:00:17 2018 +0530
+
+    added comments for functions
+
+commit 314ec2b8ca028c236dfe97c54d27d5fae56bfb2e
+Author: rishucoding <rishucoding@gmail.com>
+Date:   Wed Jun 27 10:10:13 2018 +0530
+
+    created a new directory
+
+commit 8e7e00fb7be010e5c9834138cb0ba4d213531f8a
+Author: rishucoding <rishucoding@gmail.com>
+Date:   Wed Jun 27 09:14:23 2018 +0530
+
+    fix bug in dedicated cell logic
+
+commit 4e4025ab2ef6be15ef36b82aadc739f74ae56906
+Author: rishucoding <rishucoding@gmail.com>
+Date:   Tue Jun 26 19:53:33 2018 +0530
+
+    added comment : meaning of idx in mkcomment
+
+commit 2ba3914e604ac97e4937a674dea23f9d06bb98f1
+Author: rishucoding <rishucoding@gmail.com>
+Date:   Tue Jun 26 19:52:11 2018 +0530
+
+    updated notes ..breif info about acutal_pinmux.py
+
+commit 8fa439f3955e9764d8edad0d8c10f0243278db56
+Author: rishucoding <rishucoding@gmail.com>
+Date:   Tue Jun 26 12:36:36 2018 +0530
+
+    notes for specific function and ideas
+
+commit 939aff6c3735b11f22636fd4c73e137dfe989481
+Author: rishucoding <rishucoding@gmail.com>
+Date:   Tue Jun 26 12:34:42 2018 +0530
+
+    fixed bug due to insertion of comment
+
+commit 8789617d9373304fbc4c2399de96fd1c02348cfb
+Author: rishucoding <rishucoding@gmail.com>
+Date:   Tue Jun 26 11:12:32 2018 +0530
+
+    added comment for assertion
+
+commit 455b6d5807254b4380fb08cd027aec382630647e
+Author: rishucoding <rishucoding@gmail.com>
+Date:   Tue Jun 26 10:39:28 2018 +0530
+
+    Pushing repository on Github
+
+commit 0b28aea52a4578d766fc4dc8028163495833feda
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Mon Jun 25 12:14:28 2018 +0100
+
+    reformat declarations to look like test file, bit hacky...
+
+commit 51314a7a3b434ea6e9fac8b8252fa315068b60f4
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Mon Jun 25 11:53:29 2018 +0100
+
+    split mux-generation into separate function, use it for both out and outen
+
+commit a18ccefc3fcb0879a18882da3a723e59ddc4f730
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Mon Jun 25 11:51:07 2018 +0100
+
+    correct test file
+
+commit d399b5a7c6ca775e614ea28f92f871e75af5290e
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Mon Jun 25 11:20:10 2018 +0100
+
+    cell mux bitwidth 2
+
+commit aa77942acbd1a9a9eed635758560728444875cd3
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Mon Jun 25 10:17:44 2018 +0100
+
+    pep8 cleanup
+
+commit 0ec5a49eb0475cd052ae96ce9723cca7329723da
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Mon Jun 25 10:15:48 2018 +0100
+
+    use tabs not spaces
+
+commit 8bf8e7653255fe1f6647d843b4e590fc2be5d79f
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Mon Jun 25 10:13:53 2018 +0100
+
+    2 wires per cell muxer
+
+commit a00a50ae081d1b41910c8f38064275f78a8ef912
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Mon Jun 25 10:04:35 2018 +0100
+
+    extend mux entries in test file to cover up to 1<<cell_bitwidth
+
+commit b7261abcb50126621d8a9db8daf745b54076b063
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Mon Jun 25 09:56:11 2018 +0100
+
+    do full cell mux range otherwise spurious outputs occur
+
+commit 1463d9f12d7e2993c379559e508f7eb560fac371
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Mon Jun 25 09:45:07 2018 +0100
+
+    move cell_bit_width function
+
+commit af8c7a1a6c58759def63dc022c51c14e42e682cc
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Mon Jun 25 09:27:18 2018 +0100
+
+    add comment insertion thing into muxer output
+
+commit 42dfe24d4b90eea0fffa56623aaab0881dfb89a4
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Mon Jun 25 09:12:57 2018 +0100
+
+    clarify out-mux formatting
+
+commit e49885e226994a521cff9f0bdc2a834d4bc5ccb0
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Mon Jun 25 09:04:19 2018 +0100
+
+    remove debug print
+
+commit 1f8ca1f6caebaf15ef4cce8b85909a3086e2b88a
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Mon Jun 25 08:53:59 2018 +0100
+
+    corrections to hand-coded file
+
+commit ee51427ab04c6ee2a3362be849f1901957f9732c
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Mon Jun 25 08:53:13 2018 +0100
+
+    whoops counting cell bit width, maths wrong
+
+commit 778a849edddb62aaafb2e6691092a756a158f9e2
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Mon Jun 25 08:41:21 2018 +0100
+
+    spelling corrections
+
+commit 07e915c13304fa07b059a827b8db29acf62e63e7
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Mon Jun 25 08:32:37 2018 +0100
+
+    rename twi0 and uart0 single functions
+
+commit eada6e6726a825f46759feae418d7892004fa03a
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Mon Jun 25 08:31:43 2018 +0100
+
+    removing GenericIOType, sorting out function names
+
+commit 431ee33e813d4d28608e7efb1b23ff1d969c238d
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Mon Jun 25 08:13:07 2018 +0100
+
+    correct microtest spec, single interface must take out numbering
+
+commit edfb5be31897f07f24ba9aa02860f896ee1b69a3
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Mon Jun 25 08:11:34 2018 +0100
+
+    start removing GenericIOType
+
+commit 4a8d18e2450bd67f58ef96245f139f588e1a7cd2
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Mon Jun 25 08:04:04 2018 +0100
+
+    change hand-edited bsv to bsv comments
+
+commit e7d150effdfed23a79cc940ed3143103a80d6e92
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Mon Jun 25 08:03:49 2018 +0100
+
+    whoops use bsv comments not python comments!
+
+commit 3245a19eb3496d483f2054aeeac5a2974d15ffb1
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Sun Jun 24 15:36:34 2018 +0100
+
+    change ioN_cell to methods, stop using GenericIOType
+
+commit 83edefe97d77ec6faeb2331337baecfe842f34c9
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Sun Jun 24 14:24:11 2018 +0100
+
+    add cell outen wires
+
+commit 22cf81530dbf67090c022cff7909df849dd56c8b
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Sun Jun 24 13:58:02 2018 +0100
+
+    add comments
+
+commit 492475f1ca9d986f23d5a2aad743994c32ce3e5f
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Sun Jun 24 13:28:41 2018 +0100
+
+    add preliminary mux-out wire
+
+commit e197ee4d156dc7986557d623cc87a252481a1f76
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Sun Jun 24 13:19:32 2018 +0100
+
+    add auto-generated test pinmux.bsv, to be edited and modified
+
+commit d0b4707051ce8e3d6231871bc0efc9890f4acd26
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Sun Jun 24 12:10:10 2018 +0100
+
+    whoops accidentally removed all parameters not just pad-characteristics
+
+commit 2abadd1ccd9a7f7817be63e716a48cd226292d4c
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Sun Jun 24 12:09:20 2018 +0100
+
+    reduce microtest further in size
+
+commit aad21a11cccc5356531ed15489a1fdda3b61d5fb
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Sun Jun 24 12:06:38 2018 +0100
+
+    rename minitest to microtest
+
+commit f58ec04eb18dd8500bbe6962a7ecd9b6dadb770c
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Sun Jun 24 12:00:21 2018 +0100
+
+    remove pullup and other pad characteristics as theyre handled by the GPIO mod
+
+commit 35891da4b34de75f1d01fcba8a5a967218027c2b
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Wed Jun 20 17:00:10 2018 +0100
+
+    remove None from format functions
+
+commit 365cb1e782462d20f34db887984e3dd61c8d4103
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Wed Jun 20 13:17:39 2018 +0100
+
+    add new types FunctionType and PadCharacteristicsType
+
+commit dfe125c2962ddd4784c9c75dc8c28d5152154546
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Wed Jun 20 10:06:33 2018 +0100
+
+    separate pin banks by name
+
+commit 0c9f340ba14e8e79568214bf68e5debc00d0cf28
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Wed Jun 13 14:03:12 2018 +0100
+
+    use getifacetype to identify generation of xxxx_io objects
+
+commit 30efb94b64e4df9ea00cc2f9ef4e0be0192cbcc0
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Wed Jun 13 13:23:34 2018 +0100
+
+    Revert "input cell-types now output 0 on output as well.\"
+    
+    This reverts commit 197f0c589dce79e1c8e91c5df47903aae397afbf.
+
+commit 197f0c589dce79e1c8e91c5df47903aae397afbf
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Wed Jun 13 13:15:46 2018 +0100
+
+    input cell-types now output 0 on output as well.\
+    not a good idea to output an input!
+
+commit 55e16e8120a8cc6bb09bbdbc529c636a713d9879
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Wed Jun 13 12:57:37 2018 +0100
+
+    test pinmap.txt file was not uniformly 4 entries long in each case
+
+commit d3efbc9b867a499c178af6e0fe43f517b52007ac
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Wed Jun 13 12:53:30 2018 +0100
+
+    output zero where there is a blank entry in the pinmux
+
+commit cf5455e03b150da082f368dc16369a1a548bc8da
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Wed Jun 13 12:32:39 2018 +0100
+
+    test/pinmux.txt was previously hand-edited, not in machine-readable form,\
+    needed updating since splitting now done by tabs
+
+commit 47c258030c6c182ac3797d93e09cb42853c635cb
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Wed Jun 13 12:31:37 2018 +0100
+
+    skip blank-string entries
+
+commit 34c7c241f835331d88299696255ba4f82e5cf7b1
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Wed Jun 13 11:54:02 2018 +0100
+
+    cell[0] is a string not an int
+
+commit c24cc62fef14a657148a69b3b047498f1dbb1385
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Wed Jun 13 11:52:52 2018 +0100
+
+    remove newline from line before splitting with tabs
+
+commit 82bbdc91863aec8b3ed1adbcb36f5829ec20befb
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Tue Jun 12 14:38:22 2018 +0100
+
+    pep8 whitespace cleanup
+
+commit e02d1e143ff9b7a4115292af1fb137a1c7712185
+Author: rishucoding <rishucoding@gmail.com>
+Date:   Tue Jun 12 15:20:56 2018 +0530
+
+    adding docstring to translate function
+
+commit 7f3f4c4d6087b95e9a02b9b35d2203dc914d32e3
+Author: rishucoding <rishucoding@gmail.com>
+Date:   Tue Jun 12 15:04:30 2018 +0530
+
+    adding comment to cellnumber function
+
+commit 348986f861e007cc2ee70ade84f5f4770f5ef7f7
+Merge: 54b5fd8 4dc1ed8
+Author: rishucoding <rishucoding@gmail.com>
+Date:   Tue Jun 12 14:57:44 2018 +0530
+
+    replace split from whitespace to tabspace
+
+commit 54b5fd8a33a43d35b7d3c2417003606e17b54e68
+Author: rishucoding <rishucoding@gmail.com>
+Date:   Tue Jun 12 14:57:17 2018 +0530
+
+    replace split from whitespace to tabspace
+
+commit 4dc1ed8ab495a32a5363a9cacd87abf7487bbc39
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu May 31 16:48:15 2018 +0100
+
+    add comment for init fn
+
+commit 69d7837db0eebf4d05fc0e26a5c367d79645fc44
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu May 31 16:45:11 2018 +0100
+
+    use cell idx to generate comment into pinmux, matches pinmap.txt
+
+commit f0063b6e38acea19e6437296d2328e38d727b207
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu May 31 16:28:37 2018 +0100
+
+    output comment so as to be able to track down output
+
+commit 2e77d45fa3c951835ba9140aa74b680a9dbb411b
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu May 31 16:10:42 2018 +0100
+
+    autopep8 cleanup
+
+commit 302b814c4144d9bf2ef0ef7f29134bfa97c5cbd1
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu May 24 09:57:11 2018 +0100
+
+    make mdwn path if it doesnt exist
+
+commit 14591559fe5762b231b8f13c964babb57cde40b9
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Wed May 23 11:18:48 2018 +0100
+
+    correct Makefile path
+
+commit 0186f9ebd02d2dee675c0311b11150f18e1b1008
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Apr 27 11:15:20 2018 +0100
+
+    microtest experimenting
+
+commit 97426994f7ead84c36b991609f63b2a0ef405c10
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Apr 27 10:07:30 2018 +0100
+
+    even remove gpio, microtest still too big
+
+commit 2e5a9e67643527dbab7f182fc991f0990a39114b
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Apr 27 10:06:29 2018 +0100
+
+    add microtest, minitest still too big
+
+commit bf9cc46e899ec12ae4030a61f640dbf1eb928246
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Apr 27 10:06:13 2018 +0100
+
+    clean up Makefile
+
+commit 3314a4faef89b94ef5a3a243e7d05ed1f10ff978
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Apr 27 09:33:11 2018 +0100
+
+    add Makefile/lib auto-generator
+
+commit b0abf2e1c1dc783477077fa8d38d966edae076fb
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Sat Apr 14 12:32:55 2018 +0100
+
+    use bit width consistently for mux cells
+
+commit 473bc1ff7b3639164ae94eaa91f3f5916f468911
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Sat Apr 14 12:28:03 2018 +0100
+
+    must declare mux selection same bitwidth
+
+commit bf08f76841dab3d8ee3ce2a38d3a717216279d13
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Sat Apr 14 12:16:19 2018 +0100
+
+    put cell width at fixed (max) bits
+
+commit 65ac2b19eb021bec3f5c6f2043e19d56a4ca5d7b
+Author: Neel <neelgala@gmail.com>
+Date:   Sat Apr 14 16:41:00 2018 +0530
+
+    the assignment of a wire from an input configured pin must happen through individual rules. The pinmuxing table might be defined such a way that input pins pin0 and pin2 drive the same function wrfunc. So pin0 using wrcell0_mux to assign wrfunc and pin2 uses wrcell2_mux to assign the same write again. Within the same rule this will cause a multi-driven issue. BSV takes care of this issue by generating an implicit priority between the rules. If rule-A is written before rule-B, then the effects of rule-B will be shadowed i.e only the output of rule-A will be visible.
+
+commit adb45f01714118da610f07a500db791ad5e8a126
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Mon Apr 9 15:04:36 2018 +0100
+
+    add busenable output
+
+commit 15673f9e7fb1e605df83c6d7f47674a6811d8516
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Mon Apr 9 14:24:55 2018 +0100
+
+    record bus/ganged type in tsv spec files
+
+commit d3cc9e9d41cb7730727d278b1f135653dce3477f
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Wed Apr 4 10:32:39 2018 +0100
+
+    add documentation on pinfunctions
+
+commit dfe1a287b8d74aff4b0797fc297972dd74d303db
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Wed Apr 4 10:25:55 2018 +0100
+
+    return which pins are inout-buses from spec pinfunctions
+
+commit d1159de30f20996209e0763f9ab7ba5218996767
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Wed Apr 4 09:38:54 2018 +0100
+
+    split bsv generator into functions
+
+commit cbcef6ac9d55d6766895ad6fb4e37816630b2c9a
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Wed Apr 4 09:38:37 2018 +0100
+
+    whitespace pep8 cleanup
+
+commit 880a367e8da1adf45d9153f8a8c79bce17b105c9
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Sat Mar 31 15:28:14 2018 +0100
+
+    selector test goes in opposite direction
+
+commit 8443e0c44e5117d839181807edf925a632c0164d
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Sat Mar 31 15:12:27 2018 +0100
+
+    add myhdl mux.py experiment
+
+commit 15ff3b753c3b7ad793474abb64b4cb8f1da47dc6
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Sat Mar 31 09:25:23 2018 +0100
+
+    clean up pinspec, remove redundant arguments
+
+commit 2771d517f727f56dd2c03982da4a940415d4e428
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Sat Mar 31 09:06:13 2018 +0100
+
+    big pep8 whitespace cleanup
+
+commit c89dbf5132cf806ce9fe9e86442e0e2f9d895a1d
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Sat Mar 31 09:02:33 2018 +0100
+
+    add base class for scenario and pinspecs
+
+commit 132e433aada704244aa29e24f3b049f5e64fb5de
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Sat Mar 31 08:23:48 2018 +0100
+
+    big python3 interoperability update
+
+commit 1ba6e227d3d4d52d1bf6dac221e88d4bd2944924
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Sat Mar 31 08:02:06 2018 +0100
+
+    write out to mdwn file instead of stdout
+
+commit 19a02e38b01d9acd642da277babb6e0b3b361057
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 30 14:46:03 2018 +0100
+
+    autopep8 whitespace cleanup
+
+commit ddbcad00996d95c20d38f055c0649a4dc460bc72
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 30 14:45:18 2018 +0100
+
+    add some documentation to the spec modules
+
+commit bd3692e2b11a2f7192ddcaacfa9a453eced695d4
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 30 14:05:50 2018 +0100
+
+    update minitest spec
+
+commit 53f5e6f669b1ad4239a07dea8705200d1bbf3f13
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 30 14:04:18 2018 +0100
+
+    rework spec generation functions
+
+commit 1c451a11c4b49793e9fb057e7263d2657fe735ca
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 30 13:26:05 2018 +0100
+
+    refactoring pin function name generators
+
+commit a726c666b57576c991d6f6a4542e87cd2df87bea
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 30 11:00:01 2018 +0100
+
+    fix UARTQ0 spec
+
+commit 560edd3265adcb24211e2c541abd2ccf5aaea65e
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 30 10:58:45 2018 +0100
+
+    rename m_class spec jtag and ulpi numbers
+
+commit 41e54058fd67f6897d2e45d13f2bf446d183403e
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 30 10:42:12 2018 +0100
+
+    rename m_class spec uart numbers
+
+commit 737a6673cd0faa246ccd17ae773086d50778095f
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 30 10:37:13 2018 +0100
+
+    rename m_class spec spi numbers
+
+commit 1e2dcbe9a39aa55f3eb71167fe18fef86ab7eea5
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 30 10:36:30 2018 +0100
+
+    rename m_class spec sd numbers
+
+commit 9f443d8464770467561233d194c3eff692bb7d84
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 30 10:34:17 2018 +0100
+
+    renumber interfaces start from zero
+
+commit 57946f5e41b232580a4f8cfb6715191ec1740bfe
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 30 10:25:12 2018 +0100
+
+    remove debug print statements
+
+commit 8b50efd2170c7e342e85dcc25eba1d8b98ffd62d
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 30 10:24:31 2018 +0100
+
+    adjust minitest layout
+
+commit 53366f9608dd4e993037e9d5694b4fab6aa9543c
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 30 10:10:15 2018 +0100
+
+    add mini spec for test purposes
+
+commit 5a063abaa1152dbd842889cd2d414b314cf3327d
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 30 10:10:00 2018 +0100
+
+    check pin position overwriting
+
+commit ec53ae075c2fdd746f2a89b65aa325bc3e3cea9e
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 30 10:03:16 2018 +0100
+
+    whoops not commented out properly
+
+commit 5a1bf414f7c71f0b7900ace41b9b6257430f6341
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 30 07:58:31 2018 +0100
+
+    remove print statement
+
+commit 3090da445b8bb88436ea15426d9130748df1bda3
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 30 07:57:01 2018 +0100
+
+    pep8 whitespace cleanup
+
+commit fead360a41d0857112e8661a961b277dc64bad83
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 30 07:56:40 2018 +0100
+
+    autopep8 being a bit over-zealous...
+
+commit d41c819c22052f5e93beff80399bd7dc96d5ae00
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 30 07:50:58 2018 +0100
+
+    explain flexspec, its extra functions to be added basically
+
+commit 579d3e0304cbac0532cc407993abd7c6a6403fbc
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 30 07:42:36 2018 +0100
+
+    autopep8 whitespace cleanup
+
+commit c20cdc149d3239fd929ffd58770de4dded4289ad
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 30 07:41:20 2018 +0100
+
+    move spec functions into Pinouts class
+
+commit 4662193818352294934291318a152ac0c9c7c5fd
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 30 07:21:34 2018 +0100
+
+    bug in m_class spec, flexbus pins being overwritten
+
+commit b7043af18f19bb92b5bc959a758f71f7ba811279
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 30 07:21:07 2018 +0100
+
+    rename functions with single instances
+
+commit 2cb8d0fb530d4947a8caa9c8528f930ab4102fb1
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 30 07:04:27 2018 +0100
+
+    add a "single" mode to Interfaces, stops number being inserted gpioa{0}_a0
+    is now gpioa_a0
+
+commit 30c804863132fc681d3a38b8cf1d91fade477154
+Author: Neel <neelgala@gmail.com>
+Date:   Thu Mar 29 21:21:50 2018 +0530
+
+    updated bluespec search paths
+
+commit 4c8d4eed0ecd6ac5e580d22e580984dd0fa48db2
+Author: Neel <neelgala@gmail.com>
+Date:   Thu Mar 29 21:21:29 2018 +0530
+
+    bitspec if now of type "Bit#(?)" or GenericIOType
+
+commit c1fb787dd91764a0184ff29e4d3e96874ead3cb9
+Author: Neel <neelgala@gmail.com>
+Date:   Thu Mar 29 21:20:54 2018 +0530
+
+    cell interface is now a single output method of GenericIOType instead of multiple different methods.
+
+commit 6581aeb82a869d6e58f001700c9e4cbdbc71dc90
+Author: Neel <neelgala@gmail.com>
+Date:   Thu Mar 29 21:19:49 2018 +0530
+
+    creating a single rule to assign function inputs from IOs based on mux lines
+
+commit eda1eadafdd94cd1cb44eb91e7eddfdc0a3888c6
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 29 14:59:22 2018 +0100
+
+    adding test on migen pinmux
+
+commit c32ca0071d9ef044b487f59ce92d781160af5728
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 29 14:20:28 2018 +0100
+
+    write out pinspec to pinspec.txt
+
+commit c25b3c27d5a0ef4bf6c82646090e568240b6149f
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 29 14:18:51 2018 +0100
+
+    add pinbank starting points and sizes
+
+commit 33df46b23ceb8fe713f732f99c1f7ccbabe6d92e
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 29 14:08:13 2018 +0100
+
+    add migen safe input mux
+
+commit 7e89aa20442ec64fe61705fbc9ad89aa48c47184
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 29 09:33:21 2018 +0100
+
+    whitespace python3 cleanup
+
+commit be96de66d3b258988aca259b2d17928c1ea96bed
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 29 09:33:05 2018 +0100
+
+    whoops need __contains__ due to pep8 replacement in for has_key
+
+commit 8c53871783e801b11f335423c8115de502d921d0
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 29 09:23:51 2018 +0100
+
+    stronger autopep8 whitespace cleanup
+
+commit 6490f801dd729b51c9d243e3493185844171cf8a
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 29 09:20:32 2018 +0100
+
+    add fixed pins generation
+
+commit fa847553099845d4a0564ee92b90927cca511d5f
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Wed Mar 28 16:47:30 2018 +0100
+
+    add TODO assert for now
+
+commit 91054ff296c3a7eac8c8a47eee7f1f2b84b933b7
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Wed Mar 28 16:38:54 2018 +0100
+
+    sort out pwm naming scheme
+
+commit f27ac8fbf373b1dc818f3eda9898d01512798df5
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Wed Mar 28 16:12:35 2018 +0100
+
+    fix pinmerge issue, merge pingroup
+
+commit 6b579be6fa023fdb54c1658c2c55c68fe9f9b152
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Wed Mar 28 15:42:48 2018 +0100
+
+    fix incompatibility between spec gen and pinmux code-gen
+
+commit 32692639bf44e54f53e071af31b8c79a2d07cbbf
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Wed Mar 28 15:16:06 2018 +0100
+
+    remove manual dictionary, use interface txt file definitions
+
+commit c34740c39c4747c0472dec67ae09dffa1336eed1
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Tue Mar 27 15:56:41 2018 +0100
+
+    big autopep8 whitespace cleanup, not run before on pinmux spec code
+
+commit 36deafd1d0ee3a399ba2bdb825ee6440e5718545
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Tue Mar 27 15:53:51 2018 +0100
+
+    first effort at generating pinmap.txt
+
+commit d6e7f7117127b0fab950952b31ee16ffa2e8d857
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Tue Mar 27 15:38:43 2018 +0100
+
+    whoops forgot to initialise pinspec variable in __main__
+
+commit 9afe74c971954cdf71386511c44595231f631c8f
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Tue Mar 27 08:17:25 2018 +0100
+
+    split out interface printing functions to separate module
+
+commit 534c0d2e96cfd14fadfabdaf18113f12a8850e31
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Tue Mar 27 08:14:40 2018 +0100
+
+    rename EINT, add underscore for consistency
+
+commit a336202361f31b891bd84f1f94cdbe61ca7b6810
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Tue Mar 27 08:09:12 2018 +0100
+
+    reduce I2S to 5-pin width
+
+commit 2681c5acf8ecf54b29b578e86215709a75e58fa3
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Tue Mar 27 08:08:37 2018 +0100
+
+    add inout spec
+
+commit 5f2ad577a690335adc2915dbacb647471841893f
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Tue Mar 27 07:41:15 2018 +0100
+
+    begin generating spec files consistently: codes a bit of a mess
+
+commit 41dcf2b7e900e1b0e31d5d8f605c711f31783ed4
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Tue Mar 27 06:42:20 2018 +0100
+
+    add help message for spec
+
+commit 1cb44bb2e677bae22dcd3431e652a1d2ba06681a
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Sun Mar 25 12:49:40 2018 +0100
+
+    got fed up of doing functions used class instead for Pinouts
+
+commit a90fe58bfb76683ce46529a2a3958949326f1d69
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Sat Mar 24 00:45:34 2018 +0000
+
+    write out interfaces.txt first version
+
+commit 0afc0186a8f5bad88ded238b5e38b9a5eff0c01f
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 23 23:07:13 2018 +0000
+
+    add spec generation
+
+commit 71b6c07fe729f49f13abf6cfb12938488e86035f
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 23 22:55:56 2018 +0000
+
+    add pinspec generator
+
+commit 373b5d93249442952561b6fb62b3eeb407b4f6c5
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 23 16:55:04 2018 +0000
+
+    pep8, whitespace cleanup
+
+commit 8c83979bac6b8acb5ff47a2a024353c243fb4fa5
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 23 16:47:37 2018 +0000
+
+    move more modules to src/bsv directory
+
+commit 9258b98d28e9135260f899861af5751c422639d9
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 23 16:45:30 2018 +0000
+
+    move pinmux generator function to src/bsv directory
+
+commit 17ab361abe56c3311d39b4141a68aefca09119ca
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 23 16:43:44 2018 +0000
+
+    move pinmux generator function to src/bsv directory
+
+commit 2519cdb76968e9cb710fef201aa2efe062ce864b
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 23 14:26:56 2018 +0000
+
+    whitespace cleanup
+
+commit e3cbeade0800788fa60821a3e04203dfa0e2979a
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 23 14:23:31 2018 +0000
+
+    update Makefile add test directory parameter
+
+commit 5767eae83f9825bba59adb98b198c8d70a015572
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 23 14:20:15 2018 +0000
+
+    move interface and pinmux definition to test directory
+
+commit afe70be9ddc3334067aec5c10b9fa8a4d4554a42
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 23 14:10:06 2018 +0000
+
+    add help message and options to specify source path
+
+commit 047c6244a02e86344cffe70d731964383edf9433
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 23 13:54:14 2018 +0000
+
+    add path argument to pinmuxgen function
+
+commit 2ab8413fb71ca20eec248cacd4433ae65857a894
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 23 13:34:35 2018 +0000
+
+    indent and functionify pinmux generator
+
+commit 911e6a287568d33b742fe8ddb70df7b464d796f7
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 23 13:33:54 2018 +0000
+
+    add path option to parse function
+
+commit 245fcc1c210f0427df8b731fca82c98e35b9d12c
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 23 05:57:14 2018 +0000
+
+    class restructure parsing
+
+commit 109619f5f3fd554bcfc6d05f490bdae2e75aec07
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 23 05:44:53 2018 +0000
+
+    remove if brackets
+
+commit 73dbae5fa5ba70a1a157a609e037fae1e045eb51
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 23 05:44:25 2018 +0000
+
+    remove if brackets
+
+commit 708d9a316464aa8fab9a3c5d3bc6f497c9f5869d
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 23 05:34:10 2018 +0000
+
+    slight style-alteration on pinmap.txt parsing
+
+commit 21f3199841e1037827cca55993afc6e33dc22d84
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 23 05:20:20 2018 +0000
+
+    slight logic change which seems to work on generating mux selector
+
+commit 1b6a5b09939a58b76b7e7f52ceb7a73e35e6d46f
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 23 05:11:58 2018 +0000
+
+    use assert not if/print/exit
+
+commit 773f350eb28e24ff5b0bca1566b08e0eb60f978c
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 23 05:05:56 2018 +0000
+
+    pycodestyle warned variable name l was ambiguous
+
+commit 88318db0ad083a9807825716a51f8d72883ded15
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 23 05:04:59 2018 +0000
+
+    whitespace cleanup
+
+commit f30f1ed0eff6b3e7f0e88541581d20f57b2e2e88
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Fri Mar 23 04:51:49 2018 +0000
+
+    not a fan of brackets on if statements... :)
+
+commit 7ebe4b5ab01a4e606624d71bc3b44867a49ede43
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 19:12:04 2018 +0000
+
+    autopep8, whitespace
+
+commit 5b1784cb89c6ccadcb20ae6548763052b1fbf993
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 18:46:44 2018 +0000
+
+    whitespace, autopep8
+
+commit 5820c191f9fc5128fdf8d8df0f3b55120cb0cda4
+Author: Neel <neelgala@gmail.com>
+Date:   Thu Mar 22 21:53:34 2018 +0530
+
+    signal name for pwm0 is pwm, so variables should change to pwm0_pwm and likewise
+
+commit 4ce42ee10814a009bbb1fb3ee3257f2e4eed1225
+Author: Neel <neelgala@gmail.com>
+Date:   Thu Mar 22 21:52:48 2018 +0530
+
+    signal name for spi is "ss" and not "nss"
+
+commit 5173907ae5935454c64857a5bcdf2975212fed99
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 11:57:25 2018 +0000
+
+    remove muxwire from generator, call from interface_decl instead
+
+commit caa3a52919b3212db05c8e8408df99e489f7566a
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 11:47:20 2018 +0000
+
+    remove unneeded generic_io import
+
+commit 36b510258b305d0516be1cd149846655b740cf41
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 11:38:15 2018 +0000
+
+    make interface_decl usage generic
+
+commit fa68cc4e58ac1bcdf81a6c7d8da51f61b210b9bb
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 11:27:49 2018 +0000
+
+    attempt to add io_interface to iface automatically
+
+commit 28e6cf8b6c6ed4d2868d8156cb6e23fa71b8a105
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 11:12:41 2018 +0000
+
+    convert to classes (or functions)
+
+commit 62845a90d61f8682c880846ec7bae8d5e664fa63
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 10:57:22 2018 +0000
+
+    add gitignore for vi swap and pyc files
+
+commit 203c1bddfd3258e1187847e0e901668227cfdca4
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 10:57:06 2018 +0000
+
+    add gitignore for vi swap and pyc files
+
+commit 120f34ea340978e216608784d47cdb8003439b69
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 10:55:40 2018 +0000
+
+    whitespace, autopep8
+
+commit 1abfbd580bcb71a6f40caa9e548c4f9d173d6f7b
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 10:30:21 2018 +0000
+
+    remove unneeded code
+
+commit c017f4198a46a136969050962a91e709f8935a2e
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 10:26:06 2018 +0000
+
+    import * baaad!
+
+commit 1b4818fdaa3861e0bf01a26eadd0757c58a87931
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 10:15:47 2018 +0000
+
+    remove N_UART, N_SPI etc.
+
+commit 27083f0921cec1f4d5034575f11b393bb98b7a98
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 10:15:11 2018 +0000
+
+    remove hard-coded additions of interfaces, use Interfaces class
+
+commit 96aaf0dd84e54f54428b845af10e6eb2649665c8
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 09:43:22 2018 +0000
+
+    corrections to inferface reader, add unit tests
+
+commit 750d9f1fd0a53acb208692814443b7518978b1b0
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 09:35:35 2018 +0000
+
+    add interface reader
+
+commit 260c56507814611972fae2bcf295dda7ba10e643
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 09:02:20 2018 +0000
+
+    split interface name out as a prefix
+
+commit e4ca6f2f89c650e9e1cbb385da2ea2c32fcd4ede
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 07:05:53 2018 +0000
+
+    use auto-generated wiredefs
+
+commit f49369cef6a99f3164a5a405103f62fb9f9bf7fd
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 06:37:07 2018 +0000
+
+    add wiredef auto-generation
+
+commit 9c50d39bb784303b2264330fa70f63ac80a7e80a
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 06:36:47 2018 +0000
+
+    more alteration of wire_defs to make auto-generation easier
+
+commit 17dca9ba81729ae9a1346ffac82454449ba34912
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 05:51:23 2018 +0000
+
+    wire_def whitespace cleanup
+
+commit b126af27bccafdd023f99bd567560c51dee534a6
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 05:46:58 2018 +0000
+
+    Revert "more alteration of wire_defs to make auto-generation easier"
+    
+    This reverts commit c5846936454d7d0e45aa39a4f16064797908e348.
+    
+    (actually not easier)
+
+commit c5846936454d7d0e45aa39a4f16064797908e348
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 05:39:09 2018 +0000
+
+    more alteration of wire_defs to make auto-generation easier
+
+commit 75c959533e6d3a9d3738f426f76c35732002d55b
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 05:17:59 2018 +0000
+
+    re-format wire_def to make it easier to auto-generate
+
+commit 976642ef4ff6fc521516d08fcdef3bc55cb5c872
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 05:11:25 2018 +0000
+
+    no longer use *interface_def, spi and jtag remove Bit#(1), is this ok?
+
+commit 7163819cb24c542d9975b095ac779f25b8c76599
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 05:07:01 2018 +0000
+
+    use auto-generate on interface definitions
+
+commit 1c2ab7472e44866bc09940a47d8d61dc951eeb22
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 05:04:15 2018 +0000
+
+    consistent naming on io interface
+
+commit cf4e4b272bff399150721e73a6d6ab9e15c14c74
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 04:51:59 2018 +0000
+
+    update pwm to consistent naming convention
+
+commit a5fe0af50dcf58dfbfd6e2e28cb16a8825815126
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 04:49:52 2018 +0000
+
+    rename twi to consistent naming convention
+
+commit a739e5f8465c5afec5ec4334809bd37d319d2680
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 04:39:49 2018 +0000
+
+    cell mux naming convention (forgot to save, whoops)
+
+commit 7319e7539e669fc809b837d379ae853a6351e764
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 04:39:23 2018 +0000
+
+    uart naming convention consistency
+
+commit 5efab52844df121442b1e7f6c9ad562e5790832e
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 04:17:18 2018 +0000
+
+    no longer need MuxInterface class with consistent naming scheme
+
+commit 520793f3a24009e342c5b6e138092d2a35440e20
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 04:11:59 2018 +0000
+
+    rename cell mux to consistent naming scheme
+
+commit 5309b7b9abc68f6b4ace33d397c4784ed0148d74
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Thu Mar 22 03:48:36 2018 +0000
+
+    rename spi to consistent name format
+
+commit f016929806f34b2e2e7ff00e9a9071f184a0f60d
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Wed Mar 21 14:11:33 2018 +0000
+
+    invert uart rx/tx generation to match wiredefs and interfacedef
+
+commit 283cb596dcce04b3ff23164f85abb31be7b05764
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Wed Mar 21 13:29:38 2018 +0000
+
+    partial conversion to use ifacedef
+
+commit c3d58b8d28db9e77cd2ecd6a279d8c305b8ee412
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Wed Mar 21 06:29:44 2018 +0000
+
+    make mux_interface a Pin/Interface... getting complicated
+
+commit 2580c319dd028964b0f00d3a561c88f8bfc06405
+Author: Neel <neelgala@gmail.com>
+Date:   Wed Mar 21 10:41:24 2018 +0530
+
+    updated yml files for bitbucket bot
+
+commit 29f6e91b38813a0fc8b6549921aa0a573cd1ec6f
+Author: Neel <neelgala@gmail.com>
+Date:   Wed Mar 21 10:33:33 2018 +0530
+
+    fixed indentation issue while generating wire definitions for TWI
+
+commit 4ccec5e78acf755ca49cc5a9a2b25d4c14e11765
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Tue Mar 20 21:54:28 2018 +0000
+
+    add first auto-generated interface_def (io_interface_def)
+
+commit 0b41bae086020d3467d9da16a90cb7d912956a77
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Tue Mar 20 21:10:28 2018 +0000
+
+    use ifacefmt function name consistently
+
+commit d8dcccf3cbe046cf9b9f93974760cd176b324563
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Tue Mar 20 21:03:37 2018 +0000
+
+    rename interface format fn
+
+commit 448b4b42d6767e1419a41ba7d6a4462ee69bcb45
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Tue Mar 20 17:43:17 2018 +0000
+
+    use with to open file
+
+commit 9d91e31b4fea9f759fdcb1aeba0145f28c3083da
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Tue Mar 20 17:39:44 2018 +0000
+
+    use with statement on bsv_file
+
+commit 96e69ad77277498091045d3619f9bd93a3e5af02
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Tue Mar 20 17:38:21 2018 +0000
+
+    add linebreak on long line
+
+commit cdbb4669c43202ab8d7f9b7496369f2da9f0df68
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Tue Mar 20 17:35:09 2018 +0000
+
+    add format function
+
+commit a0ee660e4ab1550933b7bd7961dc9c1ebe0b5917
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Tue Mar 20 17:18:12 2018 +0000
+
+    whitespace cleanup (autopep8)
+
+commit 783acd63efb6b84e4ea505576116e38acd914944
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Tue Mar 20 17:17:53 2018 +0000
+
+    remove hard-coded interface definitions
+
+commit 343bd14ae5b87cf09cacd52ea35efc8f031fa568
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Tue Mar 20 17:09:01 2018 +0000
+
+    add io_interface spec, fix bug where \n was in spec
+
+commit bf46f9a7111452251fae34166885b7e42692e6d8
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Tue Mar 20 16:58:09 2018 +0000
+
+    add uart interface
+
+commit 9fd6a0cd043b759a6cee2ed27b28a93d35033f47
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Tue Mar 20 16:57:10 2018 +0000
+
+    add spi interface
+
+commit fe0680d17bcff5d4552184daf4e5ddb1ab082b12
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Tue Mar 20 16:55:06 2018 +0000
+
+    add scl interface spec
+
+commit 86dc3f896318f915f1b2933c6c6bde0a7a29a745
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Tue Mar 20 16:51:24 2018 +0000
+
+    whitespace cleanup (autopep8)
+
+commit 6d901c4b10c81dcb8ef8b300fae6ea26fdb1fd1f
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Tue Mar 20 16:51:00 2018 +0000
+
+    whitespace cleanup
+
+commit 93e1f8c3ba82ff137fba3e3848b2943a8322e795
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Tue Mar 20 16:50:34 2018 +0000
+
+    document Pin class
+
+commit 8ccc61ccb3ee1b35047e738bf12607318d76e219
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Tue Mar 20 16:47:16 2018 +0000
+
+    add sdcard spec-generator
+
+commit 0f32f9c6db796266a6ea78baf318ecd713f2df94
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Tue Mar 20 16:37:36 2018 +0000
+
+    add jtag interface, remove inout param
+
+commit 3bd849ea92babcb95cd3b2bafd45744a49378395
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Tue Mar 20 16:27:53 2018 +0000
+
+    add Interface class
+
+commit 0acd7cc817421574b25e647c044c1b568cf2ddd1
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Tue Mar 20 16:12:36 2018 +0000
+
+    add io option to Pin
+
+commit d549b05fcb28a2e7b927c168b4dbb49bfffef066
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Tue Mar 20 16:08:50 2018 +0000
+
+    add basic test routine for Pin class
+
+commit e33257d08b26ea3ff71b15d1d6aa3a59e59af979
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Tue Mar 20 15:55:30 2018 +0000
+
+    add pin class for auto-generating interface lines
+
+commit b8816ca650bff749b150345a527078e3eb7a5f34
+Author: Luke Kenneth Casson Leighton <lkcl@lkcl.net>
+Date:   Tue Mar 20 11:48:28 2018 +0000
+
+    whitespace cleanup
+
+commit 44f784d597567ef0a88c30ad953662d28d7bdac3
+Author: Neel <neelgala@gmail.com>
+Date:   Tue Mar 20 15:26:52 2018 +0530
+
+    adding AXI4Lite transactor for now.
+    
+    Need to add TileLink support as well later.
+
+commit 11afcc66f875bfcf10642f8bab3812bfcf56e6d2
+Author: Neel <neelgala@gmail.com>
+Date:   Tue Mar 20 13:02:02 2018 +0530
+
+    switching to python2 and added pep8 auto-sorter to make.
+
+commit b3d256ab88c2c852659643a474d57e8ff3f32cde
+Author: Neel <neelgala@gmail.com>
+Date:   Mon Mar 19 17:31:26 2018 +0530
+
+    adding support for PWM.
+
+commit 3c9f40523337a03bff4657ca76cb2ce690c45bc5
+Author: Neel <neelgala@gmail.com>
+Date:   Mon Mar 19 16:06:56 2018 +0530
+
+    defined the user-interface for the memory mapped registers
+    
+    Support is provided to address registers using 8-bit, 16-bit, 32-bit or 64-bit addressing scheme.
+    Need to add support for a compressed scheme as well.
+
+commit 7a1f6b39c90d52c8b22c5699ba4ded51ac667d9b
+Author: Neel <neelgala@gmail.com>
+Date:   Mon Mar 19 08:22:17 2018 +0530
+
+    decoupling interfaces for IO and memory mapped registers
+
+commit 99a2a30ed218a90988a01a811b1605944fd988f1
+Author: Neel <neelgala@gmail.com>
+Date:   Sat Mar 17 14:50:25 2018 +0530
+
+    adding support for JTAG pins
+
+commit 6c10b12bad8aeb24568dcc3078dc596a7285a6ab
+Author: Neel <neelgala@gmail.com>
+Date:   Tue Mar 13 22:14:45 2018 +0530
+
+    adding support for interface of SD/MMC.
+
+commit bc6eb8c0fb6c41d7bc36b05e9da465b299937de8
+Author: Neel <neelgala@gmail.com>
+Date:   Tue Mar 13 21:07:58 2018 +0530
+
+    check for pin number consistency.
+    
+    see #3.
+    Added check to see if the user input has screwed up the pin numbering in punmap.txt. This check detects for duplicate assignment to Pins or if some pins are missed out on assignment.
+
+commit 445782ffd34ed8dc35fc12319d5eb0aff1db535e
+Author: Neel <neelgala@gmail.com>
+Date:   Tue Mar 13 18:13:35 2018 +0530
+
+    renaming params.py to parse.py. Adding checks on input
+    
+    See #3.
+    
+    Added check to see if muxed lists and dedicated lists do not have any duplciates.  This can simulated by replacing uart1_tx to uart2_tx in pinmap.txt.
+
+commit 3ed631d20cecc92e32841f56d8f2879ab553d61c
+Author: Neel <neelgala@gmail.com>
+Date:   Tue Mar 13 17:37:12 2018 +0530
+
+    adding a sample test where certain IOs have differing number of muxes
+
+commit f44d86ac7c52af943bd71c80e9b7f4c59af264e7
+Author: Neel <neelgala@gmail.com>
+Date:   Tue Mar 13 17:36:03 2018 +0530
+
+    mux selection lines for a IO should be log of the number of muxes.
+
+commit 99d93ecce0ad5935d441ec9ffdd230b6e6475fae
+Author: Neel <neelgala@gmail.com>
+Date:   Tue Mar 13 16:46:37 2018 +0530
+
+    udpated the .gitignore file.
+
+commit c1bf184703c69c8b084b3f7c8c0e3de5a5c77bf8
+Author: Neel <neelgala@gmail.com>
+Date:   Tue Mar 13 16:43:11 2018 +0530
+
+    maintaining distinct arrays for muxed and dedicated cells
+    
+    This allows better structure of code and also handling muxed logic is decoupled from the dedicated pins. Cell mux methods only for muxed IOs is created.
+    Parsing of pinmap file now happens in params.py
+    see #1
+
+commit b810d8d4e7fb0eb4f68b84692ce75c63bc016e64
+Author: Neel <neelgala@gmail.com>
+Date:   Tue Mar 13 11:54:19 2018 +0530
+
+    full support for dedicated pins.
+
+commit e9e9b9962ef2756056048b69327e0ac2cd95ada9
+Author: Neel <neelgala@gmail.com>
+Date:   Mon Mar 12 22:04:31 2018 +0530
+
+    code clean using pep8 and autopep8.
+
+commit 531ceb2ca0a30438c9cc85d6e1c58a78d23c5d8c
+Author: Neel <neelgala@gmail.com>
+Date:   Mon Mar 12 21:10:39 2018 +0530
+
+    adding synthesize attribute to the module and a print statement for pinmux generation.
+
+commit a78d43465eef4564719a6a6fa2874ff6ae4abe5f
+Author: Neel <neelgala@gmail.com>
+Date:   Mon Mar 12 18:02:00 2018 +0530
+
+    partial support for dedicated pins
+    
+    removed unwanted print statements from scripts
+
+commit a48cba776b633c35cd1bd8268a24967bcb12303b
+Author: Neel <neelgala@gmail.com>
+Date:   Mon Mar 12 17:52:19 2018 +0530
+
+    addeds i2c (twi) interface and also support for inouts
+
+commit 63f3703f7ca43d0becbc74b568bddd7cd52ba83f
+Merge: 482bf21 3ae717c
+Author: Neel <neelgala@gmail.com>
+Date:   Mon Mar 12 13:38:40 2018 +0530
+
+    Merge remote-tracking branch 'origin/master'
+
+commit 482bf21ac77afd7bbb88c5613ed9561851fb1051
+Author: Neel <neelgala@gmail.com>
+Date:   Mon Mar 12 13:38:28 2018 +0530
+
+    syntax upgrades for python3 and above
+
+commit 3ae717cbb8bdb309813450a4ec1d6cc7450369ab
+Author: Neel Gala <neelgala@gmail.com>
+Date:   Mon Mar 12 07:55:57 2018 +0000
+
+    Initial Bitbucket Pipelines configuration
+
+commit 2ab18b3c42ddb6809145cc131d77679ef98b461b
+Author: Neel <neelgala@gmail.com>
+Date:   Sun Mar 11 22:37:49 2018 +0530
+
+    change rule names to allow implicit scheduling
+    
+    When inputs from multiple IO cells drive the same interface/peripheral there needs to be an implicite priority between the rules updating the same wire (going to the interface). The current pinmap in this commit creates the above scenario.
+    To enable the implicit scheduling the rules names need to be different. This commit ensures this as well
+    Also currently the ordering is based on the order in which the user provides the two instances. the first instance os uart_rx is given priority over the later instance in the pinmap.txt file.
+
+commit 0833e8dea0960ef399dbe26c687d15f2da598f88
+Author: Neel <neelgala@gmail.com>
+Date:   Sun Mar 11 22:13:31 2018 +0530
+
+    automated the pinumxing logic
+    
+    Currently it only supports muxing between inputs and outputs. Handling of inouts will have to be done soon.
+
+commit 6635605528ad7600fa190f8e485310da28ed5d69
+Author: Neel <neelgala@gmail.com>
+Date:   Sat Mar 10 22:47:45 2018 +0530
+
+    initial commit with minimal templates
+
+commit 805f9b2576545afea56906bfca69892857e8eee9
+Author: Neel Gala <neelgala@gmail.com>
+Date:   Sat Mar 10 17:16:11 2018 +0000
+
+    README.md created online with Bitbucket
