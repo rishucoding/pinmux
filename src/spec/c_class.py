@@ -4,7 +4,7 @@ from spec.ifaceprint import display, display_fns, check_functions
 from spec.ifaceprint import display_fixed
 
 
-def pinspec(of):
+def pinspec():
     pinouts = {}
 
     pinbanks = {'A': 16,

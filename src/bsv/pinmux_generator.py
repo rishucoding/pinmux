@@ -39,24 +39,8 @@ copyright = '''
 header = copyright + '''
 package pinmux;
 
-   // FunctionType: contains the active wires of a function.  That INCLUDES
-   // GPIO (as GPIO is also a "Function").  These are what get muxed.
-   // However, only GPIO "Functions" will end up with Register SRAMs.
-   typedef struct{
-      Bit#(1) outputval;      // output from function to pad            bit2
-      Bit#(1) inputval;       // input  from pad to function            bit1
-      Bit#(1) output_en;      // output enable from core to pad         bit0
-   } FunctionType deriving(Eq,Bits,FShow);
-
-   typedef struct{
-      Bit#(1) outputval;      // output from core to pad                bit7
-      Bit#(1) output_en;      // output enable from core to pad         bit6
-      Bit#(1) input_en;       // input enable from core to io_cell      bit5
-   } GenericIOType deriving(Eq,Bits,FShow);
-
 '''
 footer = '''
-     endinterface;
    endmodule
 endpackage
 '''
@@ -67,8 +51,10 @@ def pinmuxgen(pth=None, verify=True):
     """
 
     p = Parse(pth, verify)
+    iocells = Interfaces()
+    iocells.ifaceadd('io', p.N_IO, io_interface, 0)
     ifaces = Interfaces(pth)
-    ifaces.ifaceadd('io', p.N_IO, io_interface, 0)
+    #ifaces.ifaceadd('io', p.N_IO, io_interface, 0)
     init(p, ifaces)
 
     bp = 'bsv_src'
@@ -95,7 +81,7 @@ def pinmuxgen(pth=None, verify=True):
     ptp = os.path.join(bp, 'PinTop.bsv')
     bvp = os.path.join(bp, 'bus.bsv')
 
-    write_pmp(pmp, p, ifaces)
+    write_pmp(pmp, p, ifaces, iocells)
     write_ptp(ptp, p, ifaces)
     write_bvp(bvp, p, ifaces)
     write_bus(bus, p, ifaces)
@@ -108,7 +94,7 @@ def write_bus(bus, p, ifaces):
         ifaces.busfmt(bsv_file)
 
 
-def write_pmp(pmp, p, ifaces):
+def write_pmp(pmp, p, ifaces, iocells):
     # package and interface declaration followed by
     # the generic io_cell definition
     with open(pmp, "w") as bsv_file:
@@ -126,27 +112,62 @@ def write_pmp(pmp, p, ifaces):
         for cell in p.muxed_cells:
             bsv_file.write(mux_interface.ifacefmt(cell[0], cell_bit_width))
 
+        bsv_file.write("\n      endinterface\n")
+
         bsv_file.write('''
-      endinterface
+
+      interface IOCellSide;
+      // declare the interface to the IO cells.
+      // Each IO cell will have 1 input field (output from pin mux)
+      // and an output and out-enable field (input to pinmux)''')
+
+        # == create method definitions for all iocell interfaces ==#
+        iocells.ifacefmt(bsv_file)
+
+        # ===== finish interface definition and start module definition=======
+        bsv_file.write("\n      endinterface\n")
+
+        # ===== io cell definition =======
+        bsv_file.write('''
 
       interface PeripheralSide;
-      // declare the interface to the IO cells.
-      // Each IO cell will have 8 input field (output from pin mux
-      // and on output field (input to pinmux)''')
+      // declare the interface to the peripherals
+      // Each peripheral's function will be either an input, output
+      // or be bi-directional.  an input field will be an output from the
+      // peripheral and an output field will be an input to the peripheral.
+      // Bi-directional functions also have an output-enable (which
+      // again comes *in* from the peripheral)''')
         # ==============================================================
 
         # == create method definitions for all peripheral interfaces ==#
         ifaces.ifacefmt(bsv_file)
-
-        # ==============================================================
+        bsv_file.write("\n      endinterface\n")
 
         # ===== finish interface definition and start module definition=======
         bsv_file.write('''
-   endinterface
 
    interface Ifc_pinmux;
+      // this interface controls how each IO cell is routed.  setting
+      // any given IO cell's mux control value will result in redirection
+      // of not just the input or output to different peripheral functions
+      // but also the *direction* control - if appropriate - as well.
       interface MuxSelectionLines mux_lines;
+
+      // this interface contains the inputs, outputs and direction-control
+      // lines for all peripherals.  GPIO is considered to also be just
+      // a peripheral because it also has in, out and direction-control.
       interface PeripheralSide peripheral_side;
+
+      // this interface is to be linked to the individual IO cells.
+      // if looking at a "non-muxed" GPIO design, basically the
+      // IO cell input, output and direction-control wires are cut
+      // (giving six pairs of dangling wires, named left and right)
+      // these iocells are routed in their place on one side ("left")
+      // and the matching *GPIO* peripheral interfaces in/out/dir
+      // connect to the OTHER side ("right").  the result is that
+      // the muxer settings end up controlling the routing of where
+      // the I/O from the IOcell actually goes.
+      interface IOCellSide iocell_side;
    endinterface
    (*synthesize*)
    module mkpinmux(Ifc_pinmux);
@@ -162,6 +183,7 @@ def write_pmp(pmp, p, ifaces):
             bsv_file.write(mux_interface.wirefmt(
                 cell[0], cell_bit_width))
 
+        iocells.wirefmt(bsv_file)
         ifaces.wirefmt(bsv_file)
 
         bsv_file.write("\n")
@@ -169,6 +191,7 @@ def write_pmp(pmp, p, ifaces):
         # ========================= Actual pinmuxing ========================#
         bsv_file.write('''
       /*====== This where the muxing starts for each io-cell======*/
+      Wire#(Bit#(1)) val0<-mkDWire(0); // need a zero
 ''')
         bsv_file.write(p.pinmux)
         bsv_file.write('''
@@ -183,11 +206,20 @@ def write_pmp(pmp, p, ifaces):
             bsv_file.write(
                 mux_interface.ifacedef(
                     cell[0], cell_bit_width))
+        bsv_file.write("\n    endinterface;")
+
         bsv_file.write('''
-    endinterface;
+    interface iocell_side = interface IOCellSide
+''')
+        iocells.ifacedef(bsv_file)
+        bsv_file.write("\n     endinterface;")
+
+        bsv_file.write('''
     interface peripheral_side = interface PeripheralSide
 ''')
         ifaces.ifacedef(bsv_file)
+        bsv_file.write("\n     endinterface;")
+
         bsv_file.write(footer)
         print("BSV file successfully generated: bsv_src/pinmux.bsv")
         # ======================================================================

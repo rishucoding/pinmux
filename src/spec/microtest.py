@@ -6,7 +6,7 @@ from spec.ifaceprint import display, display_fns, check_functions
 from spec.ifaceprint import display_fixed
 
 
-def pinspec(of):
+def pinspec():
     pinbanks = {
         'A': 4,
     }
@@ -55,6 +55,7 @@ def pinspec(of):
     #ps.uart("0", ('A', 0), 1)
     #ps.uart("1", ('A', 2), 1)
     ps.i2c("", ('A', 1), 2)
+    ps.i2c("", ('A', 0), 3, limit=1)
     #ps.i2c("0", ('A', 1), 2)
     #ps.i2c("1", ('A', 2), 4)
 
@@ -71,7 +72,7 @@ def pinspec(of):
         'ULPI1': 'dual USB2 Host ULPI PHY'
     }
 
-    ps.add_scenario("MiniTest", microtest, microtest_eint, microtest_pwm,
+    ps.add_scenario("MicroTest", microtest, microtest_eint, microtest_pwm,
                     descriptions)
 
-    return ps.write(of)
+    return ps

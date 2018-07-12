@@ -4,25 +4,10 @@
    https://bitbucket.org/casl/pinmux.
 
    Authors: Neel Gala, Luke
-   Date of generation: Sun Jun 24 12:09:36 2018
+   Date of generation: Wed Jul  4 14:04:17 2018
 */
 
 package pinmux;
-
-   // FunctionType: contains the active wires of a function.  That INCLUDES
-   // GPIO (as GPIO is also a "Function").  These are what get muxed.
-   // However, only GPIO "Functions" will end up with Register SRAMs.
-   typedef struct{
-      Bit#(1) outputval;      // output from function to pad            bit2
-      Bit#(1) inputval;       // input  from pad to function            bit1
-      Bit#(1) output_en;      // output enable from core to pad         bit0
-   } FunctionType deriving(Eq,Bits,FShow);
-
-   typedef struct{
-      Bit#(1) outputval;      // output from core to pad                bit7
-      Bit#(1) output_en;      // output enable from core to pad         bit6
-      Bit#(1) input_en;       // input enable from core to io_cell      bit5
-   } GenericIOType deriving(Eq,Bits,FShow);
 
    interface MuxSelectionLines;
 
@@ -33,27 +18,38 @@ package pinmux;
      method  Action cell0_mux (Bit#(2) in);
      method  Action cell1_mux (Bit#(2) in);
      method  Action cell2_mux (Bit#(2) in);
-   endinterface 
+      endinterface
+
+
+      interface IOCellSide;
+      // declare the interface to the IO cells.
+      // Each IO cell will have 1 input field (output from pin mux)
+      // and an output and out-enable field (input to pinmux)
+          // interface declaration between IO-0 and pinmux
+    (*always_ready,always_enabled*) method  Bit#(1) io0_cell_out;
+    (*always_ready,always_enabled*) method  Bit#(1) io0_cell_outen;
+    (*always_ready,always_enabled,result="io"*) method 
+                       Action io0_cell_in (Bit#(1) in);
+          // interface declaration between IO-1 and pinmux
+    (*always_ready,always_enabled*) method  Bit#(1) io1_cell_out;
+    (*always_ready,always_enabled*) method  Bit#(1) io1_cell_outen;
+    (*always_ready,always_enabled,result="io"*) method 
+                       Action io1_cell_in (Bit#(1) in);
+          // interface declaration between IO-2 and pinmux
+    (*always_ready,always_enabled*) method  Bit#(1) io2_cell_out;
+    (*always_ready,always_enabled*) method  Bit#(1) io2_cell_outen;
+    (*always_ready,always_enabled,result="io"*) method 
+                       Action io2_cell_in (Bit#(1) in);
+      endinterface
+
 
       interface PeripheralSide;
-      // declare the interface to the IO cells.
-      // Each IO cell will have 8 input field (output from pin mux
-      // and on output field (input to pinmux)
-          // interface declaration between IO-0 and pinmux
-    (*always_ready,always_enabled*) method Bit#(1) io0_cell_outen;
-    (*always_ready,always_enabled*) method Bit#(1) io0_cell_out;
-    (*always_ready,always_enabled,result="io"*) method 
-                       Action io0_inputval (Bit#(1) in);
-          // interface declaration between IO-1 and pinmux
-    (*always_ready,always_enabled*) method Bit#(1) io1_cell_outen;
-    (*always_ready,always_enabled*) method Bit#(1) io1_cell_out;
-    (*always_ready,always_enabled,result="io"*) method 
-                       Action io1_inputval (Bit#(1) in);
-          // interface declaration between IO-2 and pinmux
-    (*always_ready,always_enabled*) method Bit#(1) io2_cell_outen;
-    (*always_ready,always_enabled*) method Bit#(1) io2_cell_out;
-    (*always_ready,always_enabled,result="io"*) method 
-                       Action io2_inputval (Bit#(1) in);
+      // declare the interface to the peripherals
+      // Each peripheral's function will be either an input, output
+      // or be bi-directional.  an input field will be an output from the
+      // peripheral and an output field will be an input to the peripheral.
+      // Bi-directional functions also have an output-enable (which
+      // again comes *in* from the peripheral)
           // interface declaration between UART-0 and pinmux
     (*always_ready,always_enabled*) method  Action uart_tx (Bit#(1) in);
     (*always_ready,always_enabled*) method  Bit#(1) uart_rx;
@@ -74,11 +70,31 @@ package pinmux;
     (*always_ready,always_enabled*) method  Action twi_scl_out (Bit#(1) in);
     (*always_ready,always_enabled*) method  Action twi_scl_outen (Bit#(1) in);
     (*always_ready,always_enabled*) method  Bit#(1) twi_scl_in;
-   endinterface
+      endinterface
+
 
    interface Ifc_pinmux;
+      // this interface controls how each IO cell is routed.  setting
+      // any given IO cell's mux control value will result in redirection
+      // of not just the input or output to different peripheral functions
+      // but also the *direction* control - if appropriate - as well.
       interface MuxSelectionLines mux_lines;
+
+      // this interface contains the inputs, outputs and direction-control
+      // lines for all peripherals.  GPIO is considered to also be just
+      // a peripheral because it also has in, out and direction-control.
       interface PeripheralSide peripheral_side;
+
+      // this interface is to be linked to the individual IO cells.
+      // if looking at a "non-muxed" GPIO design, basically the
+      // IO cell input, output and direction-control wires are cut
+      // (giving six pairs of dangling wires, named left and right)
+      // these iocells are routed in their place on one side ("left")
+      // and the matching *GPIO* peripheral interfaces in/out/dir
+      // connect to the OTHER side ("right").  the result is that
+      // the muxer settings end up controlling the routing of where
+      // the I/O from the IOcell actually goes.
+      interface IOCellSide iocell_side;
    endinterface
    (*synthesize*)
    module mkpinmux(Ifc_pinmux);
@@ -109,9 +125,7 @@ package pinmux;
 
       // following wires capture signals to IO CELL if uart-0 is
       // allotted to it
-      // declare wruart_tx_*, set up as type 'out'
       Wire#(Bit#(1)) wruart_tx<-mkDWire(0);
-      // declare wruart_rx_*, set up as type 'input'
       Wire#(Bit#(1)) wruart_rx<-mkDWire(0);
 
       // following wires capture signals to IO CELL if gpioa-0 is
@@ -128,58 +142,61 @@ package pinmux;
 
       // following wires capture signals to IO CELL if twi-0 is
       // allotted to it
-      // declare wrtwi_sda_*, set up as type 'inout'
       Wire#(Bit#(1)) wrtwi_sda_out<-mkDWire(0);
       Wire#(Bit#(1)) wrtwi_sda_outen<-mkDWire(0);
       Wire#(Bit#(1)) wrtwi_sda_in<-mkDWire(0);
-      // declare wrtwi_scl_*, set up as type 'inout'
       Wire#(Bit#(1)) wrtwi_scl_out<-mkDWire(0);
       Wire#(Bit#(1)) wrtwi_scl_outen<-mkDWire(0);
       Wire#(Bit#(1)) wrtwi_scl_in<-mkDWire(0);
 
 
       /*====== This where the muxing starts for each io-cell======*/
+      Wire#(Bit#(1)) val0<-mkDWire(0); // need a zero
        // output muxer for cell idx 0
       cell0_mux_out=
 			wrcell0_mux==0?wrgpioa_a0_out:
-			wrcell0_mux==1?wruart_tx_out:
-			wrcell0_mux==2?0: // unused
-			0; // unused
+			wrcell0_mux==1?wruart_tx:
+			wrcell0_mux==2?val0: // unused
+			wrtwi_sda_out;
 
       // outen muxer for cell idx 0
       cell0_mux_outen=
 			wrcell0_mux==0?wrgpioa_a0_outen: // bi-directional
-			wrcell0_mux==1?1: // uart_tx is an output
-			wrcell0_mux==2?0: // unused
-			0; // unused
+			wrcell0_mux==1?wrgpioa_a0_outen: // uart_tx is an output
+			wrcell0_mux==2?val0: // unused
+			wrtwi_sda_outen; // bi-directional
 
+      // priority-in-muxer for cell idx 0
       rule assign_wrgpioa_a0_in_on_cell0(wrcell0_mux==0);
         wrgpioa_a0_in<=cell0_mux_in;
+      endrule
+
+      rule assign_wrtwi_sda_in_on_cell0(wrcell0_mux==3);
+        wrtwi_sda_in<=cell0_mux_in;
       endrule
 
       // output muxer for cell idx 1
       cell1_mux_out=
 			wrcell1_mux==0?wrgpioa_a1_out:
-			wrcell1_mux==1?0: // uart_rx is an input
+			wrcell1_mux==1?val0: // uart_rx is an input
 			wrcell1_mux==2?wrtwi_sda_out:
-			0; // unused
+			val0; // unused
 
       // outen muxer for cell idx 1
       cell1_mux_outen=
 			wrcell1_mux==0?wrgpioa_a1_outen: // bi-directional
-			wrcell1_mux==1?0: // uart_rx is an input
+			wrcell1_mux==1?val0: // uart_rx is an input
 			wrcell1_mux==2?wrtwi_sda_outen: // bi-directional
-			0; // unused
+			val0; // unused
 
+      // priority-in-muxer for cell idx 1
       rule assign_wrgpioa_a1_in_on_cell1(wrcell1_mux==0);
         wrgpioa_a1_in<=cell1_mux_in;
       endrule
 
-
       rule assign_wruart_rx_on_cell1(wrcell1_mux==1);
         wruart_rx<=cell1_mux_in;
       endrule
-
 
       rule assign_wrtwi_sda_in_on_cell1(wrcell1_mux==2);
         wrtwi_sda_in<=cell1_mux_in;
@@ -188,25 +205,29 @@ package pinmux;
       // output muxer for cell idx 2
       cell2_mux_out=
 			wrcell2_mux==0?wrgpioa_a2_out:
-			wrcell2_mux==1?0: // unused
+			wrcell2_mux==1?val0: // unused
 			wrcell2_mux==2?wrtwi_scl_out:
-			0; // unused
+			val0; // unused
 
       // outen muxer for cell idx 2
       cell2_mux_outen=
 			wrcell2_mux==0?wrgpioa_a2_outen: // bi-directional
-			wrcell2_mux==1?0: // unused
+			wrcell2_mux==1?val0: // unused
 			wrcell2_mux==2?wrtwi_scl_outen: // bi-directional
-			0; // unused
+			val0; // unused
 
+      // priority-in-muxer for cell idx 2
       rule assign_wrgpioa_a2_in_on_cell2(wrcell2_mux==0);
         wrgpioa_a2_in<=cell2_mux_in;
       endrule
 
-
       rule assign_wrtwi_scl_in_on_cell2(wrcell2_mux==2);
         wrtwi_scl_in<=cell2_mux_in;
       endrule
+
+
+      /*=========================================*/
+      // dedicated cells
 
 
       /*============================================================*/
@@ -226,25 +247,28 @@ package pinmux;
       endmethod
 
     endinterface;
-    interface peripheral_side = interface PeripheralSide
+    interface iocell_side = interface IOCellSide
 
       method io0_cell_out=cell0_mux_out;
       method io0_cell_outen=cell0_mux_outen;
-      method Action  io0_inputval(Bit#(1) in);
+      method Action  io0_cell_in(Bit#(1) in);
          cell0_mux_in<=in;
       endmethod
 
       method io1_cell_out=cell1_mux_out;
       method io1_cell_outen=cell1_mux_outen;
-      method Action  io1_inputval(Bit#(1) in);
+      method Action  io1_cell_in(Bit#(1) in);
          cell1_mux_in<=in;
       endmethod
 
       method io2_cell_out=cell2_mux_out;
       method io2_cell_outen=cell2_mux_outen;
-      method Action  io2_inputval(Bit#(1) in);
+      method Action  io2_cell_in(Bit#(1) in);
          cell2_mux_in<=in;
       endmethod
+
+     endinterface;
+    interface peripheral_side = interface PeripheralSide
 
       method Action  uart_tx(Bit#(1) in);
          wruart_tx<=in;

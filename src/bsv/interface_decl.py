@@ -31,11 +31,13 @@ class Pin(object):
         self.bitspec = bitspec if bitspec else 'Bit#(1)'
         self.outenmode = outenmode
 
+    # bsv will look like this (method declaration):
     """
     (*always_ready,always_enabled*) method Bit#(1) io0_cell_outen;
     (*always_ready,always_enabled,result="io"*) method
                        Action io0_inputval (Bit#(1) in);
     """
+
     def ifacefmt(self, fmtfn):
         res = '    '
         status = []
@@ -63,34 +65,37 @@ class Pin(object):
         res += ";"
         return res
 
+    # sample bsv method definition :
     """
     method Action  cell0_mux(Bit#(2) in);
         wrcell0_mux<=in;
     endmethod
     """
+
     def ifacedef(self, fmtoutfn, fmtinfn, fmtdecfn):
         res = '      method '
         if self.action:
             fmtname = fmtinfn(self.name)
             res += "Action  "
-            res += fmtdecfn(self.name) #cell0_mux
+            res += fmtdecfn(self.name)
             res += '(%s in);\n' % self.bitspec
-            res += '         %s<=in;\n' % fmtname #wrcell0_mux
+            res += '         %s<=in;\n' % fmtname
             res += '      endmethod'
         else:
-            fmtname = fmtoutfn(self.name) # method io0_cell_out=cell0_mux_out;
+            fmtname = fmtoutfn(self.name)
             res += "%s=%s;" % (self.name, fmtname)
         return res
-
+    # sample bsv wire (wire definiton):
     """
     Wire#(Bit#(2)) wrcell0_mux<-mkDWire(0);
     """
+
     def wirefmt(self, fmtoutfn, fmtinfn, fmtdecfn):
         res = '      Wire#(%s) ' % self.bitspec
         if self.action:
-            res += '%s' % fmtinfn(self.name) # wrcell0_mux
+            res += '%s' % fmtinfn(self.name)
         else:
-            res += '%s' % fmtoutfn(self.name) # cell0_mux_out
+            res += '%s' % fmtoutfn(self.name)
         res += "<-mkDWire(0);"
         return res
 
@@ -100,52 +105,52 @@ class Interface(object):
         each pinspec is a dictionary, see Pin class arguments
         single indicates that there is only one of these, and
         so the name must *not* be extended numerically (see pname)
-        Dictionary has keys : name, action, outen
     """
-
+    # sample interface object:
     """
     twiinterface_decl = Interface('twi',
                                   [{'name': 'sda', 'outen': True},
                                    {'name': 'scl', 'outen': True},
                                    ])
     """
+
     def __init__(self, ifacename, pinspecs, ganged=None, single=False):
         self.ifacename = ifacename
         self.ganged = ganged or {}
-        #pins is a list, holds object of class Pin which generates
-        # methoddef(method ... endmethod), Wire declaration
-        #method declaration
-        self.pins = []
-        self.pinspecs = pinspecs # a list of dictionary
+        self.pins = []  # a list of instances of class Pin
+        self.pinspecs = pinspecs  # a list of dictionary
         self.single = single
         for p in pinspecs:
             _p = {}
             _p.update(p)
-            #.get checks for outen key in dict, and a way to supress error
             if p.get('outen') is True:  # special case, generate 3 pins
                 del _p['outen']
                 for psuffix in ['out', 'outen', 'in']:
                     # changing the name (like sda) to (twi_sda_out)
                     _p['name'] = "%s_%s" % (self.pname(p['name']), psuffix)
-                    _p['action'] = psuffix != 'in' #action is True when not out
+                    _p['action'] = psuffix != 'in'
                     self.pins.append(Pin(**_p))
-                    #will look like {'name': 'twi_sda_out', 'action': True}
+                    # will look like {'name': 'twi_sda_out', 'action': True}
                     # {'name': 'twi_sda_outen', 'action': True}
                     #{'name': 'twi_sda_in', 'action': False}
                     # NOTice - outen key is removed
             else:
-                _p['name'] = self.pname(p['name']) # tx to uart_tx
+                _p['name'] = self.pname(p['name'])
                 self.pins.append(Pin(**_p))
 
+    # sample interface object:
     """
         uartinterface_decl = Interface('uart',
                                    [{'name': 'rx'},
                                     {'name': 'tx', 'action': True},
                                     ])
     """
-    # this function is called in actual_pinmux.py
-    #  x = ifaces.getifacetype(temp), where temp is uart_rx, spi_mosi
-    # purpose is to identify is function : input/output/inout
+    """
+    getifacetype is called multiple times in actual_pinmux.py
+    x = ifaces.getifacetype(temp), where temp is uart_rx, spi_mosi
+    Purpose is to identify is function : input/output/inout
+    """
+
     def getifacetype(self, name):
         for p in self.pinspecs:
             fname = "%s_%s" % (self.ifacename, p['name'])
@@ -166,9 +171,8 @@ class Interface(object):
             appropriate.  single mode stops the numerical extension.
         """
         if self.single:
-            return '%s_%s' % (self.ifacename, name) # uart_rx or spi_mosi
+            return '%s_%s' % (self.ifacename, name)
         return '%s{0}_%s' % (self.ifacename, name)
-        # uart{0}_rx or spi{0}_mosi for uart1_rx or spi0_mosi
 
     def busfmt(self, *args):
         """ this function creates a bus "ganging" system based
@@ -177,10 +181,9 @@ class Interface(object):
             interface may be "ganged" together.
         """
         if not self.ganged:
-            return '' # when self.ganged is None
+            return ''  # when self.ganged is None
         #print self.ganged
-        res = [] #when self.ganged is not None
-        #converting the list to dict
+        res = []
         for (k, pnames) in self.ganged.items():
             name = self.pname('%senable' % k).format(*args)
             decl = 'Bit#(1) %s = 0;' % name
@@ -201,55 +204,29 @@ class Interface(object):
     def wirefmt(self, *args):
         res = '\n'.join(map(self.wirefmtpin, self.pins)).format(*args)
         res += '\n'
-        for p in self.pinspecs:
-            name = self.pname(p['name'])
-            typ = self.getifacetype(name.format(""))
-            name = name.format(*args)
-            res += "      // declare %s_io set up as type '%s'\n" % (name, typ)
-            res += "      GenericIOType %s_io = GenericIOType{\n" % name
-            params = []
-            if typ == 'inout':
-                outname = self.ifacefmtoutfn(name)
-                params.append('outputval:%s_out,' % outname)
-                params.append('output_en:%s_outen,' % outname)  # match busfmt
-                params.append('input_en:~%s_outen,' % outname)
-            elif typ == 'out':
-                outname = self.ifacefmtoutfn(name)
-                params.append('outputval:%s,' % outname)
-                params.append('output_en:1,')
-                params.append('input_en:0,')
-            else:  # input
-                params.append('outputval:0,')
-                params.append('output_en:0,')
-                params.append('input_en:1,')
-            for param in params:
-                res += '                 %s\n' % param
-            res += '      };\n'
         return '\n' + res
 
     def ifacefmt(self, *args):
         res = '\n'.join(map(self.ifacefmtdecpin, self.pins)).format(*args)
-        return '\n' + res # pins is a list
+        return '\n' + res  # pins is a list
 
     def ifacefmtdecfn(self, name):
-        return name # uart
+        return name  # like: uart
 
     def ifacefmtdecfn2(self, name):
-        return name # uart
+        return name  # like: uart
 
     def ifacefmtdecfn3(self, name):
         """ HACK! """
-        return "%s_outenX" % name # wr_outenX
+        return "%s_outen" % name  # like uart_outen
 
     def ifacefmtoutfn(self, name):
-        return "wr%s" % name #wruart
+        return "wr%s" % name  # like wruart
 
     def ifacefmtinfn(self, name):
-        return "wr%s" % name # wruart
+        return "wr%s" % name
 
     def wirefmtpin(self, pin):
-        # pin is any object which will be passed and then its
-        # method is called
         return pin.wirefmt(self.ifacefmtoutfn, self.ifacefmtinfn,
                            self.ifacefmtdecfn2)
 
@@ -259,7 +236,7 @@ class Interface(object):
     def ifacefmtpin(self, pin):
         decfn = self.ifacefmtdecfn2
         outfn = self.ifacefmtoutfn
-        print pin, pin.outenmode
+        #print pin, pin.outenmode
         if pin.outenmode:
             decfn = self.ifacefmtdecfn3
             outfn = self.ifacefmtoutenfn
@@ -298,10 +275,12 @@ class Interfaces(UserDict):
     """ contains a list of interface definitions
     """
 
-    def __init__(self, pth):
+    def __init__(self, pth=None):
         self.pth = pth
         self.ifacecount = []
         UserDict.__init__(self, {})
+        if not pth:
+            return
         ift = 'interfaces.txt'
         if pth:
             ift = os.path.join(pth, ift)
@@ -309,13 +288,14 @@ class Interfaces(UserDict):
             for ln in ifile.readlines():
                 ln = ln.strip()
                 ln = ln.split("\t")
-                name = ln[0] # will have uart
-                count = int(ln[1]) # will have count of uart
-                #spec looks like this
-                #[{'name': 'sda', 'outen': True},
-                #                   {'name': 'scl', 'outen': True},
-                #                  ]
-
+                name = ln[0]  # will have uart
+                count = int(ln[1])  # will have count of uart
+                # spec looks like this:
+                """
+                [{'name': 'sda', 'outen': True},
+                 {'name': 'scl', 'outen': True},
+                ]
+                """
                 spec, ganged = self.read_spec(pth, name)
                 iface = Interface(name, spec, ganged, count == 1)
                 self.ifaceadd(name, count, iface)
@@ -330,12 +310,16 @@ class Interfaces(UserDict):
 
     def ifaceadd(self, name, count, iface, at=None):
         if at is None:
-            at = len(self.ifacecount) # ifacecount is a list
-        self.ifacecount.insert(at, (name, count))# appends the list 
+            at = len(self.ifacecount)  # ifacecount is a list
+        self.ifacecount.insert(at, (name, count))  # appends the list
         # with (name,count) *at* times
         self[name] = iface
 
-    # will check specific peripheral.txt files like spi.txt    
+    """
+    will check specific files of kind peripheral.txt like spi.txt,
+    uart.txt in test directory
+    """
+
     def read_spec(self, pth, name):
         spec = []
         ganged = {}
@@ -347,9 +331,9 @@ class Interfaces(UserDict):
                 ln = ln.strip()
                 ln = ln.split("\t")
                 name = ln[0]
-                d = {'name': name} # her we start to make the dictionary
+                d = {'name': name}  # here we start to make the dictionary
                 if ln[1] == 'out':
-                    d['action'] = True # adding element to the dict
+                    d['action'] = True  # adding element to the dict
                 elif ln[1] == 'inout':
                     d['outen'] = True
                     if len(ln) == 3:
@@ -400,9 +384,9 @@ mux_interface = MuxInterface('cell', [{'name': 'mux', 'ready': False,
 
 io_interface = IOInterface(
     'io',
-    [{'name': 'cell_out', 'enabled': False, },
-     {'name': 'cell_outen', 'enabled': False, 'outenmode': True, },
-     {'name': 'inputval', 'action': True, 'io': True}, ])
+    [{'name': 'cell_out', 'enabled': True, },
+     {'name': 'cell_outen', 'enabled': True, 'outenmode': True, },
+     {'name': 'cell_in', 'action': True, 'io': True}, ])
 
 # == Peripheral Interface definitions == #
 # these are the interface of the peripherals to the pin mux

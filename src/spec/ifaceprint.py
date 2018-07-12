@@ -100,6 +100,10 @@ def check_functions(of, title, bankspec, fns, pins, required, eint, pwm,
     pins = deepcopy(pins)
     if descriptions is None:
         descriptions = {}
+    fnidx = fns.keys()
+
+    #print dir(fns)
+    #print dir(pins)
 
     of.write("# Pinmap for %s\n\n" % title)
 
@@ -123,13 +127,21 @@ def check_functions(of, title, bankspec, fns, pins, required, eint, pwm,
         else:
             count = 100000
         name = name[0]
+        #print name
         found = set()
-        fnidx = fns.keys()
-        # fnidx.sort(fnsort)
         pinfound = {}
+        located = set()
         for fname in fnidx:
             if not fname.startswith(name):
                 continue
+            for k in pins.fnspec.keys():
+                if fname.startswith(k):
+                    fk = list(pins.fnspec[k].keys())
+                    fn = pins.fnspec[k]
+                    fn = fn[fk[0]]
+                    #print fname, fn, dir(fn)
+                    if count == 100000:
+                        count = len(fn.pingroup)
             for pin, mux, bank in fns[fname]:
                 if findbank is not None:
                     if findbank != bank:
@@ -142,6 +154,7 @@ def check_functions(of, title, bankspec, fns, pins, required, eint, pwm,
 
         pinidx = sorted(pinfound.keys())
 
+        removedcount = 0
         for pin_ in pinidx:
             fname, pin_, bank, pin, mux = pinfound[pin_]
             if fname in found:
@@ -150,8 +163,15 @@ def check_functions(of, title, bankspec, fns, pins, required, eint, pwm,
             if len(found) > count:
                 continue
             del pins[pin_]
+            removedcount += 1
             of.write("* %s %d %s%d/%d\n" % (fname, pin_, bank, pin, mux))
 
+        if removedcount != count:
+            print ("not all found", name, removedcount, count, title, found,
+                   fns[fname])
+            print ("pins found", pinfound)
+
+        # fnidx.sort(fnsort)
         of.write('\n')
 
     # gpios

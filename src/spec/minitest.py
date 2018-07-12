@@ -6,7 +6,7 @@ from spec.ifaceprint import display, display_fns, check_functions
 from spec.ifaceprint import display_fixed
 
 
-def pinspec(of):
+def pinspec():
     pinbanks = {
         'B': 28,
     }
@@ -109,4 +109,4 @@ def pinspec(of):
     ps.add_scenario("MiniTest", minitest, minitest_eint, minitest_pwm,
                     descriptions)
 
-    return ps.write(of)
+    return ps
