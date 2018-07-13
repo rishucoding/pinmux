@@ -24,13 +24,6 @@ dedicated_wire = '''
 digits = maketrans('0123456789', ' ' * 10)  # delete space later
 
 
-def get_cell_bit_width(p):
-    max_num_cells = 0
-    for cell in p.muxed_cells:
-        max_num_cells = max(len(cell) - 1, max_num_cells)
-    return int(math.log(max_num_cells + 1, 2))
-
-
 def cn(idx):  # idx is an integer
     return "cell%s_mux" % str(idx)
 
@@ -147,7 +140,6 @@ def init(p, ifaces):
         the last one, and we do not want the "default" (last line)
         to be the output.
     """
-    p.cell_bitwidth = get_cell_bit_width(p)
     p.pinmux = ' '
     global dedicated_wire
     for cell in p.muxed_cells:
@@ -174,7 +166,7 @@ def init(p, ifaces):
                 continue
             temp = transfn(cname)
             x = ifaces.getifacetype(temp)
-            #print (cname, temp, x)
+            print (cname, temp, x)
             assert x is not None, "ERROR: The signal : " + \
                 str(cname) + \
                 " of pinmap.txt isn't present \nin the current" + \

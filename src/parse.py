@@ -61,9 +61,12 @@ class Parse(object):
         if verify:
             self.do_checks()
 
+        self.cell_bitwidth = self.get_cell_bit_width()
+
         # == user info after parsing ================= #
         self.N_IO = len(self.dedicated_cells) + len(self.muxed_cells)
         print("Max number of IO: " + str(self.N_IO))
+        print("Muxer bit width: " + str(self.cell_bitwidth))
         print("Muxed IOs: " + str(len(self.muxed_cells)))
         print("Dedicated IOs: " + str(len(self.dedicated_cells)))
 
@@ -99,6 +102,12 @@ class Parse(object):
         # ============================================================== #
 
         # TODO
+
+    def get_cell_bit_width(self):
+        max_num_cells = 0
+        for cell in self.muxed_cells:
+            max_num_cells = max(len(cell) - 1, max_num_cells)
+        return int(math.log(max_num_cells + 1, 2))
 
 
 if __name__ == '__main__':

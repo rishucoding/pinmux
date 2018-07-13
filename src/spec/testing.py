@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 from UserDict import UserDict
+=======
+try:
+    from UserDict import UserDict
+except ImportError:
+    from collections import UserDict
+>>>>>>> 6011c03e3abce0debb521e52eba79df91a1816d0
 
 
 class Wire(object):
@@ -27,9 +34,15 @@ class Wires(UserDict):
 
 
 def dummytest(ps, output_dir, output_type):
+<<<<<<< HEAD
     print ps, output_dir, output_type
     print dir(ps)
     print ps.fnspec
+=======
+    print (ps, output_dir, output_type)
+    print (dir(ps))
+    print (ps.fnspec)
+>>>>>>> 6011c03e3abce0debb521e52eba79df91a1816d0
 
     # basically we need to replicate the entirety of the
     # verilog module's inputs and outputs, so that we can

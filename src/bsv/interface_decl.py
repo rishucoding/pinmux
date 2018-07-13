@@ -7,6 +7,7 @@ except ImportError:
 
 from bsv.wire_def import generic_io  # special case
 from bsv.wire_def import muxwire  # special case
+from ifacebase import InterfacesBase
 
 
 class Pin(object):
@@ -271,11 +272,12 @@ class IOInterface(Interface):
         return generic_io.format(*args)
 
 
-class Interfaces(UserDict):
+class Interfaces(InterfacesBase):
     """ contains a list of interface definitions
     """
 
     def __init__(self, pth=None):
+<<<<<<< HEAD
         self.pth = pth
         self.ifacecount = []
         UserDict.__init__(self, {})
@@ -343,6 +345,9 @@ class Interfaces(UserDict):
                         ganged[bus].append(name)
                 spec.append(d)
         return spec, ganged
+=======
+        InterfacesBase.__init__(self, Interface, pth)
+>>>>>>> 6011c03e3abce0debb521e52eba79df91a1816d0
 
     def ifacedef(self, f, *args):
         for (name, count) in self.ifacecount:
@@ -378,9 +383,9 @@ class Interfaces(UserDict):
 
 # ========= Interface declarations ================ #
 
-mux_interface = MuxInterface('cell', [{'name': 'mux', 'ready': False,
-                                       'enabled': False,
-                                       'bitspec': '{1}', 'action': True}])
+mux_interface = MuxInterface('cell',
+                             [{'name': 'mux', 'ready': False, 'enabled': False,
+                               'bitspec': '{1}', 'action': True}])
 
 io_interface = IOInterface(
     'io',
